@@ -915,53 +915,20 @@
   .case--alt .case__visual { order: 2; }
 
   /* ═══════════════════════════════════════════════════════
-     2026-05-20 — STACKED CASE LAYOUT
-     Image full-width on top with a wide (16:9) aspect ratio,
-     body content below. The .case--alt order-flip becomes a no-op.
+     2026-05-20 — TALLER SCREENSHOTS in side-by-side cases
+     Bump the .case__shot height so the image fills the visual
+     column at a portrait-friendly aspect ratio instead of a
+     short landscape stripe.
      ═══════════════════════════════════════════════════════ */
-  .case {
-    grid-template-columns: 1fr;
-    background: transparent;
-    border: 0;
-    border-radius: var(--radius-lg);
-    box-shadow: none;
-  }
-  .case:hover {
-    border-color: transparent;
-    box-shadow: none;
-    transform: none;
-  }
-  .case--alt { grid-template-columns: 1fr; }
-  .case--alt .case__visual { order: 0; border: 0; }
-  .case__visual {
-    padding: 0;
-    border: 0 !important;
-    background: transparent;
-    gap: 0;
-  }
-  .case__visual-meta {
-    padding: 18px 24px 0;
-  }
   .case__shot {
-    flex: 0 0 auto;
-    margin-top: 14px;
-    aspect-ratio: 16 / 9;
-    min-height: 0;
-    border-radius: var(--radius);
-    border: 0;
-    box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.55);
-    background:
-      linear-gradient(180deg, var(--bg-3) 0%, var(--bg-2) 100%);
+    min-height: 520px;
+    aspect-ratio: auto;
   }
-  .case__shot::before { display: none; }
-  .case__shot img { object-position: top center; }
-  .case__body {
-    padding: clamp(24px, 3vw, 36px) clamp(4px, 1vw, 12px) clamp(8px, 2vw, 16px);
+  @media (max-width: 1100px) {
+    .case__shot { min-height: 460px; }
   }
   @media (max-width: 880px) {
-    .case__visual-meta { padding: 14px 0 0; }
-    .case__shot { margin-top: 12px; aspect-ratio: 16 / 10; }
-    .case__body { padding: clamp(20px, 4vw, 28px) 0 0; }
+    .case__shot { min-height: 360px; }
   }
 
   /* ═══════════════════════════════════════════════════════

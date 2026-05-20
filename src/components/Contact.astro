@@ -1,5 +1,6 @@
 ---
 // Contact section — extracted from legacy index.html on 2026-05-20
+// 2026-05-20 update: form now lives inside a modal triggered by a CTA button.
 ---
 <!-- ═══════════ CONTACT ═══════════ -->
 <section class="block contact" id="contact">
@@ -16,8 +17,15 @@
       <div class="contact__pitch reveal">
         <h3>If that sounds like the room you're <em>in</em>, let's talk.</h3>
         <p>Send a note describing the project, the team, and the constraints. I'll reply within two business days with whether I'm a fit and what good next steps look like.</p>
-        <div class="contact__ctas">
-          <a class="btn btn--primary btn--lg" href="mailto:hello@kevincarp.dev">Start a Conversation <span class="arrow">→</span></a>
+
+        <div class="contact__cta">
+          <button
+            class="btn btn--primary btn--lg"
+            type="button"
+            data-contact-modal-open
+            aria-haspopup="dialog"
+            aria-controls="contact-modal"
+          >Send a Message <span class="arrow">→</span></button>
           <a class="btn btn--lg" href="assets/files/Kevin%20Resume.docx" download>Resume ↓</a>
         </div>
       </div>
@@ -36,3 +44,97 @@
     </div>
   </div>
 </section>
+
+<!-- ═══════════ CONTACT MODAL ═══════════ -->
+<div
+  class="contact-modal"
+  id="contact-modal"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="contact-modal-title"
+  aria-hidden="true"
+>
+  <div class="contact-modal__backdrop" data-contact-modal-close tabindex="-1"></div>
+  <div class="contact-modal__dialog" role="document">
+    <button
+      type="button"
+      class="contact-modal__close"
+      aria-label="Close contact form"
+      data-contact-modal-close
+    >×</button>
+    <h3 id="contact-modal-title" class="contact-modal__title">Tell me about the project</h3>
+    <p class="contact-modal__sub">A few lines on the team, the scope, and what good looks like. I'll reply within two business days.</p>
+
+    <form
+      class="contact-form"
+      action="https://formsubmit.co/carpenter.kevin@gmail.com"
+      method="POST"
+    >
+      <!-- FormSubmit config: no captcha, custom subject, redirect, anti-bot honeypot -->
+      <input type="hidden" name="_subject" value="New inquiry from kevincarpdev.com" />
+      <input type="hidden" name="_captcha" value="false" />
+      <input type="hidden" name="_template" value="table" />
+      <input type="hidden" name="_next" value="https://kevincarpdev.com/?sent=1#contact" />
+      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
+
+      <label class="contact-form__field">
+        <span class="contact-form__label">Name</span>
+        <input type="text" name="name" required autocomplete="name" />
+      </label>
+
+      <label class="contact-form__field">
+        <span class="contact-form__label">Email</span>
+        <input type="email" name="email" required autocomplete="email" />
+      </label>
+
+      <label class="contact-form__field contact-form__field--full">
+        <span class="contact-form__label">Company <span class="contact-form__opt">(optional)</span></span>
+        <input type="text" name="company" autocomplete="organization" />
+      </label>
+
+      <label class="contact-form__field contact-form__field--full">
+        <span class="contact-form__label">Project</span>
+        <textarea name="message" rows="5" required placeholder="A few lines about the project, team, and constraints."></textarea>
+      </label>
+
+      <div class="contact-form__actions">
+        <button class="btn btn--primary btn--lg" type="submit">Send Message <span class="arrow">→</span></button>
+        <button class="btn btn--lg" type="button" data-contact-modal-close>Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    var modal = document.getElementById('contact-modal');
+    if (!modal) return;
+    var openers = document.querySelectorAll('[data-contact-modal-open]');
+    var closers = modal.querySelectorAll('[data-contact-modal-close]');
+    var lastFocus = null;
+
+    function open() {
+      lastFocus = document.activeElement;
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('contact-modal-open');
+      var firstInput = modal.querySelector('input[name="name"]');
+      if (firstInput) setTimeout(function () { firstInput.focus(); }, 30);
+      document.addEventListener('keydown', onKeydown);
+    }
+    function close() {
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('contact-modal-open');
+      document.removeEventListener('keydown', onKeydown);
+      if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+    }
+    function onKeydown(e) {
+      if (e.key === 'Escape') close();
+    }
+
+    openers.forEach(function (btn) { btn.addEventListener('click', open); });
+    closers.forEach(function (btn) { btn.addEventListener('click', close); });
+
+    // Deep-link: #contact-form opens the modal
+    if (location.hash === '#contact-form') open();
+  })();
+</script>

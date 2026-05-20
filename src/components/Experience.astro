@@ -238,7 +238,7 @@
     gap: clamp(28px, 4vw, 48px);
   }
 
-  /* ── Tab strip (mobile: horizontal scroller) ─────────── */
+  /* ── Tab strip (mobile: horizontal scroller; desktop: aligned to container) ── */
   .pillars__tabs {
     display: flex;
     gap: 10px;
@@ -246,12 +246,17 @@
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
-    padding: 4px 4px 12px;
-    margin: 0 calc(var(--gutter) * -1);
-    padding-left: var(--gutter);
-    padding-right: var(--gutter);
+    padding: 4px 0 12px;
     scrollbar-width: thin;
     scrollbar-color: var(--line-2) transparent;
+  }
+  /* Mobile: let the strip bleed to viewport edges so it can scroll edge-to-edge */
+  @media (max-width: 880px) {
+    .pillars__tabs {
+      margin: 0 calc(var(--gutter) * -1);
+      padding-left: var(--gutter);
+      padding-right: var(--gutter);
+    }
   }
   .pillars__tabs::-webkit-scrollbar { height: 6px; }
   .pillars__tabs::-webkit-scrollbar-thumb { background: var(--line-2); border-radius: 999px; }

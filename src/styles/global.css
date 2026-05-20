@@ -32,8 +32,8 @@
     --font-mono:    "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 
     /* layout */
-    --max-w:        1320px;
-    --max-w-wide:   1480px;
+    --max-w:        1440px;
+    --max-w-wide:   1600px;
     --gutter:       clamp(20px, 4vw, 56px);
     --radius-sm:    8px;
     --radius:       12px;

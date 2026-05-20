@@ -654,7 +654,6 @@
   /* ─── Plain-language clarifier (what / who / proof) ─── */
   .hero__clarify {
     margin-top: 40px;
-    border-top: var(--rule-hair);
     opacity: 0;
     animation: fadeUp 0.9s ease 0.75s forwards;
   }
@@ -734,7 +733,6 @@
     align-items: center;
     gap: 24px;
     padding: 28px 0 12px;
-    border-top: var(--rule-hair);
     margin-top: 40px;
     opacity: 0;
     animation: fadeUp 0.9s ease 0.95s forwards;
@@ -793,6 +791,75 @@
 
   /* legacy decoration kept defined for graceful fallback but visually hidden */
   .hero .dimensions { display: none; }
+
+  /* ─── Architect portrait — greyscale ghost on the right side of hero ─── */
+  .hero { position: relative; overflow: hidden; }
+  .hero > * { position: relative; z-index: 2; }
+  .hero__portrait {
+    position: absolute !important;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: clamp(280px, 42vw, 620px);
+    z-index: 0 !important;
+    pointer-events: none;
+    overflow: hidden;
+    color: var(--text-3);
+  }
+  .hero__portrait__img {
+    position: absolute;
+    inset: 0;
+    background-image: url("assets/photos/Bio.png");
+    background-size: cover;
+    background-position: center 18%;
+    background-repeat: no-repeat;
+
+
+  }
+  .hero__portrait__tint {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to left, rgba(127, 182, 255, 0.10), transparent 65%),
+      linear-gradient(to bottom, rgba(10, 13, 20, 0.35), transparent 30%, transparent 70%, rgba(10, 13, 20, 0.55));
+    pointer-events: none;
+  }
+  .hero__portrait__annot {
+    position: absolute;
+    bottom: 22px;
+    right: 26px;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    line-height: 1.65;
+    text-align: right;
+    opacity: 0;
+    animation: fadeUp 1s ease 1.1s forwards;
+  }
+  .hero__portrait__annot span { display: block; }
+  .hero__portrait__annot span:first-child { color: var(--blueprint); }
+  .hero__portrait__dim {
+    position: absolute;
+    top: 24px;
+    right: 16px;
+    bottom: 24px;
+    width: 28px;
+    height: auto;
+    color: var(--text-4);
+    opacity: 0;
+    animation: fadeUp 1s ease 1.2s forwards;
+  }
+
+  @media (max-width: 1100px) {
+    .hero__portrait { width: clamp(220px, 38vw, 420px); }
+    .hero__portrait__annot { font-size: 8px; }
+    .hero__portrait__dim { display: none; }
+  }
+  @media (max-width: 760px) {
+    .hero__portrait { display: none; }
+  }
 
   .btn {
     font-family: var(--font-mono);
@@ -1377,8 +1444,8 @@
   }
   /* ─── Logo system: every brand mark renders the same uniform white ─── */
   .matrix__logo {
-    width: 54px;
-    height: 54px;
+    width: 56px;
+    height: 40px;
     display: grid;
     place-items: center;
     color: #fff;
@@ -1387,10 +1454,15 @@
   }
   .matrix__logo svg,
   .matrix__logo img {
-    width: 34px;
-    height: 34px;
+    /* Render at a slightly wider band so wider logo marks have headroom,
+       then object-fit: contain normalizes them inside the slot. */
+    width: 100%;
+    height: 100%;
+    max-height: 36px;
+    max-width: 56px;
     display: block;
     object-fit: contain;
+    object-position: left center;
     /* Force every logo to pure white regardless of its source palette,
        so the BOM reads as a uniform parts catalog. */
     filter: brightness(0) invert(1);
@@ -2094,6 +2166,20 @@
      ═══════════════════════════════════════════════════════════════ -->
 <section class="hero" aria-labelledby="hero-title">
 
+  <!-- ─── Architect portrait · greyscale ghost on the right ─── -->
+  <div class="hero__portrait" aria-hidden="true">
+    <div class="hero__portrait__img"></div>
+    <div class="hero__portrait__tint"></div>
+
+    <svg class="hero__portrait__dim" viewBox="0 0 100 400" preserveAspectRatio="none" aria-hidden="true">
+      <line x1="14" y1="20" x2="14" y2="380" stroke="currentColor" stroke-width="0.6" stroke-dasharray="3 3"/>
+      <line x1="10" y1="20" x2="18" y2="20" stroke="currentColor" stroke-width="0.6"/>
+      <line x1="10" y1="380" x2="18" y2="380" stroke="currentColor" stroke-width="0.6"/>
+      <circle cx="14" cy="120" r="1.4" fill="currentColor"/>
+      <circle cx="14" cy="240" r="1.4" fill="currentColor"/>
+    </svg>
+  </div>
+
   <div class="hero__top">
     <div class="hero__sheetref">
       <span class="badge" aria-hidden="true">01</span>
@@ -2163,12 +2249,12 @@
   <div class="hero__foot">
     <!-- Quick-contact strip — impossible to miss -->
     <nav class="hero__links" aria-label="Quick contact">
-      <a class="hero__link" href="https://github.com/" target="_blank" rel="noopener" data-todo="github-url">
+      <a class="hero__link" href="https://github.com/kevincarpdev" target="_blank" rel="noopener">
         <span class="hero__link-k">01</span>
         <span class="hero__link-v">GitHub</span>
         <span class="hero__link-arrow" aria-hidden="true">↗</span>
       </a>
-      <a class="hero__link" href="https://www.linkedin.com/" target="_blank" rel="noopener" data-todo="linkedin-url">
+      <a class="hero__link" href="https://www.linkedin.com/in/kevin-carpenter-304a4554/" target="_blank" rel="noopener">
         <span class="hero__link-k">02</span>
         <span class="hero__link-v">LinkedIn</span>
         <span class="hero__link-arrow" aria-hidden="true">↗</span>
@@ -2575,8 +2661,11 @@
           <rect x="220" y="380" width="160" height="40" class="dgm-node"/>
           <text x="300" y="405" class="dgm-text" text-anchor="middle">GLOBAL CUSTOMERS</text>
 
-          <line x1="490" y1="280" x2="490" y2="360" class="dgm-line dash"/>
-          <line x1="490" y1="360" x2="380" y2="380" class="dgm-line dash"/>
+          <!-- Next.js → Global Customers (clean orthogonal elbow) -->
+          <path d="M490,280 L490,360 L300,360 L300,380" fill="none" class="dgm-line dash"/>
+          <!-- Tick markers at each elbow so the corners feel intentional -->
+          <circle cx="490" cy="360" r="2" fill="var(--blueprint)"/>
+          <circle cx="300" cy="360" r="2" fill="var(--blueprint)"/>
         </svg>
         <div class="vfoot">
           <span>FIG. 03 · DATA FLOW</span>
@@ -3068,7 +3157,7 @@
         <span class="matrix__cat">ERP</span>
       </div>
       <div class="matrix__identity">
-        <span class="matrix__logo" aria-hidden="true"><img class="logo--soft" src="assets/logos/oracle-netsuite.svg" alt="" loading="lazy" decoding="async" /></span>
+        <span class="matrix__logo" aria-hidden="true"><img src="assets/logos/netsuite.svg" alt="" loading="lazy" decoding="async" /></span>
         <div>
           <h4 class="matrix__name">NetSuite</h4>
                   </div>
@@ -3086,7 +3175,7 @@
         <span class="matrix__cat">iPaaS</span>
       </div>
       <div class="matrix__identity">
-        <span class="matrix__logo" aria-hidden="true"><img src="assets/logos/celigo.png" alt="" loading="lazy" decoding="async" /></span>
+        <span class="matrix__logo" aria-hidden="true"><img src="assets/logos/celigo.svg" alt="" loading="lazy" decoding="async" /></span>
         <div>
           <h4 class="matrix__name">Celigo</h4>
                   </div>
@@ -3512,8 +3601,8 @@
       </p>
       <div class="signoff__ctas">
         <a class="btn btn--primary" id="contact-primary" href="mailto:hello@kevincarp.dev">Start a Conversation <span class="arrow">→</span></a>
-        <a class="btn" href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
-        <a class="btn" href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn" href="https://www.linkedin.com/in/kevin-carpenter-304a4554/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn" href="https://github.com/kevincarpdev" target="_blank" rel="noopener">GitHub</a>
       </div>
     </div>
 
@@ -3537,7 +3626,7 @@
       </div>
       <div class="signoff__row">
         <span class="k">Locale</span>
-        <span class="v">Remote · US</span>
+        <span class="v">Remote · San Diego, CA, US</span>
       </div>
       <div class="signoff__row">
         <span class="k">Status</span>

@@ -1,0 +1,2483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Kevin Carpenter — Senior Full-Stack Architect</title>
+<meta name="description" content="Kevin Carpenter — Senior Full-Stack Architect. 14+ years architecting headless eCommerce systems and high-compliance regulated infrastructure for Fortune 500 and government clients." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+  /* ═══════════════════════════════════════════════════════════════
+     KEVIN CARPENTER · PORTFOLIO · 2026
+     Flat dark · coral accent · big type · full-width sections
+     ═══════════════════════════════════════════════════════════════ */
+
+  :root {
+    /* surfaces */
+    --bg:           #0d1117;
+    --bg-2:         #11161e;
+    --bg-3:         #161b22;
+    --bg-elev:      #1c2230;
+    --line:         #232a36;
+    --line-2:       #2d3543;
+
+    /* text */
+    --text:         #e9eef5;
+    --text-2:       #a4adbd;
+    --text-3:       #6b7484;
+    --text-4:       #4a5160;
+
+    /* accents */
+    --accent:       #ff6b4a;    /* coral primary */
+    --accent-2:     #ff8a6f;    /* coral light */
+    --accent-deep:  #e54d2c;    /* coral hover */
+    --accent-glow:  rgba(255, 107, 74, 0.18);
+    --accent-soft:  rgba(255, 107, 74, 0.08);
+    --blue:         #4a9eff;
+    --green:        #4ade80;
+
+    /* typography */
+    --font-sans:    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-mono:    "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+    /* layout */
+    --max-w:        1320px;
+    --max-w-wide:   1480px;
+    --gutter:       clamp(20px, 4vw, 56px);
+    --radius-sm:    8px;
+    --radius:       12px;
+    --radius-lg:    20px;
+    --radius-pill:  999px;
+
+    --nav-h:        72px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+  ::selection { background: var(--accent); color: var(--bg); }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--bg);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  img, svg { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; cursor: pointer; background: none; border: 0; color: inherit; }
+  ul { list-style: none; }
+
+  /* ─── COMMON ─────────────────────────────────────────── */
+  .container {
+    width: 100%;
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+  .container--wide { max-width: var(--max-w-wide); }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .eyebrow::before {
+    content: "";
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .section-title {
+    font-size: clamp(34px, 5vw, 64px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    margin-top: 14px;
+  }
+  .section-title em {
+    color: var(--accent);
+    font-style: normal;
+  }
+  .section-sub {
+    color: var(--text-2);
+    margin-top: 16px;
+    font-size: clamp(15px, 1.4vw, 17px);
+    max-width: 720px;
+  }
+
+  section.block {
+    padding: clamp(80px, 10vw, 140px) 0;
+    position: relative;
+  }
+  section.block + section.block { border-top: 1px solid var(--line); }
+
+  /* ─── BUTTONS ─────────────────────────────────────────── */
+  .btn {
+    --b-bg: var(--bg-elev);
+    --b-fg: var(--text);
+    --b-bd: var(--line-2);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 28px;
+    background: var(--b-bg);
+    color: var(--b-fg);
+    border: 1px solid var(--b-bd);
+    border-radius: var(--radius);
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: -0.005em;
+    transition: transform .2s ease, background .2s ease, border-color .2s ease, box-shadow .25s ease;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .btn:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+    box-shadow: 0 10px 30px -10px var(--accent-glow);
+  }
+  .btn .arrow { transition: transform .25s ease; display: inline-block; }
+  .btn:hover .arrow { transform: translateX(4px); }
+  .btn--primary {
+    --b-bg: var(--accent);
+    --b-fg: #1a0a05;
+    --b-bd: var(--accent);
+    box-shadow: 0 10px 30px -12px var(--accent-glow), inset 0 1px 0 rgba(255,255,255,.15);
+  }
+  .btn--primary:hover {
+    --b-bg: var(--accent-deep);
+    --b-bd: var(--accent-deep);
+    box-shadow: 0 18px 40px -10px var(--accent-glow);
+  }
+  .btn--lg { padding: 20px 36px; font-size: 16px; border-radius: var(--radius); }
+  .btn--ghost { --b-bg: transparent; }
+
+  /* ═══════════════════════════════════════════════════════
+     NAV
+     ═══════════════════════════════════════════════════════ */
+  .nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: var(--nav-h);
+    z-index: 50;
+    backdrop-filter: blur(12px);
+    background: rgba(13, 17, 23, 0.7);
+    border-bottom: 1px solid transparent;
+    transition: border-color .25s ease, background .25s ease;
+  }
+  .nav.is-scrolled {
+    background: rgba(13, 17, 23, 0.92);
+    border-bottom-color: var(--line);
+  }
+  .nav__inner {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .nav__brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 800;
+    font-size: 17px;
+    letter-spacing: -0.01em;
+  }
+  .nav__brand-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 4px var(--accent-soft);
+  }
+  .nav__brand small {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    line-height: 1;
+    margin-top: 4px;
+  }
+
+  .nav__links {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+  .nav__link {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-2);
+    transition: color .2s ease;
+  }
+  .nav__link:hover { color: var(--text); }
+  .nav__cta { display: flex; gap: 12px; align-items: center; }
+  .nav__cta .btn { padding: 10px 18px; font-size: 13px; }
+
+  .nav__burger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--line-2);
+  }
+  .nav__burger span {
+    display: block;
+    width: 22px; height: 2px;
+    background: var(--text);
+    border-radius: 2px;
+    transition: transform .25s ease, opacity .25s ease;
+  }
+  .nav[data-open="true"] .nav__burger span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav[data-open="true"] .nav__burger span:nth-child(2) { opacity: 0; }
+  .nav[data-open="true"] .nav__burger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .nav__drawer {
+    position: fixed;
+    inset: var(--nav-h) 0 0 0;
+    background: var(--bg-2);
+    border-top: 1px solid var(--line);
+    transform: translateY(-100%);
+    transition: transform .35s cubic-bezier(.2,.8,.2,1);
+    z-index: 49;
+    padding: 32px var(--gutter);
+    overflow-y: auto;
+  }
+  .nav[data-open="true"] ~ .nav__drawer { transform: translateY(0); }
+  .nav__drawer-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 0;
+    font-size: 22px;
+    font-weight: 600;
+    border-bottom: 1px solid var(--line);
+  }
+  .nav__drawer-link .num {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-3);
+  }
+  .nav__drawer-cta { margin-top: 32px; display: flex; flex-direction: column; gap: 12px; }
+  .nav__drawer-cta .btn { justify-content: center; padding: 18px; }
+
+  @media (max-width: 880px) {
+    .nav__links, .nav__cta { display: none; }
+    .nav__burger { display: flex; }
+  }
+
+  /* ═══════════════════════════════════════════════════════
+     HERO  — 100vh, dark, portrait right, big type
+     ═══════════════════════════════════════════════════════ */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    padding-top: calc(var(--nav-h) + 24px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    background: radial-gradient(circle at 85% 50%, rgba(255, 107, 74, 0.10), transparent 55%),
+                radial-gradient(circle at 10% 90%, rgba(74, 158, 255, 0.04), transparent 60%),
+                var(--bg);
+  }
+
+  .hero__inner {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: clamp(32px, 6vw, 80px);
+    align-items: center;
+    padding-bottom: clamp(40px, 8vh, 80px);
+  }
+
+  .hero__left { position: relative; z-index: 2; }
+
+  .hero__hello {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    padding: 8px 16px;
+    border: 1px solid var(--line-2);
+    border-radius: var(--radius-pill);
+    background: var(--bg-3);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--text-2);
+  }
+  .hero__hello-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 0 4px rgba(74, 222, 128, 0.18);
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 4px rgba(74, 222, 128, 0.18); }
+    50%      { box-shadow: 0 0 0 8px rgba(74, 222, 128, 0.04); }
+  }
+
+  .hero__title {
+    font-size: clamp(48px, 8.5vw, 112px);
+    font-weight: 800;
+    line-height: 0.96;
+    letter-spacing: -0.035em;
+    margin-top: 28px;
+  }
+  .hero__title .line { display: block; }
+  .hero__title .accent { color: var(--accent); }
+  .hero__title .dot { color: var(--accent); }
+
+  .hero__sub {
+    font-size: clamp(16px, 1.6vw, 19px);
+    color: var(--text-2);
+    margin-top: 28px;
+    max-width: 560px;
+    line-height: 1.6;
+  }
+  .hero__sub strong { color: var(--text); font-weight: 600; }
+
+  .hero__role {
+    margin-top: 18px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--text-3);
+  }
+  .hero__role b { color: var(--accent); font-weight: 600; }
+
+  .hero__ctas {
+    margin-top: 40px;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .hero__meta {
+    margin-top: 48px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    max-width: 460px;
+  }
+  .hero__meta-cell { padding: 0 20px; border-left: 1px solid var(--line-2); }
+  .hero__meta-cell:first-child { padding-left: 0; border-left: 0; }
+  .hero__meta-k {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    margin-bottom: 4px;
+  }
+  .hero__meta-v {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .hero__meta-v small {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-3);
+    margin-left: 4px;
+  }
+
+  /* portrait */
+  .hero__portrait {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    max-width: 540px;
+    margin-left: auto;
+    width: 100%;
+  }
+  .hero__portrait::before,
+  .hero__portrait::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .hero__portrait::before {
+    inset: 8%;
+    background: radial-gradient(circle at center, var(--accent) 0%, var(--accent-deep) 38%, rgba(229,77,44,0) 70%);
+    filter: blur(2px);
+    opacity: .85;
+  }
+  .hero__portrait::after {
+    inset: 4%;
+    border: 1.5px solid var(--accent);
+    opacity: .55;
+  }
+  .hero__portrait-img {
+    position: relative;
+    z-index: 2;
+    width: 100%; height: 100%;
+    background-image: url("assets/photos/KevinCarpenter.png");
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    background-size: contain;
+    filter: drop-shadow(0 20px 40px rgba(0,0,0,.5));
+  }
+  .hero__portrait-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--accent);
+    opacity: .35;
+    z-index: 1;
+    font-size: clamp(60px, 8vw, 110px);
+    font-weight: 800;
+    line-height: 1;
+    user-select: none;
+  }
+  .hero__portrait-arrow--l { left: -2%; }
+  .hero__portrait-arrow--r { right: -2%; }
+
+  @media (max-width: 980px) {
+    .hero__inner { grid-template-columns: 1fr; gap: 40px; }
+    .hero__portrait { max-width: 360px; margin: 0 auto; order: -1; }
+    .hero__meta { margin: 36px auto 0; }
+  }
+  @media (max-width: 560px) {
+    .hero__meta { grid-template-columns: 1fr 1fr; }
+    .hero__meta-cell:nth-child(3) { display: none; }
+  }
+
+  /* ═══════════════════════════════════════════════════════
+     SKILL BANNER — full width, sits right under the 100vh hero
+     ═══════════════════════════════════════════════════════ */
+  .skillband {
+    background: var(--bg-2);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 32px 0;
+    overflow: hidden;
+    position: relative;
+  }
+  .skillband::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(90deg, var(--bg-2), transparent 8%, transparent 92%, var(--bg-2));
+  }
+  .skillband__track {
+    display: flex;
+    gap: clamp(40px, 6vw, 96px);
+    align-items: center;
+    animation: marquee 38s linear infinite;
+    width: max-content;
+  }
+  .skillband:hover .skillband__track { animation-play-state: paused; }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  .skillband__item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: var(--text-3);
+    font-weight: 600;
+    font-size: 16px;
+    letter-spacing: -0.005em;
+    transition: color .2s ease, opacity .2s ease;
+    opacity: .75;
+  }
+  .skillband__item:hover { color: var(--text); opacity: 1; }
+  .skillband__item img {
+    width: 26px; height: 26px;
+    object-fit: contain;
+    filter: grayscale(1) brightness(1.4);
+    transition: filter .25s ease;
+  }
+  .skillband__item:hover img { filter: grayscale(0) brightness(1); }
+  @media (prefers-reduced-motion: reduce) {
+    .skillband__track { animation: none; }
+  }
+
+  /* ═══════════════════════════════════════════════════════
+     ABOUT / EXPERTISE PILLARS
+     ═══════════════════════════════════════════════════════ */
+  .pillars-wrap {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: clamp(40px, 6vw, 80px);
+    margin-top: clamp(50px, 6vw, 90px);
+    align-items: start;
+  }
+  @media (max-width: 980px) { .pillars-wrap { grid-template-columns: 1fr; } }
+
+  .pillar {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 24px;
+    padding: 28px 0;
+    border-top: 1px solid var(--line);
+    position: relative;
+  }
+  .pillar:last-child { border-bottom: 1px solid var(--line); }
+  .pillar__num {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--accent);
+    font-weight: 600;
+    letter-spacing: .05em;
+    padding-top: 6px;
+  }
+  .pillar__title {
+    font-size: clamp(22px, 2.4vw, 28px);
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    line-height: 1.2;
+  }
+  .pillar__title em { color: var(--accent); font-style: normal; }
+  .pillar__desc {
+    color: var(--text-2);
+    margin-top: 10px;
+    font-size: 15.5px;
+    line-height: 1.65;
+  }
+  .pillar__tags {
+    margin-top: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .pillar__tag {
+    padding: 6px 12px;
+    border: 1px solid var(--line-2);
+    border-radius: var(--radius-pill);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-2);
+    letter-spacing: .03em;
+  }
+
+  /* stats inline with intro */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 8px;
+    background: var(--bg-3);
+    margin-top: 32px;
+  }
+  .stats__cell {
+    padding: 24px 20px;
+    text-align: left;
+    border-right: 1px solid var(--line);
+  }
+  .stats__cell:last-child { border-right: 0; }
+  .stats__v {
+    font-size: clamp(32px, 4vw, 42px);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    color: var(--text);
+    line-height: 1;
+  }
+  .stats__v small { color: var(--accent); font-weight: 700; }
+  .stats__v sup { font-size: .55em; color: var(--accent); top: -.5em; }
+  .stats__k {
+    margin-top: 10px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    color: var(--text-3);
+  }
+
+  .clients {
+    margin-top: 28px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 22px;
+    align-items: center;
+    color: var(--text-2);
+    font-size: 14px;
+  }
+  .clients strong { color: var(--text); font-weight: 700; }
+  .clients .sep { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); }
+
+  /* ═══════════════════════════════════════════════════════
+     CASE STUDIES
+     ═══════════════════════════════════════════════════════ */
+  .cases { margin-top: clamp(50px, 6vw, 90px); display: grid; gap: clamp(40px, 4vw, 64px); }
+  .case {
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    transition: transform .35s ease, border-color .35s ease, box-shadow .35s ease;
+  }
+  .case:hover {
+    border-color: var(--line-2);
+    transform: translateY(-4px);
+    box-shadow: 0 30px 60px -30px rgba(255, 107, 74, 0.18);
+  }
+  .case--alt { grid-template-columns: 1fr 1.15fr; }
+  .case--alt .case__visual { order: 2; }
+
+  .case__visual {
+    background: linear-gradient(135deg, var(--bg-elev) 0%, var(--bg-3) 100%);
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+    border-right: 1px solid var(--line);
+  }
+  .case--alt .case__visual { border-right: 0; border-left: 1px solid var(--line); }
+  .case__visual-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--text-3);
+  }
+  .case__visual-meta strong { color: var(--text); display: block; margin-bottom: 4px; font-size: 12px; }
+  .case__visual-meta .right { text-align: right; color: var(--accent); }
+  .case__visual-meta .right strong { color: var(--accent); }
+
+  .case__diagram {
+    flex: 1;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 20px;
+    min-height: 280px;
+  }
+  .case__diagram svg { width: 100%; height: 100%; min-height: 260px; }
+
+  .case__body { padding: clamp(28px, 3.5vw, 44px); display: flex; flex-direction: column; gap: 22px; }
+  .case__client {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .case__client strong { color: var(--text); font-weight: 700; }
+  .case__title {
+    font-size: clamp(26px, 3vw, 36px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+  }
+  .case__title em { color: var(--accent); font-style: normal; }
+  .case__role {
+    margin-top: -8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--text-3);
+  }
+  .case__role b { color: var(--text); font-weight: 600; }
+
+  .case__row {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 20px;
+    padding: 16px 0;
+    border-top: 1px solid var(--line);
+  }
+  .case__row:first-of-type { border-top: 1px solid var(--line); }
+  .case__row-k {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    padding-top: 2px;
+  }
+  .case__row-v { color: var(--text); font-size: 15px; line-height: 1.6; }
+  .case__row-v.muted { color: var(--text-2); }
+  .case__row-v em { color: var(--accent); font-style: normal; font-weight: 600; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    padding: 6px 12px;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--line-2);
+    background: var(--bg-3);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-2);
+    letter-spacing: .02em;
+  }
+  .chip.is-key {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-soft);
+  }
+
+  .impact {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .impact__cell {
+    background: var(--bg-3);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 16px;
+  }
+  .impact__v {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .impact__v small { font-size: 12px; color: var(--accent); font-weight: 600; margin-left: 2px; }
+  .impact__k {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    color: var(--text-3);
+    margin-top: 6px;
+  }
+
+  @media (max-width: 980px) {
+    .case, .case--alt { grid-template-columns: 1fr; }
+    .case--alt .case__visual { order: 0; border-left: 0; border-bottom: 1px solid var(--line); }
+    .case__visual { border-right: 0; border-bottom: 1px solid var(--line); }
+  }
+
+  /* diagram styles inside cases (svg classes referenced) */
+  .dgm-node    { fill: var(--bg-elev); stroke: var(--line-2); stroke-width: 1; }
+  .dgm-node.alt   { fill: var(--bg-2); stroke: var(--accent); stroke-width: 1.4; }
+  .dgm-node.ghost { fill: var(--bg-3); stroke: var(--line); }
+  .dgm-text    { font-family: var(--font-mono); font-size: 10px; fill: var(--text-2); letter-spacing: .08em; text-transform: uppercase; }
+  .dgm-text.dim    { fill: var(--text-3); }
+  .dgm-text.amber, .dgm-text.accent { fill: var(--accent); }
+  .dgm-line    { stroke: var(--line-2); stroke-width: 1; fill: none; }
+  .dgm-line.dash   { stroke-dasharray: 4 4; }
+  .dgm-line.amber  { stroke: var(--accent); }
+  .dgm-flow    {
+    stroke: var(--accent); stroke-width: 1.4; fill: none;
+    stroke-dasharray: 4 4;
+    animation: dash 1.6s linear infinite;
+  }
+  @keyframes dash { to { stroke-dashoffset: -16; } }
+
+  /* ═══════════════════════════════════════════════════════
+     STACK MATRIX
+     ═══════════════════════════════════════════════════════ */
+  .stack-filters {
+    margin-top: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .stack-filter {
+    padding: 10px 18px;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--line-2);
+    background: var(--bg-3);
+    color: var(--text-2);
+    font-size: 13px;
+    font-weight: 500;
+    transition: background .2s ease, color .2s ease, border-color .2s ease;
+  }
+  .stack-filter:hover { color: var(--text); border-color: var(--text-3); }
+  .stack-filter.is-active {
+    background: var(--accent);
+    color: #1a0a05;
+    border-color: var(--accent);
+    font-weight: 700;
+  }
+  .stack-filter .count {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    opacity: .7;
+    margin-left: 6px;
+  }
+
+  .matrix {
+    margin-top: 36px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+  }
+  .matrix__item {
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 22px;
+    transition: transform .35s ease, opacity .35s ease, border-color .25s ease, background .25s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .matrix__item:hover {
+    border-color: var(--accent);
+    background: var(--bg-3);
+    transform: translateY(-3px);
+  }
+  .matrix__item.is-dim { opacity: .18; transform: scale(.97); pointer-events: none; }
+  .matrix__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--text-3);
+  }
+  .matrix__cat { color: var(--accent); }
+  .matrix__identity { display: flex; align-items: center; gap: 14px; }
+  .matrix__logo {
+    width: 44px; height: 44px;
+    display: grid; place-items: center;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+  }
+  .matrix__logo img { width: 26px; height: 26px; object-fit: contain; }
+  .matrix__name { font-size: 17px; font-weight: 700; letter-spacing: -0.01em; }
+  .matrix__role { color: var(--text-2); font-size: 13.5px; line-height: 1.55; }
+  .matrix__spec {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    color: var(--text-3);
+    padding-top: 12px;
+    border-top: 1px solid var(--line);
+  }
+
+  /* ═══════════════════════════════════════════════════════
+     LEDGER — 29 projects in 5 pillars
+     ═══════════════════════════════════════════════════════ */
+  .ledger { margin-top: clamp(40px, 5vw, 70px); display: flex; flex-direction: column; gap: clamp(32px, 4vw, 56px); }
+  .ledger__category {
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .ledger__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 28px;
+    border-bottom: 1px solid var(--line);
+    background: linear-gradient(180deg, var(--bg-elev), var(--bg-3));
+  }
+  .ledger__head h3 {
+    font-size: clamp(20px, 2.2vw, 26px);
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    margin-top: 4px;
+  }
+  .ledger__head-k {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .14em;
+    color: var(--accent);
+  }
+  .ledger__count {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-2);
+    padding: 8px 14px;
+    border: 1px solid var(--line-2);
+    border-radius: var(--radius-pill);
+  }
+  .ledger__row {
+    display: grid;
+    grid-template-columns: 220px 240px 1fr;
+    gap: 28px;
+    padding: 20px 28px;
+    border-bottom: 1px solid var(--line);
+    align-items: start;
+    transition: background .2s ease;
+  }
+  .ledger__row:last-child { border-bottom: 0; }
+  .ledger__row:hover { background: var(--bg-3); }
+  .ledger__client strong {
+    display: block;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .ledger__client span {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-3);
+    letter-spacing: .04em;
+  }
+  .ledger__stack {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-2);
+    line-height: 1.55;
+  }
+  .ledger__impact {
+    color: var(--text-2);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  @media (max-width: 880px) {
+    .ledger__row { grid-template-columns: 1fr; gap: 8px; padding: 20px; }
+    .ledger__head { padding: 20px; flex-direction: column; align-items: flex-start; gap: 12px; }
+  }
+
+  /* ═══════════════════════════════════════════════════════
+     TIMELINE
+     ═══════════════════════════════════════════════════════ */
+  .timeline { margin-top: clamp(40px, 5vw, 70px); position: relative; }
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 88px;
+    top: 8px;
+    bottom: 8px;
+    width: 1px;
+    background: var(--line);
+  }
+  .rev {
+    display: grid;
+    grid-template-columns: 80px 1fr 280px;
+    gap: 28px;
+    padding: 32px 0;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    align-items: start;
+  }
+  .rev::after {
+    content: "";
+    position: absolute;
+    left: 84px;
+    top: 38px;
+    width: 9px; height: 9px;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px var(--accent-soft);
+  }
+  .rev__id {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: .05em;
+  }
+  .rev__body { padding-left: 28px; }
+  .rev__date {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    color: var(--text-3);
+    margin-bottom: 6px;
+  }
+  .rev__role {
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+  .rev__role em { color: var(--accent); font-style: normal; }
+  .rev__note { color: var(--text-2); font-size: 14.5px; line-height: 1.6; max-width: 620px; }
+  .rev__company {
+    background: var(--bg-3);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+  }
+  .rev__company strong {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .rev__company span {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-3);
+    letter-spacing: .04em;
+    text-transform: uppercase;
+  }
+  @media (max-width: 880px) {
+    .timeline::before { left: 8px; }
+    .rev { grid-template-columns: 1fr; gap: 14px; padding-left: 32px; }
+    .rev::after { left: 4px; top: 38px; }
+    .rev__body { padding-left: 0; }
+  }
+
+  /* ═══════════════════════════════════════════════════════
+     CONTACT
+     ═══════════════════════════════════════════════════════ */
+  .contact {
+    background: linear-gradient(160deg, var(--bg-2), var(--bg));
+  }
+  .contact__inner {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: clamp(32px, 5vw, 64px);
+    margin-top: clamp(40px, 5vw, 70px);
+    align-items: stretch;
+  }
+  @media (max-width: 980px) { .contact__inner { grid-template-columns: 1fr; } }
+
+  .contact__pitch {
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: clamp(32px, 4vw, 56px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .contact__pitch h3 {
+    font-size: clamp(28px, 3.4vw, 40px);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+  .contact__pitch h3 em { color: var(--accent); font-style: italic; }
+  .contact__pitch p {
+    color: var(--text-2);
+    margin-top: 18px;
+    font-size: 15.5px;
+    line-height: 1.7;
+    max-width: 540px;
+  }
+  .contact__ctas {
+    margin-top: 32px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .contact__card {
+    background: var(--bg-3);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: clamp(28px, 3vw, 40px);
+  }
+  .contact__card-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .contact__row {
+    display: flex;
+    justify-content: space-between;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 14px;
+    align-items: center;
+    gap: 16px;
+  }
+  .contact__row:last-child { border-bottom: 0; }
+  .contact__row-k {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    color: var(--text-3);
+  }
+  .contact__row-v { color: var(--text); font-weight: 500; text-align: right; }
+  .contact__row-v a { color: var(--text); }
+  .contact__row-v a:hover { color: var(--accent); }
+  .contact__row-v.status {
+    color: var(--green);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .contact__row-v.status::before {
+    content: "";
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 0 4px rgba(74,222,128,.18);
+  }
+
+  /* ═══════════════════════════════════════════════════════
+     FOOTER
+     ═══════════════════════════════════════════════════════ */
+  .footer {
+    border-top: 1px solid var(--line);
+    padding: 40px 0 56px;
+    background: var(--bg);
+  }
+  .footer__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+  .footer__brand {
+    font-weight: 800;
+    font-size: 17px;
+  }
+  .footer__brand small {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    margin-top: 4px;
+  }
+  .footer__copy {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-3);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+  .footer__social { display: flex; gap: 10px; }
+  .footer__social a {
+    width: 40px; height: 40px;
+    display: grid; place-items: center;
+    border: 1px solid var(--line-2);
+    border-radius: 50%;
+    color: var(--text-2);
+    transition: background .2s ease, color .2s ease, border-color .2s ease, transform .2s ease;
+  }
+  .footer__social a:hover {
+    background: var(--accent);
+    color: #1a0a05;
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .footer__social svg { width: 18px; height: 18px; }
+
+  /* ─── REVEAL ─────────────────────────────────────────── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity .8s ease, transform .8s cubic-bezier(.2,.8,.2,1);
+  }
+  .reveal.is-visible { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+  }
+
+  /* ─── SCROLLBAR ─────────────────────────────────────── */
+  ::-webkit-scrollbar { width: 12px; height: 12px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--line-2); border-radius: 6px; border: 3px solid var(--bg); }
+  ::-webkit-scrollbar-thumb:hover { background: var(--text-4); }
+
+</style>
+</head>
+<body>
+
+<!-- ═══════════ NAV ═══════════ -->
+<header class="nav" id="nav" data-open="false">
+  <div class="container nav__inner">
+    <a href="#top" class="nav__brand">
+      <span class="nav__brand-dot" aria-hidden="true"></span>
+      <span>
+        Kevin Carpenter
+        <small>Sr. Full-Stack Architect</small>
+      </span>
+    </a>
+
+    <nav class="nav__links" aria-label="Sections">
+      <a class="nav__link" href="#about">About</a>
+      <a class="nav__link" href="#work">Work</a>
+      <a class="nav__link" href="#stack">Stack</a>
+      <a class="nav__link" href="#experience">Experience</a>
+      <a class="nav__link" href="#contact">Contact</a>
+    </nav>
+
+    <div class="nav__cta">
+      <a class="btn btn--ghost" href="assets/files/Kevin%20Resume.docx" download>Resume ↓</a>
+      <a class="btn btn--primary" href="#contact">Got a project? <span class="arrow">→</span></a>
+    </div>
+
+    <button class="nav__burger" type="button" aria-expanded="false" aria-controls="nav-drawer" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<aside class="nav__drawer" id="nav-drawer">
+  <a class="nav__drawer-link" href="#about">About <span class="num">01</span></a>
+  <a class="nav__drawer-link" href="#work">Work <span class="num">02</span></a>
+  <a class="nav__drawer-link" href="#stack">Stack <span class="num">03</span></a>
+  <a class="nav__drawer-link" href="#experience">Experience <span class="num">04</span></a>
+  <a class="nav__drawer-link" href="#contact">Contact <span class="num">05</span></a>
+  <div class="nav__drawer-cta">
+    <a class="btn" href="assets/files/Kevin%20Resume.docx" download>Download Resume ↓</a>
+    <a class="btn btn--primary" href="#contact">Got a project? <span class="arrow">→</span></a>
+  </div>
+</aside>
+
+<main id="top">
+
+<!-- ═══════════ HERO ═══════════ -->
+<section class="hero">
+  <div class="container hero__inner">
+    <div class="hero__left">
+      <span class="hero__hello">
+        <span class="hero__hello-dot" aria-hidden="true"></span>
+        Available · 2026 Engagements Open
+      </span>
+
+      <h1 class="hero__title">
+        <span class="line">Hello<span class="dot">.</span></span>
+        <span class="line">I'm <span class="accent">Kevin</span></span>
+        <span class="line">Carpenter<span class="dot">.</span></span>
+      </h1>
+
+      <p class="hero__role"><b>Senior Full-Stack Architect</b> · Headless eCommerce · Regulated Systems</p>
+
+      <p class="hero__sub">
+        I architect the engineering bridges that connect <strong>NetSuite</strong>, <strong>Fortune 500</strong> catalogs and <strong>federally regulated</strong> infrastructure to the modern web — where scale, security, and performance are non-negotiable.
+      </p>
+
+      <div class="hero__ctas">
+        <a class="btn btn--primary btn--lg" href="#contact">Got a project? <span class="arrow">→</span></a>
+        <a class="btn btn--lg" href="assets/files/Kevin%20Resume.docx" download>My Resume ↓</a>
+      </div>
+
+      <div class="hero__meta" role="list">
+        <div class="hero__meta-cell" role="listitem">
+          <div class="hero__meta-k">Experience</div>
+          <div class="hero__meta-v">14<small>+ yrs</small></div>
+        </div>
+        <div class="hero__meta-cell" role="listitem">
+          <div class="hero__meta-k">Verticals</div>
+          <div class="hero__meta-v">04</div>
+        </div>
+        <div class="hero__meta-cell" role="listitem">
+          <div class="hero__meta-k">Engagements</div>
+          <div class="hero__meta-v">29<small>+</small></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero__portrait" aria-hidden="true">
+      <span class="hero__portrait-arrow hero__portrait-arrow--l">&lt;</span>
+      <span class="hero__portrait-arrow hero__portrait-arrow--r">&gt;</span>
+      <div class="hero__portrait-img"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ SKILL BANNER · full-width, sits at 100vh cutoff ═══════════ -->
+<section class="skillband" aria-label="Core technologies">
+  <div class="skillband__track">
+    <!-- duplicated set for seamless marquee -->
+    <span class="skillband__item"><img src="assets/logos/react.svg" alt="" loading="lazy" decoding="async"/>React</span>
+    <span class="skillband__item"><img src="assets/logos/nextjs.svg" alt="" loading="lazy" decoding="async"/>Next.js</span>
+    <span class="skillband__item"><img src="assets/logos/typescript.svg" alt="" loading="lazy" decoding="async"/>TypeScript</span>
+    <span class="skillband__item"><img src="assets/logos/nodejs.svg" alt="" loading="lazy" decoding="async"/>Node.js</span>
+    <span class="skillband__item"><img src="assets/logos/react-native.svg" alt="" loading="lazy" decoding="async"/>React Native</span>
+    <span class="skillband__item"><img src="assets/logos/shopify.svg" alt="" loading="lazy" decoding="async"/>Shopify</span>
+    <span class="skillband__item"><img src="assets/logos/bigcommerce.svg" alt="" loading="lazy" decoding="async"/>BigCommerce</span>
+    <span class="skillband__item"><img src="assets/logos/netsuite.svg" alt="" loading="lazy" decoding="async"/>NetSuite</span>
+    <span class="skillband__item"><img src="assets/logos/azure-functions.svg" alt="" loading="lazy" decoding="async"/>Azure</span>
+    <span class="skillband__item"><img src="assets/logos/amazon.svg" alt="" loading="lazy" decoding="async"/>AWS</span>
+    <span class="skillband__item"><img src="assets/logos/cosmos-db.svg" alt="" loading="lazy" decoding="async"/>Cosmos DB</span>
+    <span class="skillband__item"><img src="assets/logos/postgresql.svg" alt="" loading="lazy" decoding="async"/>PostgreSQL</span>
+    <span class="skillband__item"><img src="assets/logos/supabase.svg" alt="" loading="lazy" decoding="async"/>Supabase</span>
+    <span class="skillband__item"><img src="assets/logos/sanity-icon.svg" alt="" loading="lazy" decoding="async"/>Sanity</span>
+    <span class="skillband__item"><img src="assets/logos/payload.svg" alt="" loading="lazy" decoding="async"/>Payload</span>
+    <span class="skillband__item"><img src="assets/logos/tailwind.svg" alt="" loading="lazy" decoding="async"/>Tailwind</span>
+    <span class="skillband__item"><img src="assets/logos/celigo.svg" alt="" loading="lazy" decoding="async"/>Celigo</span>
+    <!-- duplicate for loop -->
+    <span class="skillband__item"><img src="assets/logos/react.svg" alt="" loading="lazy" decoding="async"/>React</span>
+    <span class="skillband__item"><img src="assets/logos/nextjs.svg" alt="" loading="lazy" decoding="async"/>Next.js</span>
+    <span class="skillband__item"><img src="assets/logos/typescript.svg" alt="" loading="lazy" decoding="async"/>TypeScript</span>
+    <span class="skillband__item"><img src="assets/logos/nodejs.svg" alt="" loading="lazy" decoding="async"/>Node.js</span>
+    <span class="skillband__item"><img src="assets/logos/react-native.svg" alt="" loading="lazy" decoding="async"/>React Native</span>
+    <span class="skillband__item"><img src="assets/logos/shopify.svg" alt="" loading="lazy" decoding="async"/>Shopify</span>
+    <span class="skillband__item"><img src="assets/logos/bigcommerce.svg" alt="" loading="lazy" decoding="async"/>BigCommerce</span>
+    <span class="skillband__item"><img src="assets/logos/netsuite.svg" alt="" loading="lazy" decoding="async"/>NetSuite</span>
+    <span class="skillband__item"><img src="assets/logos/azure-functions.svg" alt="" loading="lazy" decoding="async"/>Azure</span>
+    <span class="skillband__item"><img src="assets/logos/amazon.svg" alt="" loading="lazy" decoding="async"/>AWS</span>
+    <span class="skillband__item"><img src="assets/logos/cosmos-db.svg" alt="" loading="lazy" decoding="async"/>Cosmos DB</span>
+    <span class="skillband__item"><img src="assets/logos/postgresql.svg" alt="" loading="lazy" decoding="async"/>PostgreSQL</span>
+    <span class="skillband__item"><img src="assets/logos/supabase.svg" alt="" loading="lazy" decoding="async"/>Supabase</span>
+    <span class="skillband__item"><img src="assets/logos/sanity-icon.svg" alt="" loading="lazy" decoding="async"/>Sanity</span>
+    <span class="skillband__item"><img src="assets/logos/payload.svg" alt="" loading="lazy" decoding="async"/>Payload</span>
+    <span class="skillband__item"><img src="assets/logos/tailwind.svg" alt="" loading="lazy" decoding="async"/>Tailwind</span>
+    <span class="skillband__item"><img src="assets/logos/celigo.svg" alt="" loading="lazy" decoding="async"/>Celigo</span>
+  </div>
+</section>
+
+<!-- ═══════════ ABOUT / EXPERTISE ═══════════ -->
+<section class="block" id="about">
+  <div class="container">
+    <div class="reveal">
+      <span class="eyebrow">01 · Scope of Work</span>
+      <h2 class="section-title">What I <em>build.</em></h2>
+      <p class="section-sub">
+        Three core pillars — and the architectural seams between them. The places where most teams either over-engineer or compromise; where I refuse to.
+      </p>
+    </div>
+
+    <div class="pillars-wrap">
+      <div class="reveal">
+        <div class="pillar">
+          <div class="pillar__num">01</div>
+          <div>
+            <h3 class="pillar__title">Headless &amp; Hybrid <em>Storefronts.</em></h3>
+            <p class="pillar__desc">
+              Decoupling Fortune-500 catalogs from platform ceilings. I build React/Next.js storefronts that sit on top of BigCommerce, Shopify or custom backends — without losing the ERP, ops, and tax plumbing the business already depends on.
+            </p>
+            <div class="pillar__tags">
+              <span class="pillar__tag">BigCommerce React Hybrid</span>
+              <span class="pillar__tag">Next.js + Shopify</span>
+              <span class="pillar__tag">SSR / ISR / Edge</span>
+              <span class="pillar__tag">Sanity · Payload</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pillar">
+          <div class="pillar__num">02</div>
+          <div>
+            <h3 class="pillar__title">High-Compliance &amp; <em>Regulated.</em></h3>
+            <p class="pillar__desc">
+              Architecting systems that have to pass federal audits, not just unit tests. iGaming, identity, and government-regulated platforms with geofencing, responsible-play workflows, immutable evidence frameworks, and cryptographic verification at the boundary.
+            </p>
+            <div class="pillar__tags">
+              <span class="pillar__tag">Federal / State iGaming</span>
+              <span class="pillar__tag">Geofencing</span>
+              <span class="pillar__tag">Immutable Evidence</span>
+              <span class="pillar__tag">Crypto Identity</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pillar">
+          <div class="pillar__num">03</div>
+          <div>
+            <h3 class="pillar__title">Enterprise Middleware &amp; <em>Cloud.</em></h3>
+            <p class="pillar__desc">
+              The unglamorous backbone — NetSuite/ERP integration, Celigo orchestration, Azure Functions, Cosmos DB, AWS, and the serverless plumbing that lets a startup look enterprise and an enterprise move like a startup.
+            </p>
+            <div class="pillar__tags">
+              <span class="pillar__tag">NetSuite ↔ Shopify/BC</span>
+              <span class="pillar__tag">Celigo / iPaaS</span>
+              <span class="pillar__tag">Azure Functions</span>
+              <span class="pillar__tag">Postgres · Supabase · AWS</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <div class="stats">
+          <div class="stats__cell">
+            <div class="stats__v">120<small>+</small></div>
+            <div class="stats__k">Engagements Shipped</div>
+          </div>
+          <div class="stats__cell">
+            <div class="stats__v">14<small>+</small></div>
+            <div class="stats__k">Years Architecting</div>
+          </div>
+          <div class="stats__cell">
+            <div class="stats__v">0</div>
+            <div class="stats__k">Compromises</div>
+          </div>
+        </div>
+
+        <div class="clients">
+          <strong>Selected:</strong>
+          <span>Rust-Oleum</span><span class="sep"></span>
+          <span>DC iLottery</span><span class="sep"></span>
+          <span>Nuun Hydration</span><span class="sep"></span>
+          <span>AgeVerify</span><span class="sep"></span>
+          <span>McDonald's</span><span class="sep"></span>
+          <span>Northwest Permanente</span>
+        </div>
+
+        <div style="margin-top:36px; padding:24px; border:1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-3);">
+          <div style="font-family:var(--font-mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent);">Currently</div>
+          <div style="font-size: 19px; font-weight: 700; margin-top: 8px; letter-spacing: -0.015em;">Architecting Headless-Lite for Fortune 500</div>
+          <p style="color:var(--text-2); font-size: 14.5px; line-height:1.65; margin-top:8px;">Designing React hybrid storefronts embedded into BigCommerce — a new pattern for Fortune-500 catalogs that need scale and platform safety in the same build.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CASE STUDIES ═══════════ -->
+<section class="block" id="work">
+  <div class="container container--wide">
+    <div class="reveal">
+      <span class="eyebrow">02 · Selected Work</span>
+      <h2 class="section-title">Flagship <em>engagements.</em></h2>
+      <p class="section-sub">
+        Four projects that define the architectural patterns I keep returning to — headless commerce, regulated systems, ERP bridges, and identity infrastructure.
+      </p>
+    </div>
+
+    <div class="cases">
+
+      <!-- CASE 01 · RUST-OLEUM -->
+      <article class="case reveal">
+        <div class="case__visual">
+          <div class="case__visual-meta">
+            <div class="left"><strong>DWG · B–01</strong><span>React Hybrid / Page Builder</span></div>
+            <div class="right"><strong>Fortune 500</strong><br>D2C · Coatings</div>
+          </div>
+          <div class="case__diagram">
+            <svg viewBox="0 0 600 480" preserveAspectRatio="xMidYMid meet">
+              <rect x="60" y="170" width="480" height="220" class="dgm-node ghost"/>
+              <text x="80" y="200" class="dgm-text dim">BIGCOMMERCE · PAGE BUILDER · CART · CHECKOUT</text>
+              <rect x="100" y="120" width="400" height="170" class="dgm-node alt"/>
+              <text x="120" y="148" class="dgm-text amber">REACT · HYBRID STORE LAYER</text>
+              <rect x="120" y="170" width="100" height="90" class="dgm-node"/>
+              <text x="135" y="200" class="dgm-text dim">PDP</text>
+              <text x="135" y="216" class="dgm-text dim">RENDERED</text>
+              <rect x="240" y="170" width="100" height="90" class="dgm-node"/>
+              <text x="252" y="200" class="dgm-text dim">PLP</text>
+              <text x="252" y="216" class="dgm-text dim">FILTERED</text>
+              <rect x="360" y="170" width="120" height="90" class="dgm-node"/>
+              <text x="375" y="200" class="dgm-text dim">QUICK-SHOP</text>
+              <text x="375" y="216" class="dgm-text dim">PAGE BUILDER</text>
+              <rect x="60" y="60" width="160" height="40" class="dgm-node"/>
+              <text x="80" y="86" class="dgm-text">PAGE BUILDER · CMS</text>
+              <rect x="380" y="60" width="160" height="40" class="dgm-node"/>
+              <text x="400" y="86" class="dgm-text">ERP · OPS · TAX</text>
+              <path d="M140,100 L140,170" class="dgm-flow"/>
+              <path d="M460,100 L460,170" class="dgm-flow" style="animation-delay:.5s"/>
+              <path d="M180,290 L180,390" class="dgm-line dash"/>
+              <path d="M420,290 L420,390" class="dgm-line dash"/>
+              <line x1="500" y1="205" x2="560" y2="205" class="dgm-line amber"/>
+              <line x1="560" y1="205" x2="560" y2="430" class="dgm-line amber"/>
+              <text x="540" y="445" class="dgm-text amber" text-anchor="end">PLATFORM CEILING ↘ BYPASSED</text>
+              <text x="300" y="430" class="dgm-text dim" text-anchor="middle">REACT HYBRID PAGE BUILDER</text>
+            </svg>
+          </div>
+        </div>
+
+        <div class="case__body">
+          <div class="case__client"><strong>Rust-Oleum</strong> · Home</div>
+          <h3 class="case__title">A storefront <em>through the ceiling.</em></h3>
+          <div class="case__role">Role · <b>Principal Architect</b></div>
+
+          <div class="case__row">
+            <div class="case__row-k">Challenge</div>
+            <div class="case__row-v muted">Fortune-500 catalog stranded inside platform constraints. Marketing wanted Apple-grade product experiences; ops wanted to keep the BigCommerce checkout, tax, and ERP integrations they'd already paid for.</div>
+          </div>
+          <div class="case__row">
+            <div class="case__row-k">Solution</div>
+            <div class="case__row-v">Designed a React hybrid page-builder experience for BigCommerce — a custom storefront layer embedded into the Page Builder workflow so marketing could compose experiences without losing checkout, tax, or back-of-house stability.</div>
+          </div>
+          <div class="case__row">
+            <div class="case__row-k">Tech</div>
+            <div class="case__row-v">
+              <div class="chips">
+                <span class="chip is-key">React</span>
+                <span class="chip is-key">BigCommerce</span>
+                <span class="chip">Page Builder</span>
+                <span class="chip">TypeScript</span>
+                <span class="chip">Tailwind CSS</span>
+                <span class="chip">Stencil</span>
+                <span class="chip">Node.js</span>
+              </div>
+            </div>
+          </div>
+          <div class="case__row">
+            <div class="case__row-k">Impact</div>
+            <div class="case__row-v">
+              <div class="impact">
+                <div class="impact__cell">
+                  <div class="impact__v">−68<small>%</small></div>
+                  <div class="impact__k">Time-to-PDP</div>
+                </div>
+                <div class="impact__cell">
+                  <div class="impact__v">0<small> req</small></div>
+                  <div class="impact__k">Platform Rip-out</div>
+                </div>
+                <div class="impact__cell">
+                  <div class="impact__v">F500</div>
+                  <div class="impact__k">Catalog Scale</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- CASE 02 · DC iLOTTERY -->
+      <article class="case case--alt reveal">
+        <div class="case__visual">
+          <div class="case__visual-meta">
+            <div class="left"><strong>DWG · B–02</strong><span>Geofenced iGaming</span></div>
+            <div class="right"><strong>Government</strong><br>Federal-Grade Compliance</div>
+          </div>
+          <div class="case__diagram">
+            <svg viewBox="0 0 600 480" preserveAspectRatio="xMidYMid meet">
+              <path d="M80,240 Q80,80 300,80 Q520,80 520,240 Q520,400 300,400 Q80,400 80,240 Z" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="4 4"/>
+              <text x="300" y="60" class="dgm-text amber" text-anchor="middle">PERIMETER · DC JURISDICTION</text>
+              <rect x="220" y="200" width="160" height="80" class="dgm-node alt"/>
+              <text x="300" y="232" class="dgm-text amber" text-anchor="middle">iLOTTERY APP</text>
+              <text x="300" y="250" class="dgm-text dim" text-anchor="middle">Native · Web · React Native</text>
+              <rect x="80" y="160" width="100" height="60" class="dgm-node"/>
+              <text x="130" y="184" class="dgm-text" text-anchor="middle">GEOFENCE</text>
+              <text x="130" y="200" class="dgm-text dim" text-anchor="middle">GPS + IP</text>
+              <rect x="80" y="260" width="100" height="60" class="dgm-node"/>
+              <text x="130" y="284" class="dgm-text" text-anchor="middle">KYC / IDV</text>
+              <text x="130" y="300" class="dgm-text dim" text-anchor="middle">Crypto</text>
+              <rect x="420" y="160" width="100" height="60" class="dgm-node"/>
+              <text x="470" y="184" class="dgm-text" text-anchor="middle">RG WORKFLOWS</text>
+              <text x="470" y="200" class="dgm-text dim" text-anchor="middle">limits/excl.</text>
+              <rect x="420" y="260" width="100" height="60" class="dgm-node"/>
+              <text x="470" y="284" class="dgm-text" text-anchor="middle">EVIDENCE LOG</text>
+              <text x="470" y="300" class="dgm-text dim" text-anchor="middle">immutable</text>
+              <line x1="180" y1="190" x2="220" y2="220" class="dgm-line"/>
+              <line x1="180" y1="290" x2="220" y2="260" class="dgm-line"/>
+              <line x1="380" y1="220" x2="420" y2="190" class="dgm-line"/>
+              <line x1="380" y1="260" x2="420" y2="290" class="dgm-line"/>
+              <rect x="220" y="370" width="160" height="40" class="dgm-node"/>
+              <text x="300" y="395" class="dgm-text" text-anchor="middle">DC OLG · REGULATOR</text>
+              <line x1="300" y1="280" x2="300" y2="370" class="dgm-line dash"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="case__body">
+          <div class="case__client"><strong>DC iLottery</strong> · Intralot</div>
+          <h3 class="case__title">An app that <em>survives audit.</em></h3>
+          <div class="case__role">Role · <b>Lead Architect</b></div>
+
+          <div class="case__row">
+            <div class="case__row-k">Challenge</div>
+            <div class="case__row-v muted">Build a high-security, government-regulated iGaming platform — native and web — for the District of Columbia's lottery. Every flow had to be defensible to a federal-grade regulator, every event had to be replayable, every wallet had to be enforceable.</div>
+          </div>
+          <div class="case__row">
+            <div class="case__row-k">Solution</div>
+            <div class="case__row-v">Architected a hard-perimeter system: <em>geofencing</em> with layered GPS+IP signals, responsible-gaming workflows wired into every entry point, and an <em>immutable evidence framework</em> for post-hoc compliance reconstruction.</div>
+          </div>
+          <div class="case__row">
+            <div class="case__row-k">Tech</div>
+            <div class="case__row-v">
+              <div class="chips">
+                <span class="chip is-key">React Native</span>
+                <span class="chip is-key">Node.js</span>
+                <span class="chip">TypeScript</span>
+                <span class="chip">AWS</span>
+                <span class="chip">PostgreSQL</span>
+                <span class="chip">Geofencing SDKs</span>
+                <span class="chip">Crypto/KYC</span>
+              </div>
+            </div>
+          </div>
+          <div class="case__row">
+            <div class="case__row-k">Impact</div>
+            <div class="case__row-v">
+              <div class="impact">
+                <div class="impact__cell">
+                  <div class="impact__v">Fed<small>-grade</small></div>
+                  <div class="impact__k">Compliance</div>
+                </div>
+                <div class="impact__cell">
+                  <div class="impact__v">100<small>%</small></div>
+                  <div class="impact__k">Audit Re-runs</div>
+                </div>
+                <div class="impact__cell">
+                  <div class="impact__v">01</div>
+                  <div class="impact__k">Jurisdiction</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- CASE 03 · NUUN -->
+      <article class="case reveal">
+        <div class="case__visual">
+          <div class="case__visual-meta">
+            <div class="left"><strong>DWG · B–03</strong><span>ERP ↔ Headless Bridge</span></div>
+            <div class="right"><strong>10-Year Partnership</strong><br>Startup → Global</div>
+          </div>
+          <div class="case__diagram">
+            <svg viewBox="0 0 600 480" preserveAspectRatio="xMidYMid meet">
+              <rect x="40" y="200" width="140" height="80" class="dgm-node"/>
+              <text x="110" y="232" class="dgm-text" text-anchor="middle">NETSUITE</text>
+              <text x="110" y="250" class="dgm-text dim" text-anchor="middle">ERP · INVENTORY · FIN</text>
+              <rect x="230" y="170" width="140" height="140" class="dgm-node alt"/>
+              <text x="300" y="200" class="dgm-text amber" text-anchor="middle">MIDDLEWARE</text>
+              <text x="300" y="218" class="dgm-text dim" text-anchor="middle">Celigo · Custom</text>
+              <rect x="246" y="232" width="108" height="22" fill="var(--bg)" stroke="var(--line-2)" stroke-width="1"/>
+              <text x="300" y="247" class="dgm-text dim" text-anchor="middle">SYNC · ORDERS</text>
+              <rect x="246" y="262" width="108" height="22" fill="var(--bg)" stroke="var(--line-2)" stroke-width="1"/>
+              <text x="300" y="277" class="dgm-text dim" text-anchor="middle">SYNC · INV</text>
+              <rect x="420" y="200" width="140" height="80" class="dgm-node"/>
+              <text x="490" y="232" class="dgm-text" text-anchor="middle">NEXT.JS</text>
+              <text x="490" y="250" class="dgm-text dim" text-anchor="middle">SHOPIFY HEADLESS</text>
+              <path d="M180,240 L230,240" class="dgm-flow"/>
+              <path d="M180,256 L230,256" class="dgm-flow" style="animation-delay:.4s"/>
+              <path d="M370,240 L420,240" class="dgm-flow" style="animation-delay:.8s"/>
+              <path d="M370,256 L420,256" class="dgm-flow" style="animation-delay:1.2s"/>
+              <text x="300" y="100" class="dgm-text accent" text-anchor="middle">D2C COMMERCE PIPELINE</text>
+              <line x1="110" y1="120" x2="490" y2="120" class="dgm-line dash"/>
+              <line x1="110" y1="120" x2="110" y2="200" class="dgm-line dash"/>
+              <line x1="300" y1="120" x2="300" y2="170" class="dgm-line dash"/>
+              <line x1="490" y1="120" x2="490" y2="200" class="dgm-line dash"/>
+              <rect x="220" y="380" width="160" height="40" class="dgm-node"/>
+              <text x="300" y="405" class="dgm-text" text-anchor="middle">GLOBAL CUSTOMERS</text>
+              <path d="M490,280 L490,360 L300,360 L300,380" fill="none" class="dgm-line dash"/>
+              <circle cx="490" cy="360" r="2" fill="var(--accent)"/>
+              <circle cx="300" cy="360" r="2" fill="var(--accent)"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="case__body">
+          <div class="case__client"><strong>Nuun</strong> · Hydration</div>
+          <h3 class="case__title">Startup to <em>global, in stages.</em></h3>
+          <div class="case__role">Role · <b>Technical Partner · 10 yrs</b></div>
+
+          <div class="case__row">
+            <div class="case__row-k">Challenge</div>
+            <div class="case__row-v muted">A category-defining brand growing past every commerce platform they tried. Each scale-jump risked breaking the ERP, inventory truth, and operational workflows that the warehouse and finance teams actually trusted.</div>
+          </div>
+          <div class="case__row">
+            <div class="case__row-k">Solution</div>
+            <div class="case__row-v">Owned the <em>custom middleware</em> architecture between NetSuite and a headless Shopify storefront on Next.js — guiding the brand through three platform generations without ever taking inventory truth offline.</div>
+          </div>
+          <div class="case__row">
+            <div class="case__row-k">Tech</div>
+            <div class="case__row-v">
+              <div class="chips">
+                <span class="chip is-key">NetSuite</span>
+                <span class="chip is-key">Shopify Headless</span>
+                <span class="chip is-key">Next.js</span>
+                <span class="chip">Celigo</span>
+                <span class="chip">Node.js</span>
+                <span class="chip">TypeScript</span>
+                <span class="chip">Liquid</span>
+              </div>
+            </div>
+          </div>
+          <div class="case__row">
+            <div class="case__row-k">Impact</div>
+            <div class="case__row-v">
+              <div class="impact">
+                <div class="impact__cell">
+                  <div class="impact__v">10<small> yrs</small></div>
+                  <div class="impact__k">Partnership</div>
+                </div>
+                <div class="impact__cell">
+                  <div class="impact__v">03</div>
+                  <div class="impact__k">Migrations</div>
+                </div>
+                <div class="impact__cell">
+                  <div class="impact__v">0<small> min</small></div>
+                  <div class="impact__k">ERP Downtime</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- CASE 04 · AGEVERIFY -->
+      <article class="case case--alt reveal">
+        <div class="case__visual">
+          <div class="case__visual-meta">
+            <div class="left"><strong>DWG · B–04</strong><span>Identity SDK</span></div>
+            <div class="right"><strong>Proprietary</strong><br>Privacy-First IDV</div>
+          </div>
+          <div class="case__diagram">
+            <svg viewBox="0 0 600 480" preserveAspectRatio="xMidYMid meet">
+              <rect x="40" y="200" width="120" height="80" class="dgm-node"/>
+              <text x="100" y="232" class="dgm-text" text-anchor="middle">CLIENT APP</text>
+              <text x="100" y="250" class="dgm-text dim" text-anchor="middle">web · mobile</text>
+              <rect x="210" y="170" width="180" height="140" class="dgm-node alt"/>
+              <text x="300" y="200" class="dgm-text amber" text-anchor="middle">AGEVERIFY · SDK</text>
+              <rect x="226" y="216" width="148" height="26" fill="var(--bg)" stroke="var(--line-2)" stroke-width="1"/>
+              <text x="300" y="234" class="dgm-text dim" text-anchor="middle">CAPTURE · LOCAL</text>
+              <rect x="226" y="248" width="148" height="26" fill="var(--bg)" stroke="var(--line-2)" stroke-width="1"/>
+              <text x="300" y="266" class="dgm-text dim" text-anchor="middle">HASH · ENCRYPT</text>
+              <rect x="226" y="280" width="148" height="22" fill="var(--bg)" stroke="var(--line-2)" stroke-width="1"/>
+              <text x="300" y="296" class="dgm-text dim" text-anchor="middle">VERIFY · BOUNDARY</text>
+              <rect x="440" y="170" width="130" height="60" class="dgm-node"/>
+              <text x="505" y="195" class="dgm-text" text-anchor="middle">AZURE FN</text>
+              <text x="505" y="213" class="dgm-text dim" text-anchor="middle">serverless · stateless</text>
+              <rect x="440" y="250" width="130" height="60" class="dgm-node"/>
+              <text x="505" y="275" class="dgm-text" text-anchor="middle">COSMOS DB</text>
+              <text x="505" y="293" class="dgm-text dim" text-anchor="middle">geo-distributed</text>
+              <path d="M160,240 L210,240" class="dgm-flow"/>
+              <path d="M390,200 L440,200" class="dgm-flow" style="animation-delay:.4s"/>
+              <path d="M390,280 L440,280" class="dgm-flow" style="animation-delay:.8s"/>
+              <line x1="300" y1="320" x2="300" y2="370" class="dgm-line amber"/>
+              <line x1="220" y1="370" x2="380" y2="370" class="dgm-line amber"/>
+              <text x="300" y="395" class="dgm-text amber" text-anchor="middle">PRIVACY-FIRST CRYPTOGRAPHIC BOUNDARY</text>
+              <text x="300" y="412" class="dgm-text dim" text-anchor="middle">PII never crosses unencrypted</text>
+              <text x="300" y="90" class="dgm-text accent" text-anchor="middle">IDENTITY · API · CRYPTO</text>
+              <line x1="100" y1="110" x2="505" y2="110" class="dgm-line dash"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="case__body">
+          <div class="case__client"><strong>AgeVerify</strong> · SDK</div>
+          <h3 class="case__title">Identity, <em>without surveillance.</em></h3>
+          <div class="case__role">Role · <b>Founder / Engineer</b></div>
+
+          <div class="case__row">
+            <div class="case__row-k">Challenge</div>
+            <div class="case__row-v muted">Regulated industries need verifiable age gates — but every off-the-shelf IDV vendor turns private documents into someone else's database. A proper boundary needed to be engineered, not configured.</div>
+          </div>
+          <div class="case__row">
+            <div class="case__row-k">Solution</div>
+            <div class="case__row-v">Built a proprietary IDV <em>SDK/API</em> on Azure serverless infrastructure with a strict cryptographic privacy boundary — verification at the edge, no PII at rest, immutable proof for compliance without bulk data hoarding.</div>
+          </div>
+          <div class="case__row">
+            <div class="case__row-k">Tech</div>
+            <div class="case__row-v">
+              <div class="chips">
+                <span class="chip is-key">Azure Functions</span>
+                <span class="chip is-key">Cosmos DB</span>
+                <span class="chip is-key">TypeScript</span>
+                <span class="chip">Node.js</span>
+                <span class="chip">Crypto / Hashing</span>
+                <span class="chip">React SDK</span>
+                <span class="chip">REST / Webhooks</span>
+              </div>
+            </div>
+          </div>
+          <div class="case__row">
+            <div class="case__row-k">Impact</div>
+            <div class="case__row-v">
+              <div class="impact">
+                <div class="impact__cell">
+                  <div class="impact__v">0<small> bytes</small></div>
+                  <div class="impact__k">PII at Rest</div>
+                </div>
+                <div class="impact__cell">
+                  <div class="impact__v">&lt;200<small>ms</small></div>
+                  <div class="impact__k">Cold Start</div>
+                </div>
+                <div class="impact__cell">
+                  <div class="impact__v">B2B</div>
+                  <div class="impact__k">Tenants</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ STACK MATRIX ═══════════ -->
+<section class="block" id="stack">
+  <div class="container container--wide">
+    <div class="reveal">
+      <span class="eyebrow">03 · Bill of Materials</span>
+      <h2 class="section-title">The <em>stack.</em></h2>
+      <p class="section-sub">
+        Grouped by delivery layer — frontend, backend &amp; cloud, commerce, CMS &amp; tools. Production defaults only; nothing here is theoretical.
+      </p>
+
+      <div class="stack-filters" role="tablist" aria-label="Filter stack">
+        <button class="stack-filter is-active" data-filter="all" role="tab" aria-selected="true">All <span class="count">20</span></button>
+        <button class="stack-filter" data-filter="frontend" role="tab" aria-selected="false">Frontend <span class="count">06</span></button>
+        <button class="stack-filter" data-filter="backend" role="tab" aria-selected="false">Backend &amp; Cloud <span class="count">07</span></button>
+        <button class="stack-filter" data-filter="commerce" role="tab" aria-selected="false">Commerce <span class="count">04</span></button>
+        <button class="stack-filter" data-filter="cms" role="tab" aria-selected="false">CMS &amp; Tools <span class="count">03</span></button>
+      </div>
+    </div>
+
+    <div class="matrix reveal" id="matrix">
+      <!-- Frontend -->
+      <article class="matrix__item" data-cat="frontend">
+        <div class="matrix__head"><span>F · 01</span><span class="matrix__cat">Frontend</span></div>
+        <div class="matrix__identity">
+          <span class="matrix__logo"><img src="assets/logos/react.svg" alt="" loading="lazy" decoding="async"/></span>
+          <h4 class="matrix__name">React</h4>
+        </div>
+        <p class="matrix__role">Component-driven storefronts &amp; complex stateful interfaces at enterprise scale.</p>
+        <div class="matrix__spec"><span>Interface systems</span><span>Production default</span></div>
+      </article>
+
+      <article class="matrix__item" data-cat="frontend">
+        <div class="matrix__head"><span>F · 02</span><span class="matrix__cat">Frontend</span></div>
+        <div class="matrix__identity">
+          <span class="matrix__logo"><img src="assets/logos/nextjs.svg" alt="" loading="lazy" decoding="async"/></span>
+          <h4 class="matrix__name">Next.js</h4>
+        </div>
+        <p class="matrix__role">SSR / ISR / edge rendering for headless commerce at Fortune-500 catalog scale.</p>
+        <div class="matrix__spec"><span>Interface systems</span><span>Production default</span></div>
+      </article>
+
+      <article class="matrix__item" data-cat="frontend">
+        <div class="matrix__head"><span>F · 03</span><span class="matrix__cat">Frontend</span></div>
+        <div class="matrix__identity">
+          <span class="matrix__logo"><img src="assets/logos/typescript.svg" alt="" loading="lazy" decoding="async"/></span>
+          <h4 class="matrix__name">TypeScript</h4>
+        </div>
+        <p class="matrix__role">Default language across every layer — frontend, services, SDKs, middleware.</p>
+        <div class="matrix__spec"><span>Interface systems</span><span>Production default</span></div>
+      </article>
+
+      <article class="matrix__item" data-cat="frontend">
+        <div class="matrix__head"><span>F · 04</span><span class="matrix__cat">Frontend</span></div>
+        <div class="matrix__identity">
+          <span class="matrix__logo"><img src="assets/logos/react-native.svg" alt="" loading="lazy" decoding="async"/></span>
+          <h4 class="matrix__name">React Native</h4>
+        </div>
+        <p class="matrix__role">Native iOS/Android delivery for regulated mobile apps &amp; cross-platform commerce.</p>
+        <div class="matrix__spec"><span>Interface systems</span><span>Production default</span></div>
+      </article>
+
+      <article class="matrix__item" data-cat="frontend">
+        <div class="matrix__head"><span>F · 05</span><span class="matrix__cat">Frontend</span></div>
+        <div class="matrix__identity">
+          <span class="matrix__logo"><img src="assets/logos/tailwind.svg" alt="" loading="lazy" decoding="async"/></span>
+          <h4 class="matrix__name">Tailwind CSS</h4>
+        </div>
+        <p class="matrix__role">Design-system-grade utility CSS with strict token discipline across teams.</p>
+        <div class="matrix__spec"><span>Interface systems</span><span>Production default</span></div>
+      </article>
+
+      <article class="matrix__item" data-cat="frontend">
+        <div class="matrix__head"><span>F · 06</span><span class="matrix__cat">Frontend</span></div>
+        <div class="matrix__identity">
+          <span class="matrix__logo"><img src="assets/logos/framer.svg" alt="" loading="lazy" decoding="async"/></span>
+          <h4 class="matrix__name">Framer Motion</h4>
+        </div>
+        <p class="matrix__role">Production motion language for storefronts &amp; brand-grade UI.</p>
+        <div class="matrix__spec"><span>Interface systems</span><span>Production default</span></div>
+      </article>
+
+      <!-- Backend / Cloud -->
+      <article class="matrix__item" data-cat="backend">
+        <div class="matrix__head"><span>B · 01</span><span class="matrix__cat">Backend</span></div>
+        <div class="matrix__identity">
+          <span class="matrix__logo"><img src="assets/logos/nodejs.svg" alt="" loading="lazy" decoding="async"/></span>
+          <h4 class="matrix__name">Node.js</h4>
+        </div>
+        <p class="matrix__role">Default service runtime — APIs, middleware, integrations, SDK servers.</p>
+        <div class="matrix__spec"><span>Service runtime</span><span>Production default</span></div>
+      </article>
+
+      <article class="matrix__item" data-cat="backend">
+        <div class="matrix__head"><span>B · 02</span><span class="matrix__cat">Backend</span></div>
+        <div class="matrix__identity">
+          <span class="matrix__logo"><img src="assets/logos/python.svg" alt="" loading="lazy" decoding="async"/></span>
+          <h4 class="matrix__name">Python</h4>
+        </div>
+        <p class="matrix__role">Scripting, data pipelines, and integration glue across enterprise stacks.</p>
+        <div class="matrix__spec"><span>Glue layer</span><span>Pipelines</span></div>
+      </article>
+
+      <article class="matrix__item" data-cat="backend">
+        <div class="matrix__head"><span>B · 03</span><span class="matrix__cat">Cloud</span></div>
+        <div class="matrix__identity">
+          <span class="matrix__logo"><img src="assets/logos/azure-functions.svg" alt="" loading="lazy" decoding="async"/></span>
+          <h4 class="matrix__name">Azure Functions</h4>
+        </div>
+        <p class="matrix__role">Serverless backbone for stateless verification, SDK APIs &amp; webhook handling.</p>
+        <div class="matrix__spec"><span>Serverless</span><span>Production</span></div>
+      </article>
+
+      <article class="matrix__item" data-cat="backend">
+        <div class="matrix__head"><span>B · 04</span><span class="matrix__cat">Cloud</span></div>
+        <div class="matrix__identity">
+          <span class="matrix__logo"><img src="assets/logos/cosmos-db.svg" alt="" loading="lazy" decoding="async"/></span>
+          <h4 class="matrix__name">Cosmos DB</h4>
+        </div>
+        <p class="matrix__role">Geo-distributed document store for low-latency tenant data at the edge.</p>
+        <div class="matrix__spec"><span>Storage</span><span>Geo-distributed</span></div>
+      </article>
+
+      <article class="matrix__item" data-cat="backend">
+        <div class="matrix__head"><span>B · 05</span><span class="matrix__cat">Cloud</span></div>
+        <div class="matrix__identity">
+          <span class="matrix__logo"><img src="assets/logos/postgresql.svg" alt="" loading="lazy" decoding="async"/></span>
+          <h4 class="matrix__name">PostgreSQL</h4>
+        </div>
+        <p class="matrix__role">Relational source-of-truth for transactional commerce &amp; regulated workloads.</p>
+        <div class="matrix__spec"><span>Storage</span><span>Relational</span></div>
+      </article>
+
+      <article class="matrix__item" data-cat="backend">
+        <div class="matrix__head"><span>B · 06</span><span class="matrix__cat">Cloud</span></div>
+        <div class="matrix__identity">
+          <span class="matrix__logo"><img src="assets/logos/supabase.svg" alt="" loading="lazy" decoding="async"/></span>
+          <h4 class="matrix__name">Supabase</h4>
+        </div>
+        <p class="matrix__role">Postgres-backed BaaS for rapid product iteration &amp; auth flows.</p>
+        <div class="matrix__spec"><span>BaaS</span><span>Product</span></div>
+      </article>
+
+      <article class="matrix__item" data-cat="backend">
+        <div class="matrix__head"><span>B · 07</span><span class="matrix__cat">Cloud</span></div>
+        <div class="matrix__identity">
+          <span class="matrix__logo"><img src="assets/logos/amazon.svg" alt="" loading="lazy" decoding="async"/></span>
+          <h4 class="matrix__name">AWS</h4>
+        </div>
+        <p class="matrix__role">Cloud infrastructure and fulfillment rails for regulated and consumer-scale systems.</p>
+        <div class="matrix__spec"><span>Infrastructure</span><span>Production</span></div>
+      </article>
+
+      <!-- Commerce -->
+      <article class="matrix__item" data-cat="commerce">
+        <div class="matrix__head"><span>C · 01</span><span class="matrix__cat">Commerce</span></div>
+        <div class="matrix__identity">
+          <span class="matrix__logo"><img src="assets/logos/bigcommerce.svg" alt="" loading="lazy" decoding="async"/></span>
+          <h4 class="matrix__name">BigCommerce</h4>
+        </div>
+        <p class="matrix__role">React-hybrid storefronts for Fortune-500 catalogs — including the Headless-Lite pattern.</p>
+        <div class="matrix__spec"><span>Platform</span><span>F500</span></div>
+      </article>
+
+      <article class="matrix__item" data-cat="commerce">
+        <div class="matrix__head"><span>C · 02</span><span class="matrix__cat">Commerce</span></div>
+        <div class="matrix__identity">
+          <span class="matrix__logo"><img src="assets/logos/shopify.svg" alt="" loading="lazy" decoding="async"/></span>
+          <h4 class="matrix__name">Shopify (Headless)</h4>
+        </div>
+        <p class="matrix__role">Liquid storefronts &amp; full headless Next.js builds backed by Hydrogen / Storefront API.</p>
+        <div class="matrix__spec"><span>Platform</span><span>D2C</span></div>
+      </article>
+
+      <article class="matrix__item" data-cat="commerce">
+        <div class="matrix__head"><span>C · 03</span><span class="matrix__cat">ERP</span></div>
+        <div class="matrix__identity">
+          <span class="matrix__logo"><img src="assets/logos/netsuite.svg" alt="" loading="lazy" decoding="async"/></span>
+          <h4 class="matrix__name">NetSuite</h4>
+        </div>
+        <p class="matrix__role">ERP-to-headless middleware — inventory, orders, finance synced without downtime.</p>
+        <div class="matrix__spec"><span>ERP</span><span>Enterprise</span></div>
+      </article>
+
+      <article class="matrix__item" data-cat="commerce">
+        <div class="matrix__head"><span>C · 04</span><span class="matrix__cat">iPaaS</span></div>
+        <div class="matrix__identity">
+          <span class="matrix__logo"><img src="assets/logos/celigo.svg" alt="" loading="lazy" decoding="async"/></span>
+          <h4 class="matrix__name">Celigo</h4>
+        </div>
+        <p class="matrix__role">Integration orchestration between ERPs and headless commerce surfaces.</p>
+        <div class="matrix__spec"><span>iPaaS</span><span>Production</span></div>
+      </article>
+
+      <!-- CMS / Tools -->
+      <article class="matrix__item" data-cat="cms">
+        <div class="matrix__head"><span>M · 01</span><span class="matrix__cat">CMS</span></div>
+        <div class="matrix__identity">
+          <span class="matrix__logo"><img src="assets/logos/sanity-icon.svg" alt="" loading="lazy" decoding="async"/></span>
+          <h4 class="matrix__name">Sanity.io</h4>
+        </div>
+        <p class="matrix__role">Structured content modeling for Fortune-500 brand &amp; product storytelling.</p>
+        <div class="matrix__spec"><span>CMS</span><span>Content</span></div>
+      </article>
+
+      <article class="matrix__item" data-cat="cms">
+        <div class="matrix__head"><span>M · 02</span><span class="matrix__cat">CMS</span></div>
+        <div class="matrix__identity">
+          <span class="matrix__logo"><img src="assets/logos/payload.svg" alt="" loading="lazy" decoding="async"/></span>
+          <h4 class="matrix__name">Payload CMS</h4>
+        </div>
+        <p class="matrix__role">Code-first headless CMS for tightly-typed schema and engineering-owned content.</p>
+        <div class="matrix__spec"><span>CMS</span><span>Code-first</span></div>
+      </article>
+
+      <article class="matrix__item" data-cat="cms">
+        <div class="matrix__head"><span>M · 03</span><span class="matrix__cat">Tools</span></div>
+        <div class="matrix__identity">
+          <span class="matrix__logo"><img src="assets/logos/liquid.svg" alt="" loading="lazy" decoding="async"/></span>
+          <h4 class="matrix__name">Liquid</h4>
+        </div>
+        <p class="matrix__role">Shopify-native templating where Liquid is the right answer, not Next.js.</p>
+        <div class="matrix__spec"><span>Templating</span><span>Shopify</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ EXPERIENCE LEDGER ═══════════ -->
+<section class="block" id="experience">
+  <div class="container container--wide">
+    <div class="reveal">
+      <span class="eyebrow">04 · Experience Ledger</span>
+      <h2 class="section-title">29 engagements, <em>five pillars.</em></h2>
+      <p class="section-sub">
+        Documented client work across high-compliance, headless commerce, B2B/ERP, SaaS &amp; enterprise ops, and brand/interactive apps.
+      </p>
+    </div>
+
+    <div class="ledger">
+
+      <article class="ledger__category reveal">
+        <div class="ledger__head">
+          <div>
+            <div class="ledger__head-k">Category Pillar</div>
+            <h3>High-Compliance &amp; Regulated</h3>
+          </div>
+          <div class="ledger__count">5 projects</div>
+        </div>
+        <div class="ledger__row">
+          <div class="ledger__client"><strong>DC iLottery &amp; Intralot</strong><span>dcilottery.com</span></div>
+          <div class="ledger__stack">React Native, Azure Functions, Cosmos DB, Swagger</div>
+          <div class="ledger__impact">Regulated Fintech/iGaming: Architected secure native and web platforms for government-regulated lottery systems, implementing geofencing, responsible gaming workflows, and immutable evidence frameworks matching federal standards.</div>
+        </div>
+        <div class="ledger__row">
+          <div class="ledger__client"><strong>AgeVerify SDK</strong><span>Built in-house</span></div>
+          <div class="ledger__stack">Azure Serverless, Next.js, Cryptographic Persistence</div>
+          <div class="ledger__impact">Privacy-First Identity Verification: Engineered a proprietary SDK/API ecosystem utilizing Azure serverless pipelines for highly scalable, cost-aware throughput with privacy-conscious validation boundaries.</div>
+        </div>
+        <div class="ledger__row">
+          <div class="ledger__client"><strong>Northwest Permanente</strong><span>nwpermanente.com</span></div>
+          <div class="ledger__stack">Custom Frontend, Enterprise CMS, Legacy Integrations</div>
+          <div class="ledger__impact">HIPAA-Compliant Portals: Led full-stack enhancements for one of the largest medical groups in the Pacific Northwest, maintaining strict diagnostic data privacy protocols and responsive patient-facing UI workflows.</div>
+        </div>
+        <div class="ledger__row">
+          <div class="ledger__client"><strong>IDX / MyIDCare / ID Experts</strong><span>idx.us / myidcare.com</span></div>
+          <div class="ledger__stack">Vue.js, ExpressionEngine, HTML5/CSS3</div>
+          <div class="ledger__impact">Enterprise Data Shielding: Built custom data verification interfaces and frontend workflows for multi-million user identity theft protection platforms, optimizing secure customer document delivery systems.</div>
+        </div>
+        <div class="ledger__row">
+          <div class="ledger__client"><strong>Oregon Anesthesiology Group</strong><span>oagpc.com</span></div>
+          <div class="ledger__stack">Custom PHP / Secure Database Architecture</div>
+          <div class="ledger__impact">Clinical Infrastructure: Maintained and modernized the web infrastructure and custom applications for complex regional medical provider setups, emphasizing portal security and high reliability.</div>
+        </div>
+      </article>
+
+      <article class="ledger__category reveal">
+        <div class="ledger__head">
+          <div>
+            <div class="ledger__head-k">Category Pillar</div>
+            <h3>Headless eCommerce</h3>
+          </div>
+          <div class="ledger__count">8 projects</div>
+        </div>
+        <div class="ledger__row">
+          <div class="ledger__client"><strong>Rust-Oleum Home</strong><span>rustoleumhome.com</span></div>
+          <div class="ledger__stack">BigCommerce, React Hybrid, Stencil, Performance Optimization</div>
+          <div class="ledger__impact">"Headless-Lite" Architecture: Bypassed native SaaS limits by embedding a custom React storefront engine into BigCommerce, delivering premium merchandising flexibility and superior page speeds for a massive catalog.</div>
+        </div>
+        <div class="ledger__row">
+          <div class="ledger__client"><strong>Nuun Hydration</strong><span>nuunlife.com</span></div>
+          <div class="ledger__stack">Next.js, Headless Shopify, NetSuite ERP Sync, Liquid</div>
+          <div class="ledger__impact">10-Year Technical Partnership: Guided an emerging brand from startup to a global market leader via three major ground-up redesigns, culminating in a headless Next.js + Shopify migration with custom middleware asset mapping.</div>
+        </div>
+        <div class="ledger__row">
+          <div class="ledger__client"><strong>FinalStraw / Final.co</strong><span>final.co</span></div>
+          <div class="ledger__stack">Gatsby.js, React, Headless Shopify, Sanity CMS</div>
+          <div class="ledger__impact">High-Velocity Scale: Partnered directly with leadership to transform a high-profile viral product into a mature DTC catalog utilizing a decoupled headless configuration optimized for massive campaign traffic bursts.</div>
+        </div>
+        <div class="ledger__row">
+          <div class="ledger__client"><strong>Wildfang</strong><span>wildfang.com</span></div>
+          <div class="ledger__stack">Headless Shopify, JavaScript ES6, Custom UI</div>
+          <div class="ledger__impact">Conversion Optimization: Implemented highly optimized, pixel-perfect frontend experiences focused on checkout conversions, custom product filters, and complex merchandising workflows.</div>
+        </div>
+        <div class="ledger__row">
+          <div class="ledger__client"><strong>Revant Optics</strong><span>revantoptics.com</span></div>
+          <div class="ledger__stack">Magento, AWS Cloud, Shopify Migration</div>
+          <div class="ledger__impact">Scalable DTC Infrastructure: Spearheaded frontend performance optimization and custom cloud instance scaling to handle massive high-frequency product page interactions and high volume item variants.</div>
+        </div>
+        <div class="ledger__row">
+          <div class="ledger__client"><strong>MyChelle Dermaceuticals</strong><span>mychelle.com</span></div>
+          <div class="ledger__stack">Shopify, Enterprise ERP Sync Patterns</div>
+          <div class="ledger__impact">SKU Merchandising Automation: Managed sophisticated visual frontend overhauls paired with rigorous inventory handling logic for wide-distribution retail channels.</div>
+        </div>
+        <div class="ledger__row">
+          <div class="ledger__client"><strong>Fully / MillerKnoll</strong><span>fully.com</span></div>
+          <div class="ledger__stack">Magento Enterprise / Custom UI Layer</div>
+          <div class="ledger__impact">High-Scale B2B/DTC Retail: Designed components for complex industrial-scale furniture configurations, handling high-value cart checkouts and heavy media processing workflows.</div>
+        </div>
+        <div class="ledger__row">
+          <div class="ledger__client"><strong>Boost Oxygen</strong><span>boostoxygen.com</span></div>
+          <div class="ledger__stack">Shopify Liquid, Custom Cart Functionality</div>
+          <div class="ledger__impact">DTC Conversion Architecture: Upgraded retail presence with rich media layouts, responsive UI adjustments, and faster asset pipelines to enhance user engagement.</div>
+        </div>
+      </article>
+
+      <article class="ledger__category reveal">
+        <div class="ledger__head">
+          <div>
+            <div class="ledger__head-k">Category Pillar</div>
+            <h3>B2B &amp; ERP Integrations</h3>
+          </div>
+          <div class="ledger__count">5 projects</div>
+        </div>
+        <div class="ledger__row">
+          <div class="ledger__client"><strong>Discount Low Voltage</strong><span>discountlowvoltage.com</span></div>
+          <div class="ledger__stack">Magento 2, NetSuite CRM, RESTlets, Custom CRM Tooling</div>
+          <div class="ledger__impact">Massive Dataset Management: Managed full-stack ongoing development for a storefront with 340,000+ active SKUs, executing massive spreadsheet data manipulations and building proprietary CRM data pipelines.</div>
+        </div>
+        <div class="ledger__row">
+          <div class="ledger__client"><strong>Wesspur Tree Equipment</strong><span>wesspur.com</span></div>
+          <div class="ledger__stack">SuiteCommerce, Oracle NetSuite, RESTlets, Suitelets</div>
+          <div class="ledger__impact">Custom NetSuite Engineering: Built a custom SuiteCommerce interface from an existing NetSuite instance, developing bespoke Suitelets and RESTlets to handle data imports/exports for over 50,000 complex items.</div>
+        </div>
+        <div class="ledger__row">
+          <div class="ledger__client"><strong>Amazon &amp; NetSuite Ledger</strong><span>Internal Systems</span></div>
+          <div class="ledger__stack">Celigo, FarApp, NetSuite REST API</div>
+          <div class="ledger__impact">Automated Financial Middleware: Developed custom integration pipelines linking Amazon Seller Central directly with NetSuite accounting ledgers via Celigo, eliminating data friction for high-volume retailers.</div>
+        </div>
+        <div class="ledger__row">
+          <div class="ledger__client"><strong>Bridgewell Resources</strong><span>bridgewellresources.com</span></div>
+          <div class="ledger__stack">Enterprise ERP, B2B Web Systems</div>
+          <div class="ledger__impact">Global Trade Dashboards: Engineered complex tracking capabilities and information panels for large-scale supply chain and wholesale infrastructure environments.</div>
+        </div>
+        <div class="ledger__row">
+          <div class="ledger__client"><strong>FourthWave Consulting</strong><span>Client Portfolios</span></div>
+          <div class="ledger__stack">NetSuite, Celigo, Sanity, Payload CMS</div>
+          <div class="ledger__impact">Distributed Team Management: Supervised architecture standards across 100+ complex enterprise environments, specializing in high-stakes middleware bridges syncing inventory data across disparate platforms.</div>
+        </div>
+      </article>
+
+      <article class="ledger__category reveal">
+        <div class="ledger__head">
+          <div>
+            <div class="ledger__head-k">Category Pillar</div>
+            <h3>SaaS &amp; Enterprise Ops</h3>
+          </div>
+          <div class="ledger__count">5 projects</div>
+        </div>
+        <div class="ledger__row">
+          <div class="ledger__client"><strong>Gigaphoton / Fabscape</strong><span>fabscape.co</span></div>
+          <div class="ledger__stack">React, Data Ingestion Pipelines, Advanced Dashboards</div>
+          <div class="ledger__impact">Industrial IoT Dashboarding: Engineered precision data monitoring views for semiconductor manufacturing tools, handling heavy, complex telemetry ingestion and critical telemetry visibility.</div>
+        </div>
+        <div class="ledger__row">
+          <div class="ledger__client"><strong>Fall Creek Farm &amp; Nursery</strong><span>fallcreeknursery.com</span></div>
+          <div class="ledger__stack">Custom Enterprise Systems, Operational Portals</div>
+          <div class="ledger__impact">Global Operations Tracking: Developed robust inventory mapping and internal tooling architectures supporting massive agricultural catalog operations across multiple international territories.</div>
+        </div>
+        <div class="ledger__row">
+          <div class="ledger__client"><strong>New Seasons Market</strong><span>newseasonsmarket.com</span></div>
+          <div class="ledger__stack">Custom Frontend, Store Locators, Recipe Ingestion</div>
+          <div class="ledger__impact">High-Density Consumer Facing Apps: Architected deep regional application features, including highly-trafficked store-mapping data arrays, recipe parsing tools, and localized web experiences.</div>
+        </div>
+        <div class="ledger__row">
+          <div class="ledger__client"><strong>Dick Hannah Dealerships</strong><span>dickhannah.com</span></div>
+          <div class="ledger__stack">Custom Inventory Ingestion, Real-time Search</div>
+          <div class="ledger__impact">High-Frequency Aggregations: Engineered responsive search and filtering layers capable of mapping real-time pricing and complex physical car inventory parameters smoothly for buyers.</div>
+        </div>
+        <div class="ledger__row">
+          <div class="ledger__client"><strong>Cyclone</strong><span>cyclone.co</span></div>
+          <div class="ledger__stack">Custom Web Systems, Technical Product Catalogs</div>
+          <div class="ledger__impact">Industrial B2B Catalogs: Oversaw structured formatting and high-fidelity layouts for technical environmental equipment catalogs requiring rigorous filtering details.</div>
+        </div>
+      </article>
+
+      <article class="ledger__category reveal">
+        <div class="ledger__head">
+          <div>
+            <div class="ledger__head-k">Category Pillar</div>
+            <h3>Brand &amp; Interactive Apps</h3>
+          </div>
+          <div class="ledger__count">6 projects</div>
+        </div>
+        <div class="ledger__row">
+          <div class="ledger__client"><strong>McDonald's</strong><span>mcdonalds.com</span></div>
+          <div class="ledger__stack">High-Performance Marketing Layouts, Custom UI</div>
+          <div class="ledger__impact">Fortune 100 Campaign Engineering: Developed highly interactive regional campaign platforms and promotional code engines built to withstand immense concurrent consumer usage.</div>
+        </div>
+        <div class="ledger__row">
+          <div class="ledger__client"><strong>Star Autism Support</strong><span>starautismsupport.com</span></div>
+          <div class="ledger__stack">Custom LMS, Subscription Management, React</div>
+          <div class="ledger__impact">EdTech Subscription Frameworks: Built specialized curriculum portals and multi-tenant subscription delivery portals for educational tools deployed widely across school districts.</div>
+        </div>
+        <div class="ledger__row">
+          <div class="ledger__client"><strong>NACS Legacy</strong><span>nacs.org</span></div>
+          <div class="ledger__stack">Association Management Systems (AMS), Legacy Sync</div>
+          <div class="ledger__impact">Enterprise System Migrations: Rebuilt critical data presentation mechanisms and modern membership dashboards attached to deep legacy data records for national retail associations.</div>
+        </div>
+        <div class="ledger__row">
+          <div class="ledger__client"><strong>Lan Su Chinese Garden</strong><span>lansugarden.org</span></div>
+          <div class="ledger__stack">Custom Interaction Framework, Ticketing Integrations</div>
+          <div class="ledger__impact">Interactive Community Portals: Crafted highly reliable localized cultural presentation tools featuring integrated ticketing pipelines and responsive event scheduling logic.</div>
+        </div>
+        <div class="ledger__row">
+          <div class="ledger__client"><strong>Timberline Lodge</strong><span>timberlinelodge.com</span></div>
+          <div class="ledger__stack">Reservation Integrations, Media-Rich UI</div>
+          <div class="ledger__impact">High-Traffic Hospitality UX: Developed beautiful, media-heavy reservation interfaces optimized for high-performance mobile devices and booking data processing pipelines.</div>
+        </div>
+        <div class="ledger__row">
+          <div class="ledger__client"><strong>PackRush</strong><span>packrush.com</span></div>
+          <div class="ledger__stack">Next.js, Web3 Integrations, Automated Workflows</div>
+          <div class="ledger__impact">Real-Time Interactive Platforms: Built advanced, low-latency UI components using modern JavaScript stacks to support high-velocity web apps and automated user notification states.</div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ TIMELINE ═══════════ -->
+<section class="block" id="timeline">
+  <div class="container">
+    <div class="reveal">
+      <span class="eyebrow">05 · Revision History</span>
+      <h2 class="section-title">14 years, <em>newest first.</em></h2>
+      <p class="section-sub">Selected engagements that shaped the architectural patterns I keep returning to.</p>
+    </div>
+
+    <div class="timeline reveal">
+      <div class="rev">
+        <div class="rev__id">R 7.2</div>
+        <div class="rev__body">
+          <div class="rev__date">2024 — Present</div>
+          <div class="rev__role">Principal Architect · <em>Headless-Lite</em> Storefronts</div>
+          <div class="rev__note">Designing React hybrid storefronts embedded into BigCommerce — a new pattern for Fortune-500 catalogs that need scale and platform safety in the same build.</div>
+        </div>
+        <div class="rev__company">
+          <strong>Rust-Oleum Home</strong>
+          <span>Fortune 500 · D2C</span>
+        </div>
+      </div>
+      <div class="rev">
+        <div class="rev__id">R 6.0</div>
+        <div class="rev__body">
+          <div class="rev__date">2022 — 2024</div>
+          <div class="rev__role">Lead Architect · <em>Regulated</em> iGaming</div>
+          <div class="rev__note">Engineered the architecture, geofencing, responsible-gaming workflows, and immutable evidence framework for a federally-regulated iLottery web &amp; native platform.</div>
+        </div>
+        <div class="rev__company">
+          <strong>DC iLottery (Intralot)</strong>
+          <span>Government · iGaming</span>
+        </div>
+      </div>
+      <div class="rev">
+        <div class="rev__id">R 5.0</div>
+        <div class="rev__body">
+          <div class="rev__date">2014 — Present</div>
+          <div class="rev__role">Long-Term Technical Partner · <em>NetSuite</em> ↔ <em>Headless</em></div>
+          <div class="rev__note">Decade-long technical partnership — owned the middleware between NetSuite ERP and a Next.js / Shopify Headless storefront. Guided the brand through three platform generations.</div>
+        </div>
+        <div class="rev__company">
+          <strong>Nuun Hydration</strong>
+          <span>D2C · Global</span>
+        </div>
+      </div>
+      <div class="rev">
+        <div class="rev__id">R 4.0</div>
+        <div class="rev__body">
+          <div class="rev__date">2021 — Present</div>
+          <div class="rev__role">Founder &amp; Engineer · <em>AgeVerify</em> SDK</div>
+          <div class="rev__note">Built a privacy-first IDV SDK on Azure Functions and Cosmos DB. Strict cryptographic boundary — verification at the edge, no PII at rest.</div>
+        </div>
+        <div class="rev__company">
+          <strong>AgeVerify</strong>
+          <span>Self-funded</span>
+        </div>
+      </div>
+      <div class="rev">
+        <div class="rev__id">R 3.0</div>
+        <div class="rev__body">
+          <div class="rev__date">2018 — 2022</div>
+          <div class="rev__role">Senior Full-Stack Engineer · <em>Headless</em> Migrations</div>
+          <div class="rev__note">Led headless re-platforms for D2C brands moving from monolithic SaaS to Next.js / Shopify Headless / BigCommerce, with custom Node.js middleware bridging legacy ops systems.</div>
+        </div>
+        <div class="rev__company">
+          <strong>Independent · Multiple</strong>
+          <span>D2C · Mid-Market</span>
+        </div>
+      </div>
+      <div class="rev">
+        <div class="rev__id">R 2.0</div>
+        <div class="rev__body">
+          <div class="rev__date">2014 — 2018</div>
+          <div class="rev__role">Full-Stack Engineer · <em>eCommerce</em> Scaling</div>
+          <div class="rev__note">Shopify Plus, Liquid, Node, and the early waves of headless tooling. Shipping storefronts, integrations, and the bones of what became the modern composable commerce stack.</div>
+        </div>
+        <div class="rev__company">
+          <strong>Agency &amp; In-House</strong>
+          <span>D2C · eCommerce</span>
+        </div>
+      </div>
+      <div class="rev">
+        <div class="rev__id">R 1.0</div>
+        <div class="rev__body">
+          <div class="rev__date">2012 — 2014</div>
+          <div class="rev__role">Engineer · <em>Foundations</em></div>
+          <div class="rev__note">First commercial shipping work — PHP, JavaScript, the pre-React era. The years that taught the discipline of debugging production code at 2am.</div>
+        </div>
+        <div class="rev__company">
+          <strong>Initial Engagements</strong>
+          <span>Early Career</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CONTACT ═══════════ -->
+<section class="block contact" id="contact">
+  <div class="container">
+    <div class="reveal">
+      <span class="eyebrow">06 · Let's Talk</span>
+      <h2 class="section-title">Got a project the platform can't <em>quite</em> hold?</h2>
+      <p class="section-sub">
+        I take on a small number of new engagements per year — typically Principal- or Lead-Architect roles on headless commerce, regulated systems, or ERP/middleware bridges where the cost of getting it wrong is real.
+      </p>
+    </div>
+
+    <div class="contact__inner">
+      <div class="contact__pitch reveal">
+        <h3>If that sounds like the room you're <em>in</em>, let's talk.</h3>
+        <p>Send a note describing the project, the team, and the constraints. I'll reply within two business days with whether I'm a fit and what good next steps look like.</p>
+        <div class="contact__ctas">
+          <a class="btn btn--primary btn--lg" href="mailto:hello@kevincarp.dev">Start a Conversation <span class="arrow">→</span></a>
+          <a class="btn btn--lg" href="assets/files/Kevin%20Resume.docx" download>Resume ↓</a>
+        </div>
+      </div>
+
+      <aside class="contact__card reveal">
+        <div class="contact__card-label">Architect · Card</div>
+        <div class="contact__row"><span class="contact__row-k">Name</span><span class="contact__row-v">Kevin Carpenter</span></div>
+        <div class="contact__row"><span class="contact__row-k">Role</span><span class="contact__row-v">Sr. Full-Stack Architect</span></div>
+        <div class="contact__row"><span class="contact__row-k">Email</span><span class="contact__row-v"><a href="mailto:hello@kevincarp.dev">hello@kevincarp.dev</a></span></div>
+        <div class="contact__row"><span class="contact__row-k">Web</span><span class="contact__row-v"><a href="https://kevincarpdev.com">kevincarpdev.com</a></span></div>
+        <div class="contact__row"><span class="contact__row-k">LinkedIn</span><span class="contact__row-v"><a href="https://www.linkedin.com/in/kevin-carpenter-304a4554/" target="_blank" rel="noopener">/in/kevin-carpenter</a></span></div>
+        <div class="contact__row"><span class="contact__row-k">GitHub</span><span class="contact__row-v"><a href="https://github.com/kevincarpdev" target="_blank" rel="noopener">@kevincarpdev</a></span></div>
+        <div class="contact__row"><span class="contact__row-k">Locale</span><span class="contact__row-v">Remote · San Diego, CA</span></div>
+        <div class="contact__row"><span class="contact__row-k">Status</span><span class="contact__row-v status">Accepting 2026 Engagements</span></div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer class="footer">
+  <div class="container footer__inner">
+    <div class="footer__brand">
+      Kevin Carpenter
+      <small>© 2026 · KCD–2026</small>
+    </div>
+    <div class="footer__copy">Designed &amp; built by Kevin Carpenter</div>
+    <div class="footer__social">
+      <a href="https://github.com/kevincarpdev" target="_blank" rel="noopener" aria-label="GitHub">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.69-3.87-1.36-3.87-1.36-.52-1.34-1.28-1.7-1.28-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.74.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.51-1.47.11-3.06 0 0 .96-.31 3.15 1.18.92-.25 1.9-.38 2.88-.38.98 0 1.96.13 2.88.38 2.19-1.49 3.15-1.18 3.15-1.18.62 1.59.23 2.77.11 3.06.74.81 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.07.78 2.16v3.2c0 .31.21.68.8.56 4.57-1.53 7.85-5.83 7.85-10.91C23.5 5.65 18.35.5 12 .5z"/></svg>
+      </a>
+      <a href="https://www.linkedin.com/in/kevin-carpenter-304a4554/" target="_blank" rel="noopener" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 110-4.13 2.07 2.07 0 010 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .78 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.73V1.73C24 .78 23.2 0 22.22 0z"/></svg>
+      </a>
+      <a href="mailto:hello@kevincarp.dev" aria-label="Email">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ── NAV scroll state + mobile drawer ─────────────────────────
+  (function () {
+    const nav = document.getElementById('nav');
+    const burger = nav?.querySelector('.nav__burger');
+    const drawer = document.getElementById('nav-drawer');
+    const drawerLinks = drawer?.querySelectorAll('.nav__drawer-link, .nav__drawer-cta a');
+
+    function setScrolled() {
+      if (window.scrollY > 12) nav.classList.add('is-scrolled');
+      else nav.classList.remove('is-scrolled');
+    }
+    setScrolled();
+    window.addEventListener('scroll', setScrolled, { passive: true });
+
+    function setDrawer(open) {
+      if (!nav) return;
+      nav.dataset.open = open ? 'true' : 'false';
+      burger?.setAttribute('aria-expanded', open ? 'true' : 'false');
+      // toggle drawer visibility via CSS sibling selector — also handle directly:
+      if (drawer) drawer.style.transform = open ? 'translateY(0)' : 'translateY(-100%)';
+      document.body.style.overflow = open ? 'hidden' : '';
+    }
+    burger?.addEventListener('click', () => setDrawer(nav.dataset.open !== 'true'));
+    drawerLinks?.forEach(a => a.addEventListener('click', () => setDrawer(false)));
+    window.addEventListener('resize', () => { if (window.innerWidth > 880) setDrawer(false); });
+  })();
+
+  // ── Stack filter pills ───────────────────────────────────────
+  (function () {
+    const filters = document.querySelectorAll('.stack-filter');
+    const items   = document.querySelectorAll('#matrix .matrix__item');
+    filters.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const cat = btn.dataset.filter;
+        filters.forEach(f => {
+          f.classList.toggle('is-active', f === btn);
+          f.setAttribute('aria-selected', f === btn ? 'true' : 'false');
+        });
+        items.forEach(it => {
+          const match = cat === 'all' || it.dataset.cat === cat;
+          it.classList.toggle('is-dim', !match);
+        });
+      });
+    });
+  })();
+
+  // ── Reveal on scroll ─────────────────────────────────────────
+  (function () {
+    const items = document.querySelectorAll('.reveal');
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced || !('IntersectionObserver' in window)) {
+      items.forEach(el => el.classList.add('is-visible'));
+      return;
+    }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8%' });
+    items.forEach(el => io.observe(el));
+    // safety: reveal after 1.4s no matter what
+    setTimeout(() => items.forEach(el => el.classList.add('is-visible')), 1400);
+  })();
+</script>
+
+</body>
+</html>

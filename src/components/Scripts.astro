@@ -1,0 +1,71 @@
+---
+// Inline behavior: nav scroll state, mobile drawer, stack filter, reveal-on-scroll.
+---
+<script is:inline>
+// ── NAV scroll state + mobile drawer ─────────────────────────
+  (function () {
+    const nav = document.getElementById('nav');
+    const burger = nav?.querySelector('.nav__burger');
+    const drawer = document.getElementById('nav-drawer');
+    const drawerLinks = drawer?.querySelectorAll('.nav__drawer-link, .nav__drawer-cta a');
+
+    function setScrolled() {
+      if (window.scrollY > 12) nav.classList.add('is-scrolled');
+      else nav.classList.remove('is-scrolled');
+    }
+    setScrolled();
+    window.addEventListener('scroll', setScrolled, { passive: true });
+
+    function setDrawer(open) {
+      if (!nav) return;
+      nav.dataset.open = open ? 'true' : 'false';
+      burger?.setAttribute('aria-expanded', open ? 'true' : 'false');
+      // toggle drawer visibility via CSS sibling selector — also handle directly:
+      if (drawer) drawer.style.transform = open ? 'translateY(0)' : 'translateY(-100%)';
+      document.body.style.overflow = open ? 'hidden' : '';
+    }
+    burger?.addEventListener('click', () => setDrawer(nav.dataset.open !== 'true'));
+    drawerLinks?.forEach(a => a.addEventListener('click', () => setDrawer(false)));
+    window.addEventListener('resize', () => { if (window.innerWidth > 880) setDrawer(false); });
+  })();
+
+  // ── Stack filter pills ───────────────────────────────────────
+  (function () {
+    const filters = document.querySelectorAll('.stack-filter');
+    const items   = document.querySelectorAll('#matrix .matrix__item');
+    filters.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const cat = btn.dataset.filter;
+        filters.forEach(f => {
+          f.classList.toggle('is-active', f === btn);
+          f.setAttribute('aria-selected', f === btn ? 'true' : 'false');
+        });
+        items.forEach(it => {
+          const match = cat === 'all' || it.dataset.cat === cat;
+          it.classList.toggle('is-dim', !match);
+        });
+      });
+    });
+  })();
+
+  // ── Reveal on scroll ─────────────────────────────────────────
+  (function () {
+    const items = document.querySelectorAll('.reveal');
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced || !('IntersectionObserver' in window)) {
+      items.forEach(el => el.classList.add('is-visible'));
+      return;
+    }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8%' });
+    items.forEach(el => io.observe(el));
+    // safety: reveal after 1.4s no matter what
+    setTimeout(() => items.forEach(el => el.classList.add('is-visible')), 1400);
+  })();
+</script>

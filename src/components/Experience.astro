@@ -1,209 +1,457 @@
 ---
-// Experience section — extracted from legacy index.html on 2026-05-20
+// Experience section — pillar switcher (interactive tabs + project grid)
+// Replaced legacy stacked-column layout 2026-05-20
 ---
-<!-- ═══════════ EXPERIENCE LEDGER ═══════════ -->
+<!-- ═══════════ EXPERIENCE LEDGER · PILLAR SWITCHER ═══════════ -->
 <section class="block" id="experience">
   <div class="container container--wide">
     <div class="reveal">
       <span class="eyebrow">04 · Experience Ledger</span>
-      <h2 class="section-title">29 engagements, <em>five pillars.</em></h2>
+      <h2 class="section-title">28 engagements, <em>five pillars.</em></h2>
       <p class="section-sub">
-        Documented client work across high-compliance, headless commerce, B2B/ERP, SaaS &amp; enterprise ops, and brand/interactive apps.
+        Documented client work — pick a pillar to inspect the engagements inside it.
       </p>
     </div>
 
-    <div class="ledger">
+    <div class="pillars" data-pillars>
+      <!-- TABS -->
+      <div class="pillars__tabs reveal" role="tablist" aria-label="Category pillars">
+        <button class="pillars__tab is-active" role="tab" data-pillar="compliance" aria-selected="true" aria-controls="pillar-compliance" id="tab-compliance">
+          <span class="pillars__tab-code">01</span>
+          <span class="pillars__tab-name">High-Compliance &amp; Regulated</span>
+          <span class="pillars__tab-count">5</span>
+        </button>
+        <button class="pillars__tab" role="tab" data-pillar="headless" aria-selected="false" aria-controls="pillar-headless" id="tab-headless">
+          <span class="pillars__tab-code">02</span>
+          <span class="pillars__tab-name">Headless eCommerce</span>
+          <span class="pillars__tab-count">8</span>
+        </button>
+        <button class="pillars__tab" role="tab" data-pillar="erp" aria-selected="false" aria-controls="pillar-erp" id="tab-erp">
+          <span class="pillars__tab-code">03</span>
+          <span class="pillars__tab-name">B2B &amp; ERP Integrations</span>
+          <span class="pillars__tab-count">5</span>
+        </button>
+        <button class="pillars__tab" role="tab" data-pillar="saas" aria-selected="false" aria-controls="pillar-saas" id="tab-saas">
+          <span class="pillars__tab-code">04</span>
+          <span class="pillars__tab-name">SaaS &amp; Enterprise Ops</span>
+          <span class="pillars__tab-count">4</span>
+        </button>
+        <button class="pillars__tab" role="tab" data-pillar="brand" aria-selected="false" aria-controls="pillar-brand" id="tab-brand">
+          <span class="pillars__tab-code">05</span>
+          <span class="pillars__tab-name">Brand &amp; Interactive Apps</span>
+          <span class="pillars__tab-count">6</span>
+        </button>
+      </div>
 
-      <article class="ledger__category reveal">
-        <div class="ledger__head">
-          <div>
-            <div class="ledger__head-k">Category Pillar</div>
-            <h3>High-Compliance &amp; Regulated</h3>
+      <!-- PANELS -->
+      <div class="pillars__panels">
+        <div class="pillars__panel reveal" id="pillar-compliance" role="tabpanel" aria-labelledby="tab-compliance">
+          <header class="pillars__panel-head">
+            <div class="pillars__panel-eyebrow"><span>Pillar 01</span> · High-Compliance &amp; Regulated</div>
+            <div class="pillars__panel-meta">5 projects</div>
+          </header>
+          <div class="pillars__grid">
+            <article class="pcard">
+              <div class="pcard__client"><strong>DC iLottery &amp; Intralot</strong><span>dcilottery.com</span></div>
+              <div class="pcard__stack">React Native · Azure Functions · Cosmos DB</div>
+              <p class="pcard__impact">Regulated Fintech/iGaming: secure native and web platforms for government-regulated lottery systems — geofencing, RG workflows, immutable evidence at federal grade.</p>
+            </article>
+            <article class="pcard">
+              <div class="pcard__client"><strong>AgeVerify SDK</strong><span>Built in-house</span></div>
+              <div class="pcard__stack">Azure Serverless · Next.js · Cryptography</div>
+              <p class="pcard__impact">Privacy-First IDV: proprietary SDK/API ecosystem on Azure serverless pipelines, with cryptographic privacy boundaries and scalable cost-aware throughput.</p>
+            </article>
+            <article class="pcard">
+              <div class="pcard__client"><strong>Northwest Permanente</strong><span>nwpermanente.com</span></div>
+              <div class="pcard__stack">Custom Frontend · Enterprise CMS · Legacy</div>
+              <p class="pcard__impact">HIPAA-Compliant Portals: full-stack enhancements for one of the largest medical groups in the Pacific Northwest, with strict diagnostic data privacy and responsive patient UX.</p>
+            </article>
+            <article class="pcard">
+              <div class="pcard__client"><strong>IDX / MyIDCare / ID Experts</strong><span>idx.us / myidcare.com</span></div>
+              <div class="pcard__stack">Vue.js · ExpressionEngine · HTML5</div>
+              <p class="pcard__impact">Enterprise Data Shielding: custom data verification interfaces for multi-million user identity theft protection platforms with secure document delivery.</p>
+            </article>
+            <article class="pcard">
+              <div class="pcard__client"><strong>Oregon Anesthesiology Group</strong><span>oagpc.com</span></div>
+              <div class="pcard__stack">PHP · Secure Database Architecture</div>
+              <p class="pcard__impact">Clinical Infrastructure: modernized web infrastructure and custom apps for complex regional medical provider setups — portal security and reliability.</p>
+            </article>
           </div>
-          <div class="ledger__count">5 projects</div>
         </div>
-        <div class="ledger__row">
-          <div class="ledger__client"><strong>DC iLottery &amp; Intralot</strong><span>dcilottery.com</span></div>
-          <div class="ledger__stack">React Native, Azure Functions, Cosmos DB, Swagger</div>
-          <div class="ledger__impact">Regulated Fintech/iGaming: Architected secure native and web platforms for government-regulated lottery systems, implementing geofencing, responsible gaming workflows, and immutable evidence frameworks matching federal standards.</div>
-        </div>
-        <div class="ledger__row">
-          <div class="ledger__client"><strong>AgeVerify SDK</strong><span>Built in-house</span></div>
-          <div class="ledger__stack">Azure Serverless, Next.js, Cryptographic Persistence</div>
-          <div class="ledger__impact">Privacy-First Identity Verification: Engineered a proprietary SDK/API ecosystem utilizing Azure serverless pipelines for highly scalable, cost-aware throughput with privacy-conscious validation boundaries.</div>
-        </div>
-        <div class="ledger__row">
-          <div class="ledger__client"><strong>Northwest Permanente</strong><span>nwpermanente.com</span></div>
-          <div class="ledger__stack">Custom Frontend, Enterprise CMS, Legacy Integrations</div>
-          <div class="ledger__impact">HIPAA-Compliant Portals: Led full-stack enhancements for one of the largest medical groups in the Pacific Northwest, maintaining strict diagnostic data privacy protocols and responsive patient-facing UI workflows.</div>
-        </div>
-        <div class="ledger__row">
-          <div class="ledger__client"><strong>IDX / MyIDCare / ID Experts</strong><span>idx.us / myidcare.com</span></div>
-          <div class="ledger__stack">Vue.js, ExpressionEngine, HTML5/CSS3</div>
-          <div class="ledger__impact">Enterprise Data Shielding: Built custom data verification interfaces and frontend workflows for multi-million user identity theft protection platforms, optimizing secure customer document delivery systems.</div>
-        </div>
-        <div class="ledger__row">
-          <div class="ledger__client"><strong>Oregon Anesthesiology Group</strong><span>oagpc.com</span></div>
-          <div class="ledger__stack">Custom PHP / Secure Database Architecture</div>
-          <div class="ledger__impact">Clinical Infrastructure: Maintained and modernized the web infrastructure and custom applications for complex regional medical provider setups, emphasizing portal security and high reliability.</div>
-        </div>
-      </article>
-
-      <article class="ledger__category reveal">
-        <div class="ledger__head">
-          <div>
-            <div class="ledger__head-k">Category Pillar</div>
-            <h3>Headless eCommerce</h3>
+        <div class="pillars__panel reveal" id="pillar-headless" role="tabpanel" aria-labelledby="tab-headless" hidden>
+          <header class="pillars__panel-head">
+            <div class="pillars__panel-eyebrow"><span>Pillar 02</span> · Headless eCommerce</div>
+            <div class="pillars__panel-meta">8 projects</div>
+          </header>
+          <div class="pillars__grid">
+            <article class="pcard">
+              <div class="pcard__client"><strong>Rust-Oleum Home</strong><span>rustoleumhome.com</span></div>
+              <div class="pcard__stack">BigCommerce · React Hybrid · Stencil</div>
+              <p class="pcard__impact">“Headless-Lite” architecture: a custom React storefront engine embedded into BigCommerce, delivering merchandising flexibility and speed across a massive catalog.</p>
+            </article>
+            <article class="pcard">
+              <div class="pcard__client"><strong>Nuun Hydration</strong><span>nuunlife.com</span></div>
+              <div class="pcard__stack">Next.js · Headless Shopify · NetSuite · Liquid</div>
+              <p class="pcard__impact">10-year technical partnership: guided startup → global through three full-platform rebuilds, culminating in a headless Next.js + Shopify migration with custom ERP middleware.</p>
+            </article>
+            <article class="pcard">
+              <div class="pcard__client"><strong>FinalStraw / Final.co</strong><span>final.co</span></div>
+              <div class="pcard__stack">Gatsby · React · Shopify · Sanity</div>
+              <p class="pcard__impact">High-velocity scale: viral D2C product turned mature catalog on a decoupled headless stack optimized for massive campaign traffic bursts.</p>
+            </article>
+            <article class="pcard">
+              <div class="pcard__client"><strong>Wildfang</strong><span>wildfang.com</span></div>
+              <div class="pcard__stack">Headless Shopify · ES6 · Custom UI</div>
+              <p class="pcard__impact">Conversion optimization: pixel-perfect frontend experiences focused on checkout, custom filters, and complex merchandising workflows.</p>
+            </article>
+            <article class="pcard">
+              <div class="pcard__client"><strong>Revant Optics</strong><span>revantoptics.com</span></div>
+              <div class="pcard__stack">Magento · AWS · Shopify Migration</div>
+              <p class="pcard__impact">Scalable D2C infrastructure: frontend performance + custom cloud scaling for high-frequency PDPs and high-variant SKUs.</p>
+            </article>
+            <article class="pcard">
+              <div class="pcard__client"><strong>MyChelle Dermaceuticals</strong><span>mychelle.com</span></div>
+              <div class="pcard__stack">Shopify · ERP Sync Patterns</div>
+              <p class="pcard__impact">SKU merchandising automation: sophisticated visual overhauls paired with rigorous inventory logic for wide-distribution retail.</p>
+            </article>
+            <article class="pcard">
+              <div class="pcard__client"><strong>Fully / MillerKnoll</strong><span>fully.com</span></div>
+              <div class="pcard__stack">Magento Enterprise · Custom UI</div>
+              <p class="pcard__impact">B2B / D2C at industrial scale: complex furniture configurations, high-value cart checkouts, and heavy media pipelines.</p>
+            </article>
+            <article class="pcard">
+              <div class="pcard__client"><strong>Boost Oxygen</strong><span>boostoxygen.com</span></div>
+              <div class="pcard__stack">Shopify Liquid · Custom Cart</div>
+              <p class="pcard__impact">D2C conversion architecture: rich media layouts, responsive UI, and faster asset pipelines for higher engagement.</p>
+            </article>
           </div>
-          <div class="ledger__count">8 projects</div>
         </div>
-        <div class="ledger__row">
-          <div class="ledger__client"><strong>Rust-Oleum Home</strong><span>rustoleumhome.com</span></div>
-          <div class="ledger__stack">BigCommerce, React Hybrid, Stencil, Performance Optimization</div>
-          <div class="ledger__impact">"Headless-Lite" Architecture: Bypassed native SaaS limits by embedding a custom React storefront engine into BigCommerce, delivering premium merchandising flexibility and superior page speeds for a massive catalog.</div>
-        </div>
-        <div class="ledger__row">
-          <div class="ledger__client"><strong>Nuun Hydration</strong><span>nuunlife.com</span></div>
-          <div class="ledger__stack">Next.js, Headless Shopify, NetSuite ERP Sync, Liquid</div>
-          <div class="ledger__impact">10-Year Technical Partnership: Guided an emerging brand from startup to a global market leader via three major ground-up redesigns, culminating in a headless Next.js + Shopify migration with custom middleware asset mapping.</div>
-        </div>
-        <div class="ledger__row">
-          <div class="ledger__client"><strong>FinalStraw / Final.co</strong><span>final.co</span></div>
-          <div class="ledger__stack">Gatsby.js, React, Headless Shopify, Sanity CMS</div>
-          <div class="ledger__impact">High-Velocity Scale: Partnered directly with leadership to transform a high-profile viral product into a mature DTC catalog utilizing a decoupled headless configuration optimized for massive campaign traffic bursts.</div>
-        </div>
-        <div class="ledger__row">
-          <div class="ledger__client"><strong>Wildfang</strong><span>wildfang.com</span></div>
-          <div class="ledger__stack">Headless Shopify, JavaScript ES6, Custom UI</div>
-          <div class="ledger__impact">Conversion Optimization: Implemented highly optimized, pixel-perfect frontend experiences focused on checkout conversions, custom product filters, and complex merchandising workflows.</div>
-        </div>
-        <div class="ledger__row">
-          <div class="ledger__client"><strong>Revant Optics</strong><span>revantoptics.com</span></div>
-          <div class="ledger__stack">Magento, AWS Cloud, Shopify Migration</div>
-          <div class="ledger__impact">Scalable DTC Infrastructure: Spearheaded frontend performance optimization and custom cloud instance scaling to handle massive high-frequency product page interactions and high volume item variants.</div>
-        </div>
-        <div class="ledger__row">
-          <div class="ledger__client"><strong>MyChelle Dermaceuticals</strong><span>mychelle.com</span></div>
-          <div class="ledger__stack">Shopify, Enterprise ERP Sync Patterns</div>
-          <div class="ledger__impact">SKU Merchandising Automation: Managed sophisticated visual frontend overhauls paired with rigorous inventory handling logic for wide-distribution retail channels.</div>
-        </div>
-        <div class="ledger__row">
-          <div class="ledger__client"><strong>Fully / MillerKnoll</strong><span>fully.com</span></div>
-          <div class="ledger__stack">Magento Enterprise / Custom UI Layer</div>
-          <div class="ledger__impact">High-Scale B2B/DTC Retail: Designed components for complex industrial-scale furniture configurations, handling high-value cart checkouts and heavy media processing workflows.</div>
-        </div>
-        <div class="ledger__row">
-          <div class="ledger__client"><strong>Boost Oxygen</strong><span>boostoxygen.com</span></div>
-          <div class="ledger__stack">Shopify Liquid, Custom Cart Functionality</div>
-          <div class="ledger__impact">DTC Conversion Architecture: Upgraded retail presence with rich media layouts, responsive UI adjustments, and faster asset pipelines to enhance user engagement.</div>
-        </div>
-      </article>
-
-      <article class="ledger__category reveal">
-        <div class="ledger__head">
-          <div>
-            <div class="ledger__head-k">Category Pillar</div>
-            <h3>B2B &amp; ERP Integrations</h3>
+        <div class="pillars__panel reveal" id="pillar-erp" role="tabpanel" aria-labelledby="tab-erp" hidden>
+          <header class="pillars__panel-head">
+            <div class="pillars__panel-eyebrow"><span>Pillar 03</span> · B2B &amp; ERP Integrations</div>
+            <div class="pillars__panel-meta">5 projects</div>
+          </header>
+          <div class="pillars__grid">
+            <article class="pcard">
+              <div class="pcard__client"><strong>Discount Low Voltage</strong><span>discountlowvoltage.com</span></div>
+              <div class="pcard__stack">Magento 2 · NetSuite · RESTlets</div>
+              <p class="pcard__impact">Massive dataset management: 340k+ SKU storefront with custom CRM data pipelines and large-scale spreadsheet transformations.</p>
+            </article>
+            <article class="pcard">
+              <div class="pcard__client"><strong>Wesspur Tree Equipment</strong><span>wesspur.com</span></div>
+              <div class="pcard__stack">SuiteCommerce · NetSuite · Suitelets</div>
+              <p class="pcard__impact">Custom NetSuite engineering: SuiteCommerce interface from an existing instance, bespoke Suitelets/RESTlets for 50k+ complex items.</p>
+            </article>
+            <article class="pcard">
+              <div class="pcard__client"><strong>Amazon × NetSuite Ledger</strong><span>Internal Systems</span></div>
+              <div class="pcard__stack">Celigo · FarApp · NetSuite REST</div>
+              <p class="pcard__impact">Automated financial middleware: custom pipelines linking Amazon Seller Central directly into NetSuite ledgers — friction-free for high-volume retailers.</p>
+            </article>
+            <article class="pcard">
+              <div class="pcard__client"><strong>Bridgewell Resources</strong><span>bridgewellresources.com</span></div>
+              <div class="pcard__stack">Enterprise ERP · B2B Web</div>
+              <p class="pcard__impact">Global trade dashboards: tracking + information panels for supply-chain and wholesale infrastructure environments.</p>
+            </article>
+            <article class="pcard">
+              <div class="pcard__client"><strong>FourthWave Consulting</strong><span>Client Portfolios</span></div>
+              <div class="pcard__stack">NetSuite · Celigo · Sanity · Payload</div>
+              <p class="pcard__impact">Distributed team management: architecture standards across 100+ enterprise environments, specializing in high-stakes inventory middleware.</p>
+            </article>
           </div>
-          <div class="ledger__count">5 projects</div>
         </div>
-        <div class="ledger__row">
-          <div class="ledger__client"><strong>Discount Low Voltage</strong><span>discountlowvoltage.com</span></div>
-          <div class="ledger__stack">Magento 2, NetSuite CRM, RESTlets, Custom CRM Tooling</div>
-          <div class="ledger__impact">Massive Dataset Management: Managed full-stack ongoing development for a storefront with 340,000+ active SKUs, executing massive spreadsheet data manipulations and building proprietary CRM data pipelines.</div>
-        </div>
-        <div class="ledger__row">
-          <div class="ledger__client"><strong>Wesspur Tree Equipment</strong><span>wesspur.com</span></div>
-          <div class="ledger__stack">SuiteCommerce, Oracle NetSuite, RESTlets, Suitelets</div>
-          <div class="ledger__impact">Custom NetSuite Engineering: Built a custom SuiteCommerce interface from an existing NetSuite instance, developing bespoke Suitelets and RESTlets to handle data imports/exports for over 50,000 complex items.</div>
-        </div>
-        <div class="ledger__row">
-          <div class="ledger__client"><strong>Amazon &amp; NetSuite Ledger</strong><span>Internal Systems</span></div>
-          <div class="ledger__stack">Celigo, FarApp, NetSuite REST API</div>
-          <div class="ledger__impact">Automated Financial Middleware: Developed custom integration pipelines linking Amazon Seller Central directly with NetSuite accounting ledgers via Celigo, eliminating data friction for high-volume retailers.</div>
-        </div>
-        <div class="ledger__row">
-          <div class="ledger__client"><strong>Bridgewell Resources</strong><span>bridgewellresources.com</span></div>
-          <div class="ledger__stack">Enterprise ERP, B2B Web Systems</div>
-          <div class="ledger__impact">Global Trade Dashboards: Engineered complex tracking capabilities and information panels for large-scale supply chain and wholesale infrastructure environments.</div>
-        </div>
-        <div class="ledger__row">
-          <div class="ledger__client"><strong>FourthWave Consulting</strong><span>Client Portfolios</span></div>
-          <div class="ledger__stack">NetSuite, Celigo, Sanity, Payload CMS</div>
-          <div class="ledger__impact">Distributed Team Management: Supervised architecture standards across 100+ complex enterprise environments, specializing in high-stakes middleware bridges syncing inventory data across disparate platforms.</div>
-        </div>
-      </article>
-
-      <article class="ledger__category reveal">
-        <div class="ledger__head">
-          <div>
-            <div class="ledger__head-k">Category Pillar</div>
-            <h3>SaaS &amp; Enterprise Ops</h3>
+        <div class="pillars__panel reveal" id="pillar-saas" role="tabpanel" aria-labelledby="tab-saas" hidden>
+          <header class="pillars__panel-head">
+            <div class="pillars__panel-eyebrow"><span>Pillar 04</span> · SaaS &amp; Enterprise Ops</div>
+            <div class="pillars__panel-meta">4 projects</div>
+          </header>
+          <div class="pillars__grid">
+            <article class="pcard">
+              <div class="pcard__client"><strong>Fall Creek Farm &amp; Nursery</strong><span>fallcreeknursery.com</span></div>
+              <div class="pcard__stack">Custom Enterprise · Operational Portals</div>
+              <p class="pcard__impact">Global operations tracking: inventory mapping + internal tooling for massive agricultural catalog operations across international territories.</p>
+            </article>
+            <article class="pcard">
+              <div class="pcard__client"><strong>New Seasons Market</strong><span>newseasonsmarket.com</span></div>
+              <div class="pcard__stack">Custom Frontend · Store Locators · Recipes</div>
+              <p class="pcard__impact">High-density consumer apps: regional features — store-mapping arrays, recipe parsing, localized web experiences.</p>
+            </article>
+            <article class="pcard">
+              <div class="pcard__client"><strong>Dick Hannah Dealerships</strong><span>dickhannah.com</span></div>
+              <div class="pcard__stack">Custom Ingestion · Real-time Search</div>
+              <p class="pcard__impact">High-frequency aggregations: responsive search/filter mapping real-time pricing and physical car inventory parameters for buyers.</p>
+            </article>
+            <article class="pcard">
+              <div class="pcard__client"><strong>Cyclone</strong><span>cyclone.co</span></div>
+              <div class="pcard__stack">Custom Web · Technical Catalogs</div>
+              <p class="pcard__impact">Industrial B2B catalogs: structured formatting and high-fidelity layouts for technical environmental equipment with rigorous filtering.</p>
+            </article>
           </div>
-          <div class="ledger__count">4 projects</div>
         </div>
-        <div class="ledger__row">
-          <div class="ledger__client"><strong>Fall Creek Farm &amp; Nursery</strong><span>fallcreeknursery.com</span></div>
-          <div class="ledger__stack">Custom Enterprise Systems, Operational Portals</div>
-          <div class="ledger__impact">Global Operations Tracking: Developed robust inventory mapping and internal tooling architectures supporting massive agricultural catalog operations across multiple international territories.</div>
-        </div>
-        <div class="ledger__row">
-          <div class="ledger__client"><strong>New Seasons Market</strong><span>newseasonsmarket.com</span></div>
-          <div class="ledger__stack">Custom Frontend, Store Locators, Recipe Ingestion</div>
-          <div class="ledger__impact">High-Density Consumer Facing Apps: Architected deep regional application features, including highly-trafficked store-mapping data arrays, recipe parsing tools, and localized web experiences.</div>
-        </div>
-        <div class="ledger__row">
-          <div class="ledger__client"><strong>Dick Hannah Dealerships</strong><span>dickhannah.com</span></div>
-          <div class="ledger__stack">Custom Inventory Ingestion, Real-time Search</div>
-          <div class="ledger__impact">High-Frequency Aggregations: Engineered responsive search and filtering layers capable of mapping real-time pricing and complex physical car inventory parameters smoothly for buyers.</div>
-        </div>
-        <div class="ledger__row">
-          <div class="ledger__client"><strong>Cyclone</strong><span>cyclone.co</span></div>
-          <div class="ledger__stack">Custom Web Systems, Technical Product Catalogs</div>
-          <div class="ledger__impact">Industrial B2B Catalogs: Oversaw structured formatting and high-fidelity layouts for technical environmental equipment catalogs requiring rigorous filtering details.</div>
-        </div>
-      </article>
-
-      <article class="ledger__category reveal">
-        <div class="ledger__head">
-          <div>
-            <div class="ledger__head-k">Category Pillar</div>
-            <h3>Brand &amp; Interactive Apps</h3>
+        <div class="pillars__panel reveal" id="pillar-brand" role="tabpanel" aria-labelledby="tab-brand" hidden>
+          <header class="pillars__panel-head">
+            <div class="pillars__panel-eyebrow"><span>Pillar 05</span> · Brand &amp; Interactive Apps</div>
+            <div class="pillars__panel-meta">6 projects</div>
+          </header>
+          <div class="pillars__grid">
+            <article class="pcard">
+              <div class="pcard__client"><strong>McDonald's</strong><span>mcdonalds.com</span></div>
+              <div class="pcard__stack">High-Performance Marketing UI</div>
+              <p class="pcard__impact">Fortune-100 campaign engineering: interactive regional campaign platforms and promotional code engines under massive concurrent load.</p>
+            </article>
+            <article class="pcard">
+              <div class="pcard__client"><strong>Star Autism Support</strong><span>starautismsupport.com</span></div>
+              <div class="pcard__stack">Custom LMS · Subscriptions · React</div>
+              <p class="pcard__impact">EdTech subscription frameworks: curriculum portals and multi-tenant delivery for tools deployed across school districts.</p>
+            </article>
+            <article class="pcard">
+              <div class="pcard__client"><strong>NACS Legacy</strong><span>nacs.org</span></div>
+              <div class="pcard__stack">AMS · Legacy Sync</div>
+              <p class="pcard__impact">Enterprise system migrations: critical data presentation + modern membership dashboards attached to deep legacy records.</p>
+            </article>
+            <article class="pcard">
+              <div class="pcard__client"><strong>Lan Su Chinese Garden</strong><span>lansugarden.org</span></div>
+              <div class="pcard__stack">Custom Framework · Ticketing</div>
+              <p class="pcard__impact">Interactive community portals: localized cultural presentation tools with integrated ticketing pipelines and responsive scheduling.</p>
+            </article>
+            <article class="pcard">
+              <div class="pcard__client"><strong>Timberline Lodge</strong><span>timberlinelodge.com</span></div>
+              <div class="pcard__stack">Reservation Integrations · Media-Rich UI</div>
+              <p class="pcard__impact">High-traffic hospitality UX: media-heavy reservation interfaces optimized for mobile and booking data pipelines.</p>
+            </article>
+            <article class="pcard">
+              <div class="pcard__client"><strong>PackRush</strong><span>packrush.com</span></div>
+              <div class="pcard__stack">Next.js · Web3 · Automated Workflows</div>
+              <p class="pcard__impact">Real-time interactive platforms: low-latency UI for high-velocity web apps and automated notification states.</p>
+            </article>
           </div>
-          <div class="ledger__count">6 projects</div>
         </div>
-        <div class="ledger__row">
-          <div class="ledger__client"><strong>McDonald's</strong><span>mcdonalds.com</span></div>
-          <div class="ledger__stack">High-Performance Marketing Layouts, Custom UI</div>
-          <div class="ledger__impact">Fortune 100 Campaign Engineering: Developed highly interactive regional campaign platforms and promotional code engines built to withstand immense concurrent consumer usage.</div>
-        </div>
-        <div class="ledger__row">
-          <div class="ledger__client"><strong>Star Autism Support</strong><span>starautismsupport.com</span></div>
-          <div class="ledger__stack">Custom LMS, Subscription Management, React</div>
-          <div class="ledger__impact">EdTech Subscription Frameworks: Built specialized curriculum portals and multi-tenant subscription delivery portals for educational tools deployed widely across school districts.</div>
-        </div>
-        <div class="ledger__row">
-          <div class="ledger__client"><strong>NACS Legacy</strong><span>nacs.org</span></div>
-          <div class="ledger__stack">Association Management Systems (AMS), Legacy Sync</div>
-          <div class="ledger__impact">Enterprise System Migrations: Rebuilt critical data presentation mechanisms and modern membership dashboards attached to deep legacy data records for national retail associations.</div>
-        </div>
-        <div class="ledger__row">
-          <div class="ledger__client"><strong>Lan Su Chinese Garden</strong><span>lansugarden.org</span></div>
-          <div class="ledger__stack">Custom Interaction Framework, Ticketing Integrations</div>
-          <div class="ledger__impact">Interactive Community Portals: Crafted highly reliable localized cultural presentation tools featuring integrated ticketing pipelines and responsive event scheduling logic.</div>
-        </div>
-        <div class="ledger__row">
-          <div class="ledger__client"><strong>Timberline Lodge</strong><span>timberlinelodge.com</span></div>
-          <div class="ledger__stack">Reservation Integrations, Media-Rich UI</div>
-          <div class="ledger__impact">High-Traffic Hospitality UX: Developed beautiful, media-heavy reservation interfaces optimized for high-performance mobile devices and booking data processing pipelines.</div>
-        </div>
-        <div class="ledger__row">
-          <div class="ledger__client"><strong>PackRush</strong><span>packrush.com</span></div>
-          <div class="ledger__stack">Next.js, Web3 Integrations, Automated Workflows</div>
-          <div class="ledger__impact">Real-Time Interactive Platforms: Built advanced, low-latency UI components using modern JavaScript stacks to support high-velocity web apps and automated user notification states.</div>
-        </div>
-      </article>
-
+      </div>
     </div>
   </div>
 </section>
+
+<style>
+  /* ── Pillar switcher ─────────────────────────────────── */
+  .pillars {
+    margin-top: clamp(40px, 6vw, 72px);
+    display: grid;
+    gap: clamp(28px, 4vw, 48px);
+  }
+
+  /* ── Tab strip (mobile: horizontal scroller) ─────────── */
+  .pillars__tabs {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 4px 4px 12px;
+    margin: 0 calc(var(--gutter) * -1);
+    padding-left: var(--gutter);
+    padding-right: var(--gutter);
+    scrollbar-width: thin;
+    scrollbar-color: var(--line-2) transparent;
+  }
+  .pillars__tabs::-webkit-scrollbar { height: 6px; }
+  .pillars__tabs::-webkit-scrollbar-thumb { background: var(--line-2); border-radius: 999px; }
+  .pillars__tabs::-webkit-scrollbar-track { background: transparent; }
+
+  .pillars__tab {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 18px;
+    border: 1px solid var(--line);
+    background: var(--bg-2);
+    color: var(--text-2);
+    border-radius: var(--radius-pill);
+    transition: border-color .2s, color .2s, background .2s, box-shadow .2s, transform .2s;
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .pillars__tab:hover {
+    color: var(--text);
+    border-color: var(--line-2);
+  }
+  .pillars__tab:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+  .pillars__tab.is-active {
+    color: var(--bg);
+    background: var(--accent);
+    border-color: var(--accent);
+    box-shadow: 0 10px 30px -12px var(--accent-glow);
+  }
+  .pillars__tab-code {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--text-3);
+  }
+  .pillars__tab.is-active .pillars__tab-code { color: rgba(13, 17, 23, 0.65); }
+  .pillars__tab-name { font-weight: 600; }
+  .pillars__tab-count {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text-3);
+    border: 1px solid var(--line);
+  }
+  .pillars__tab.is-active .pillars__tab-count {
+    background: rgba(13, 17, 23, 0.18);
+    color: rgba(13, 17, 23, 0.85);
+    border-color: rgba(13, 17, 23, 0.18);
+  }
+
+  /* ── Panels ─────────────────────────────────────────── */
+  .pillars__panel[hidden] { display: none; }
+
+  .pillars__panel-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 18px;
+    margin-bottom: 28px;
+    border-bottom: 1px solid var(--line);
+  }
+  .pillars__panel-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-2);
+  }
+  .pillars__panel-eyebrow span { color: var(--accent); }
+  .pillars__panel-meta {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-3);
+  }
+
+  /* ── Grid of project cards (mobile-first) ─────────────── */
+  .pillars__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  @media (min-width: 640px) {
+    .pillars__grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  }
+  @media (min-width: 1024px) {
+    .pillars__grid { grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  }
+
+  .pcard {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: clamp(18px, 2.4vw, 24px);
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    transition: border-color .2s, transform .2s, box-shadow .2s, background .2s;
+    min-width: 0;
+  }
+  .pcard:hover {
+    border-color: var(--accent);
+    background: var(--bg-3);
+    box-shadow: 0 18px 40px -22px var(--accent-glow);
+    transform: translateY(-2px);
+  }
+  .pcard__client {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+  .pcard__client strong {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.01em;
+    word-break: break-word;
+  }
+  .pcard__client span {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--text-3);
+    letter-spacing: 0.02em;
+    word-break: break-word;
+  }
+  .pcard__stack {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--accent);
+    background: var(--accent-soft);
+    border: 1px solid var(--accent-glow);
+    padding: 6px 10px;
+    border-radius: 6px;
+    align-self: flex-start;
+    line-height: 1.5;
+    max-width: 100%;
+    word-break: break-word;
+  }
+  .pcard__impact {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-2);
+  }
+
+  /* ── Reduced motion ──────────────────────────────────── */
+  @media (prefers-reduced-motion: reduce) {
+    .pillars__tab,
+    .pcard { transition: none; }
+    .pcard:hover { transform: none; }
+  }
+</style>
+
+<script>
+  // Pillar tab switcher — accessible, no deps
+  const root = document.querySelector<HTMLElement>('[data-pillars]');
+  if (root) {
+    const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('.pillars__tab'));
+    const panels = Array.from(root.querySelectorAll<HTMLElement>('.pillars__panel'));
+
+    const activate = (pillar: string, focus = false) => {
+      tabs.forEach((tab) => {
+        const isActive = tab.dataset.pillar === pillar;
+        tab.classList.toggle('is-active', isActive);
+        tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        tab.tabIndex = isActive ? 0 : -1;
+        if (isActive && focus) tab.focus();
+      });
+      panels.forEach((panel) => {
+        const isActive = panel.id === `pillar-${pillar}`;
+        if (isActive) panel.removeAttribute('hidden');
+        else panel.setAttribute('hidden', '');
+      });
+    };
+
+    tabs.forEach((tab, idx) => {
+      tab.addEventListener('click', () => {
+        const pillar = tab.dataset.pillar;
+        if (pillar) activate(pillar);
+      });
+      tab.addEventListener('keydown', (e) => {
+        if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft' && e.key !== 'Home' && e.key !== 'End') return;
+        e.preventDefault();
+        let next = idx;
+        if (e.key === 'ArrowRight') next = (idx + 1) % tabs.length;
+        else if (e.key === 'ArrowLeft') next = (idx - 1 + tabs.length) % tabs.length;
+        else if (e.key === 'Home') next = 0;
+        else if (e.key === 'End') next = tabs.length - 1;
+        const pillar = tabs[next].dataset.pillar;
+        if (pillar) activate(pillar, true);
+      });
+    });
+  }
+</script>

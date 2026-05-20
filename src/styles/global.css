@@ -9,6 +9,9 @@
     --bg-2:         #11161e;
     --bg-3:         #161b22;
     --bg-elev:      #1c2230;
+    /* Section banding palette (2026-05-20) — two contrasting bands */
+    --band-a:       #0a0e14;
+    --band-b:       #171c26;
     --line:         #232a36;
     --line-2:       #2d3543;
 
@@ -931,17 +934,7 @@
     .case__shot { min-height: 360px; }
   }
 
-  /* ═══════════════════════════════════════════════════════
-     2026-05-20 — SECTION BANDING
-     Each major section gets its own full-width background, no borders.
-     ═══════════════════════════════════════════════════════ */
-  section.block { border: 0; }
-  section.block#about    { background: var(--bg); }
-  section.block#work     { background: var(--bg-2); }
-  section.block#experience { background: var(--bg); }
-  section.block#timeline { background: var(--bg-2); }
-  section.block.resume   { background: var(--bg); }
-  section.block#contact  { background: var(--bg-2); }
+  /* (Section banding + card-border sweep moved below — see end of case rules) */
 
   .case__visual {
     background: linear-gradient(135deg, var(--bg-elev) 0%, var(--bg-3) 100%);
@@ -1787,3 +1780,68 @@
     .contact-modal__backdrop,
     .contact-modal__dialog { animation: none; }
   }
+
+  /* ═══════════════════════════════════════════════════════
+     2026-05-20 — SECTION BANDING + CARD-BORDER SWEEP
+     Sections paint full-width contrasting backgrounds; inner cards
+     drop their borders so the page reads as alternating color bands
+     rather than boxes-inside-boxes.
+
+     Placed at the end of the file so these rules override the
+     per-component declarations above without needing !important
+     more than strictly necessary.
+     ═══════════════════════════════════════════════════════ */
+  body { background: var(--band-a); }
+  section.block { border: 0; }
+  section.block#about      { background: var(--band-a); }
+  section.block#work       { background: var(--band-b); }
+  section.block#experience { background: var(--band-a); }
+  section.block#timeline   { background: var(--band-b); }
+  section.block.resume     { background: var(--band-a); }
+  section.block#contact    { background: var(--band-b); }
+
+  /* Skillband / footer anchor to band-a so the page top and bottom
+     are the same tone as the first content band. */
+  .skillband { background: var(--band-a); }
+
+  /* Drop card-style borders + shadows from major content containers
+     inside the banded sections. Each card now sits flat on its band. */
+  .case,
+  .case__visual,
+  .case__shot,
+  .pillar-card,
+  .pcard,
+  .resume__card,
+  .contact__card,
+  .timeline .rev {
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+  /* Kill internal dividers between timeline rev rows */
+  .timeline .rev { border-bottom: 0 !important; }
+  /* Also kill the case__visual internal divider line that splits the
+     image column from the body column. */
+  .case__visual,
+  .case--alt .case__visual { border-right: 0 !important; border-left: 0 !important; }
+
+  /* Cases: transparent so the band shows through. */
+  .case,
+  .case__visual { background: transparent !important; }
+
+  /* Case screenshot frame: subtle gradient sourced from the opposing band
+     so the image still has a visible plate on band-b. */
+  section.block#work .case__shot {
+    background: linear-gradient(180deg, var(--band-a) 0%, var(--band-b) 100%) !important;
+  }
+
+  /* Inner cards lift off their band by using the opposing band. */
+  section.block#about .pillar-card       { background: var(--band-b) !important; }
+  section.block#experience .pcard        { background: var(--band-b) !important; }
+  section.block#timeline   .pcard        { background: var(--band-a) !important; }
+  section.block#timeline   .rev          { background: transparent !important; }
+  section.block.resume     .resume__card { background: var(--band-b) !important; }
+  section.block#contact    .contact__card{ background: var(--band-a) !important; }
+
+  /* Hover lifts: keep transforms but drop the now-irrelevant border
+     transitions on the case card. */
+  .case:hover { border-color: transparent !important; }

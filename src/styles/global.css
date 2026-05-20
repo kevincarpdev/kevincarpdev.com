@@ -114,7 +114,6 @@
     padding: clamp(80px, 10vw, 140px) 0;
     position: relative;
   }
-  section.block + section.block { border-top: 1px solid var(--line); }
 
   /* ─── BUTTONS ─────────────────────────────────────────── */
   .btn {
@@ -503,7 +502,6 @@
   }
   .hero__portrait::after {
     inset: 4%;
-    border: 1.5px solid var(--accent);
     opacity: .55;
   }
   .hero__portrait-img {
@@ -514,7 +512,7 @@
     background-repeat: no-repeat;
     background-position: center bottom;
     background-size: contain;
-    filter: drop-shadow(0 20px 40px rgba(0,0,0,.5));
+    /* filter: drop-shadow(0 20px 40px rgba(0,0,0,.5)); */
   }
   .hero__portrait-arrow {
     position: absolute;
@@ -546,8 +544,6 @@
      ═══════════════════════════════════════════════════════ */
   .skillband {
     background: var(--bg-2);
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
     padding: 0;
     height: var(--skillband-h);
     display: flex;
@@ -600,54 +596,130 @@
   }
 
   /* ═══════════════════════════════════════════════════════
-     ABOUT / EXPERTISE PILLARS
+     ABOUT / EXPERTISE — INTERACTIVE PILLAR DECK
+     Desktop: 3 cards side-by-side, one expanded (the active one).
+     Tablet:  3 equal cards, all expanded.
+     Mobile:  horizontal snap-scroll carousel with dot indicators.
      ═══════════════════════════════════════════════════════ */
-  .pillars-wrap {
+  .pillars-deck {
+    margin-top: clamp(40px, 5vw, 70px);
     display: grid;
-    grid-template-columns: 1.1fr 1fr;
-    gap: clamp(40px, 6vw, 80px);
-    margin-top: clamp(50px, 6vw, 90px);
-    align-items: start;
+    /* The active card grows ~2.4x; collapsed cards stay narrow rails */
+    grid-template-columns: 2.4fr 1fr 1fr;
+    gap: 14px;
+    align-items: stretch;
+    transition: grid-template-columns .55s cubic-bezier(.2,.8,.2,1);
   }
-  @media (max-width: 980px) { .pillars-wrap { grid-template-columns: 1fr; } }
+  /* When card 2 is active, swap the fractions */
+  .pillars-deck:has(.pillar-card[data-pillar="02"].is-active) {
+    grid-template-columns: 1fr 2.4fr 1fr;
+  }
+  .pillars-deck:has(.pillar-card[data-pillar="03"].is-active) {
+    grid-template-columns: 1fr 1fr 2.4fr;
+  }
 
-  .pillar {
-    display: grid;
-    grid-template-columns: 56px 1fr;
-    gap: 24px;
-    padding: 28px 0;
-    border-top: 1px solid var(--line);
+  .pillar-card {
+    /* reset button */
+    appearance: none;
+    background: var(--bg-3);
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    /* card chrome */
     position: relative;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 28px 26px;
+    min-height: 320px;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: 22px;
+    transition:
+      border-color .35s ease,
+      background .35s ease,
+      transform .35s ease,
+      box-shadow .35s ease;
   }
-  .pillar:last-child { border-bottom: 1px solid var(--line); }
-  .pillar__num {
+  .pillar-card:hover { border-color: var(--line-2); }
+  .pillar-card:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+  .pillar-card.is-active {
+    border-color: var(--accent);
+    background: linear-gradient(180deg, var(--bg-3) 0%, var(--bg-2) 100%);
+    box-shadow: 0 30px 80px -40px rgba(0,0,0,.6), 0 0 0 1px var(--accent) inset;
+  }
+  .pillar-card.is-active .pillar-card__num { color: var(--bg); background: var(--accent); }
+  .pillar-card.is-active .pillar-card__title em { color: var(--accent); }
+
+  .pillar-card__rail {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .pillar-card__num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: var(--bg-2);
+    border: 1px solid var(--line-2);
     font-family: var(--font-mono);
-    font-size: 14px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .04em;
     color: var(--accent);
-    font-weight: 600;
-    letter-spacing: .05em;
-    padding-top: 6px;
+    transition: background .3s ease, color .3s ease;
   }
-  .pillar__title {
-    font-size: clamp(22px, 2.4vw, 28px);
+  .pillar-card__label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .18em;
+    color: var(--text-2);
+    white-space: nowrap;
+  }
+
+  .pillar-card__body {
+    /* On collapsed (inactive) cards we hide the body except title.
+       Title rotates 90° to read like a book spine — that's the magic. */
+    display: grid;
+    align-content: start;
+    gap: 14px;
+    overflow: hidden;
+  }
+  .pillar-card__title {
+    font-size: clamp(20px, 1.9vw, 26px);
     font-weight: 700;
     letter-spacing: -0.015em;
-    line-height: 1.2;
+    line-height: 1.18;
+    margin: 0;
+    transition: color .3s ease;
   }
-  .pillar__title em { color: var(--accent); font-style: normal; }
-  .pillar__desc {
+  .pillar-card__title em { font-style: normal; color: var(--text); transition: color .3s ease; }
+  .pillar-card__desc {
     color: var(--text-2);
-    margin-top: 10px;
-    font-size: 15.5px;
+    font-size: 15px;
     line-height: 1.65;
+    margin: 0;
+    /* fade content for collapsed cards */
+    opacity: 1;
+    max-height: 600px;
+    transition: opacity .35s ease, max-height .45s ease;
   }
-  .pillar__tags {
-    margin-top: 16px;
+  .pillar-card__tags {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
+    opacity: 1;
+    transition: opacity .35s ease;
   }
-  .pillar__tag {
+  .pillar-card__tag {
     padding: 6px 12px;
     border: 1px solid var(--line-2);
     border-radius: var(--radius-pill);
@@ -655,6 +727,118 @@
     font-size: 11px;
     color: var(--text-2);
     letter-spacing: .03em;
+    white-space: nowrap;
+  }
+
+  /* COLLAPSED state — only on desktop with hover/click model */
+  @media (min-width: 901px) {
+    .pillar-card:not(.is-active) .pillar-card__desc,
+    .pillar-card:not(.is-active) .pillar-card__tags {
+      opacity: 0;
+      max-height: 0;
+      pointer-events: none;
+    }
+    .pillar-card:not(.is-active) .pillar-card__title {
+      font-size: 18px;
+      opacity: .82;
+    }
+    .pillar-card:not(.is-active):hover {
+      transform: translateY(-2px);
+    }
+  }
+
+  /* Subtle accent glow that animates when active */
+  .pillar-card__glow {
+    position: absolute;
+    inset: -1px;
+    border-radius: var(--radius-lg);
+    pointer-events: none;
+    opacity: 0;
+    background:
+      radial-gradient(600px 200px at 0% 0%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 60%),
+      radial-gradient(500px 200px at 100% 100%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 60%);
+    transition: opacity .5s ease;
+  }
+  .pillar-card.is-active .pillar-card__glow { opacity: 1; }
+
+  /* ── Tablet: 3 equal cards, fully expanded ── */
+  @media (max-width: 1100px) and (min-width: 721px) {
+    .pillars-deck,
+    .pillars-deck:has(.pillar-card[data-pillar="02"].is-active),
+    .pillars-deck:has(.pillar-card[data-pillar="03"].is-active) {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+    .pillar-card { min-height: 0; }
+    .pillar-card:not(.is-active) .pillar-card__desc,
+    .pillar-card:not(.is-active) .pillar-card__tags { opacity: 1; max-height: 600px; pointer-events: auto; }
+    .pillar-card:not(.is-active) .pillar-card__title { font-size: clamp(20px, 1.9vw, 26px); opacity: 1; }
+  }
+
+  /* ── Mobile: snap-scroll carousel ── */
+  @media (max-width: 720px) {
+    .pillars-deck {
+      display: flex;
+      grid-template-columns: none !important;
+      gap: 14px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-padding: 0 20px;
+      padding: 4px 20px 20px;
+      margin-left: -20px;
+      margin-right: -20px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .pillars-deck::-webkit-scrollbar { display: none; }
+    .pillar-card {
+      flex: 0 0 86%;
+      scroll-snap-align: center;
+      min-height: 0;
+    }
+    /* every card shows full content on mobile */
+    .pillar-card .pillar-card__desc,
+    .pillar-card .pillar-card__tags { opacity: 1; max-height: 600px; pointer-events: auto; }
+    .pillar-card .pillar-card__title { font-size: 22px; opacity: 1; }
+  }
+
+  /* Carousel dots — visible only on mobile */
+  .pillars-dots {
+    display: none;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 14px;
+  }
+  @media (max-width: 720px) { .pillars-dots { display: flex; } }
+  .pillars-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: var(--line-2);
+    transition: width .3s ease, background .3s ease;
+  }
+  .pillars-dot.is-active {
+    width: 22px;
+    background: var(--accent);
+  }
+
+  /* Meta row underneath the deck — stats on left, "currently" on right */
+  .pillars-meta {
+    margin-top: clamp(36px, 5vw, 56px);
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: clamp(20px, 3vw, 40px);
+    align-items: stretch;
+  }
+  @media (max-width: 900px) {
+    .pillars-meta { grid-template-columns: 1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pillars-deck,
+    .pillar-card,
+    .pillar-card__desc,
+    .pillar-card__tags,
+    .pillar-card__glow { transition: none !important; }
   }
 
   /* stats inline with intro */

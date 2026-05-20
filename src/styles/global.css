@@ -212,12 +212,32 @@
     gap: 32px;
   }
   .nav__link {
-    font-size: 14px;
-    font-weight: 500;
+    --fill: 0%;
+    position: relative;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.005em;
     color: var(--text-2);
-    transition: color .2s ease;
+    background: linear-gradient(90deg, var(--accent) var(--fill), var(--text-2) var(--fill));
+    -webkit-background-clip: text;
+            background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: --fill .12s linear, font-size .2s ease, color .2s ease;
   }
-  .nav__link:hover { color: var(--text); }
+  .nav__link:hover {
+    color: var(--text);
+    -webkit-text-fill-color: var(--text);
+  }
+  /* When a link is the actively-scrolled section, hover/active drops the gradient hint */
+  .nav__link.is-active {
+    font-size: 17px;
+  }
+  /* Animate the custom property via @property so the gradient stop tweens smoothly */
+  @property --fill {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 0%;
+  }
   .nav__cta { display: flex; gap: 12px; align-items: center; }
   .nav__cta .btn { padding: 10px 18px; font-size: 13px; }
 

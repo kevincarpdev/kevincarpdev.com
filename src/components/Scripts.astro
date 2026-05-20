@@ -48,6 +48,94 @@
     });
   })();
 
+  // ── Pillar deck (tabs + mobile carousel sync) ────────────────
+  (function () {
+    const deck = document.querySelector('.pillars-deck');
+    if (!deck) return;
+    const cards = Array.from(deck.querySelectorAll('.pillar-card'));
+    const dots  = Array.from(document.querySelectorAll('.pillars-dots .pillars-dot'));
+    if (!cards.length) return;
+
+    function activate(idx, opts = {}) {
+      cards.forEach((c, i) => {
+        const active = i === idx;
+        c.classList.toggle('is-active', active);
+        c.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
+      dots.forEach((d, i) => d.classList.toggle('is-active', i === idx));
+
+      // On mobile (carousel mode), scroll the chosen card into view.
+      if (opts.scroll && window.matchMedia('(max-width: 720px)').matches) {
+        cards[idx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    }
+
+    // Click / focus to activate (desktop tablist behavior)
+    cards.forEach((card, idx) => {
+      card.addEventListener('click', () => activate(idx, { scroll: true }));
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+          e.preventDefault();
+          const next = (idx + 1) % cards.length;
+          cards[next].focus();
+          activate(next, { scroll: true });
+        } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+          e.preventDefault();
+          const prev = (idx - 1 + cards.length) % cards.length;
+          cards[prev].focus();
+          activate(prev, { scroll: true });
+        }
+      });
+    });
+
+    // Dot tap → activate
+    dots.forEach((dot, idx) => {
+      dot.addEventListener('click', () => activate(idx, { scroll: true }));
+    });
+
+    // On mobile, sync dots with scroll position via IntersectionObserver
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        if (!window.matchMedia('(max-width: 720px)').matches) return;
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.intersectionRatio > 0.6) {
+            const idx = cards.indexOf(entry.target);
+            if (idx >= 0) activate(idx);
+          }
+        });
+      }, { root: deck, threshold: [0.6] });
+      cards.forEach(c => io.observe(c));
+    }
+
+    // Auto-rotate on desktop, but pause on hover/focus (subtle ambience)
+    let autoTimer = null;
+    function startAuto() {
+      if (window.matchMedia('(max-width: 720px)').matches) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      stopAuto();
+      autoTimer = setInterval(() => {
+        const currentIdx = cards.findIndex(c => c.classList.contains('is-active'));
+        const next = (currentIdx + 1) % cards.length;
+        activate(next);
+      }, 5500);
+    }
+    function stopAuto() { if (autoTimer) { clearInterval(autoTimer); autoTimer = null; } }
+    deck.addEventListener('mouseenter', stopAuto);
+    deck.addEventListener('mouseleave', startAuto);
+    deck.addEventListener('focusin', stopAuto);
+    deck.addEventListener('focusout', startAuto);
+    // Kick off after the section is in view
+    if ('IntersectionObserver' in window) {
+      const sectionIO = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) { startAuto(); }
+          else { stopAuto(); }
+        });
+      }, { threshold: 0.25 });
+      sectionIO.observe(deck);
+    }
+  })();
+
   // ── Reveal on scroll ─────────────────────────────────────────
   (function () {
     const items = document.querySelectorAll('.reveal');

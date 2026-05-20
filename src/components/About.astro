@@ -12,58 +12,78 @@
       </p>
     </div>
 
-    <div class="pillars-wrap">
-      <div class="reveal">
-        <div class="pillar">
-          <div class="pillar__num">01</div>
-          <div>
-            <h3 class="pillar__title">Headless &amp; Hybrid <em>Storefronts.</em></h3>
-            <p class="pillar__desc">
-              Decoupling Fortune-500 catalogs from platform ceilings. I build React/Next.js storefronts that sit on top of BigCommerce, Shopify or custom backends — without losing the ERP, ops, and tax plumbing the business already depends on.
-            </p>
-            <div class="pillar__tags">
-              <span class="pillar__tag">BigCommerce React Hybrid</span>
-              <span class="pillar__tag">Next.js + Shopify</span>
-              <span class="pillar__tag">SSR / ISR / Edge</span>
-              <span class="pillar__tag">Sanity · Payload</span>
-            </div>
+    <!-- Interactive pillar deck: expandable cards on desktop, snap-carousel on mobile -->
+    <div class="pillars-deck reveal" role="tablist" aria-label="Core pillars">
+      <button class="pillar-card is-active" data-pillar="01" role="tab" aria-selected="true" type="button">
+        <div class="pillar-card__rail">
+          <span class="pillar-card__num">01</span>
+          <span class="pillar-card__label">Storefronts</span>
+        </div>
+        <div class="pillar-card__body">
+          <h3 class="pillar-card__title">Headless &amp; Hybrid <em>Storefronts.</em></h3>
+          <p class="pillar-card__desc">
+            Decoupling Fortune-500 catalogs from platform ceilings. I build React/Next.js storefronts that sit on top of BigCommerce, Shopify or custom backends — without losing the ERP, ops, and tax plumbing the business already depends on.
+          </p>
+          <div class="pillar-card__tags">
+            <span class="pillar-card__tag">BigCommerce React Hybrid</span>
+            <span class="pillar-card__tag">Next.js + Shopify</span>
+            <span class="pillar-card__tag">SSR / ISR / Edge</span>
+            <span class="pillar-card__tag">Sanity · Payload</span>
           </div>
         </div>
+        <span class="pillar-card__glow" aria-hidden="true"></span>
+      </button>
 
-        <div class="pillar">
-          <div class="pillar__num">02</div>
-          <div>
-            <h3 class="pillar__title">High-Compliance &amp; <em>Regulated.</em></h3>
-            <p class="pillar__desc">
-              Architecting systems that have to pass federal audits, not just unit tests. iGaming, identity, and government-regulated platforms with geofencing, responsible-play workflows, immutable evidence frameworks, and cryptographic verification at the boundary.
-            </p>
-            <div class="pillar__tags">
-              <span class="pillar__tag">Federal / State iGaming</span>
-              <span class="pillar__tag">Geofencing</span>
-              <span class="pillar__tag">Immutable Evidence</span>
-              <span class="pillar__tag">Crypto Identity</span>
-            </div>
+      <button class="pillar-card" data-pillar="02" role="tab" aria-selected="false" type="button">
+        <div class="pillar-card__rail">
+          <span class="pillar-card__num">02</span>
+          <span class="pillar-card__label">Compliance</span>
+        </div>
+        <div class="pillar-card__body">
+          <h3 class="pillar-card__title">High-Compliance &amp; <em>Regulated.</em></h3>
+          <p class="pillar-card__desc">
+            Architecting systems that have to pass federal audits, not just unit tests. iGaming, identity, and government-regulated platforms with geofencing, responsible-play workflows, immutable evidence frameworks, and cryptographic verification at the boundary.
+          </p>
+          <div class="pillar-card__tags">
+            <span class="pillar-card__tag">Federal / State iGaming</span>
+            <span class="pillar-card__tag">Geofencing</span>
+            <span class="pillar-card__tag">Immutable Evidence</span>
+            <span class="pillar-card__tag">Crypto Identity</span>
           </div>
         </div>
+        <span class="pillar-card__glow" aria-hidden="true"></span>
+      </button>
 
-        <div class="pillar">
-          <div class="pillar__num">03</div>
-          <div>
-            <h3 class="pillar__title">Enterprise Middleware &amp; <em>Cloud.</em></h3>
-            <p class="pillar__desc">
-              The unglamorous backbone — NetSuite/ERP integration, Celigo orchestration, Azure Functions, Cosmos DB, AWS, and the serverless plumbing that lets a startup look enterprise and an enterprise move like a startup.
-            </p>
-            <div class="pillar__tags">
-              <span class="pillar__tag">NetSuite ↔ Shopify/BC</span>
-              <span class="pillar__tag">Celigo / iPaaS</span>
-              <span class="pillar__tag">Azure Functions</span>
-              <span class="pillar__tag">Postgres · Supabase · AWS</span>
-            </div>
+      <button class="pillar-card" data-pillar="03" role="tab" aria-selected="false" type="button">
+        <div class="pillar-card__rail">
+          <span class="pillar-card__num">03</span>
+          <span class="pillar-card__label">Middleware</span>
+        </div>
+        <div class="pillar-card__body">
+          <h3 class="pillar-card__title">Enterprise Middleware &amp; <em>Cloud.</em></h3>
+          <p class="pillar-card__desc">
+            The unglamorous backbone — NetSuite/ERP integration, Celigo orchestration, Azure Functions, Cosmos DB, AWS, and the serverless plumbing that lets a startup look enterprise and an enterprise move like a startup.
+          </p>
+          <div class="pillar-card__tags">
+            <span class="pillar-card__tag">NetSuite ↔ Shopify/BC</span>
+            <span class="pillar-card__tag">Celigo / iPaaS</span>
+            <span class="pillar-card__tag">Azure Functions</span>
+            <span class="pillar-card__tag">Postgres · Supabase · AWS</span>
           </div>
         </div>
-      </div>
+        <span class="pillar-card__glow" aria-hidden="true"></span>
+      </button>
+    </div>
 
-      <div class="reveal">
+    <!-- Carousel dot indicators (visible on mobile only) -->
+    <div class="pillars-dots reveal" aria-hidden="true">
+      <span class="pillars-dot is-active" data-dot="01"></span>
+      <span class="pillars-dot" data-dot="02"></span>
+      <span class="pillars-dot" data-dot="03"></span>
+    </div>
+
+    <div class="pillars-meta reveal">
+      <div class="pillars-meta__stats">
         <div class="stats">
           <div class="stats__cell">
             <div class="stats__v">120<small>+</small></div>
@@ -88,8 +108,10 @@
           <span>McDonald's</span><span class="sep"></span>
           <span>Northwest Permanente</span>
         </div>
+      </div>
 
-        <div style="margin-top:36px; padding:24px; border:1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-3);">
+      <div class="pillars-meta__currently">
+        <div style="padding:24px; border:1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-3); height: 100%;">
           <div style="font-family:var(--font-mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent);">Currently</div>
           <div style="font-size: 19px; font-weight: 700; margin-top: 8px; letter-spacing: -0.015em;">Architecting Headless-Lite for Fortune 500</div>
           <p style="color:var(--text-2); font-size: 14.5px; line-height:1.65; margin-top:8px;">Designing React hybrid storefronts embedded into BigCommerce — a new pattern for Fortune-500 catalogs that need scale and platform safety in the same build.</p>

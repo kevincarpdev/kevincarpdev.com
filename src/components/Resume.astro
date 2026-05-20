@@ -1,0 +1,154 @@
+---
+// Resume summary — a scannable web resume so the page itself tells the story
+// before someone has to download a DOCX. Added 2026-05-20.
+---
+<!-- ═══════════ RESUME SUMMARY ═══════════ -->
+<section class="block resume" id="resume">
+  <div class="container">
+    <div class="reveal">
+      <span class="eyebrow">07 · Resume</span>
+      <h2 class="section-title">Kevin Carpenter, <em>at a glance.</em></h2>
+      <p class="section-sub">
+        Senior Full-Stack Architect · Headless Commerce · Regulated Systems · Enterprise Integrations
+      </p>
+    </div>
+
+    <div class="resume__grid reveal">
+      <div class="resume__summary">
+        <h3 class="resume__h">Summary</h3>
+        <p>
+          14+ years designing and shipping commerce platforms, regulated systems, and enterprise integrations. Deep experience across React, Next.js, TypeScript, Node.js, Shopify, BigCommerce, NetSuite, AWS, Azure, and serverless architecture. I build systems that connect storefronts to operational infrastructure without sacrificing scale, security, or maintainability.
+        </p>
+
+        <h3 class="resume__h">Core Strengths</h3>
+        <ul class="resume__list">
+          <li>Headless and hybrid commerce</li>
+          <li>ERP and middleware architecture</li>
+          <li>Regulated and compliance-heavy platforms</li>
+          <li>Technical leadership and long-term partnerships</li>
+          <li>Performance, reliability, and systems integration</li>
+        </ul>
+      </div>
+
+      <aside class="resume__side">
+        <div class="resume__card">
+          <h3 class="resume__h">Core Stack</h3>
+          <div class="resume__chips">
+            <span class="chip is-key">React</span>
+            <span class="chip is-key">Next.js</span>
+            <span class="chip is-key">TypeScript</span>
+            <span class="chip is-key">Node.js</span>
+            <span class="chip">Shopify</span>
+            <span class="chip">BigCommerce</span>
+            <span class="chip">NetSuite</span>
+            <span class="chip">Celigo</span>
+            <span class="chip">AWS</span>
+            <span class="chip">Azure Functions</span>
+            <span class="chip">Cosmos DB</span>
+            <span class="chip">PostgreSQL</span>
+            <span class="chip">Supabase</span>
+            <span class="chip">Sanity</span>
+            <span class="chip">Payload</span>
+            <span class="chip">Tailwind</span>
+          </div>
+
+          <h3 class="resume__h">Highlights</h3>
+          <ul class="resume__list resume__list--mono">
+            <li><strong>Principal Architect</strong> · Rust-Oleum Home · React hybrid on BigCommerce</li>
+            <li><strong>Lead Architect</strong> · DC iLottery · regulated iGaming platform</li>
+            <li><strong>10-yr Partner</strong> · Nuun · NetSuite ↔ Headless Shopify</li>
+            <li><strong>Founder / Engineer</strong> · AgeVerify · privacy-first IDV SDK</li>
+          </ul>
+
+          <a class="btn btn--primary btn--lg resume__download" href="assets/files/Kevin%20Resume.docx" download>Download Full Resume ↓</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<style>
+  .resume__grid {
+    margin-top: clamp(32px, 4vw, 56px);
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: clamp(24px, 4vw, 56px);
+    align-items: start;
+  }
+  @media (max-width: 880px) {
+    .resume__grid { grid-template-columns: 1fr; }
+  }
+
+  .resume__h {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 12px;
+  }
+  .resume__summary > .resume__h:not(:first-child) {
+    margin-top: 28px;
+  }
+  .resume__summary p {
+    color: var(--text-2);
+    font-size: 16px;
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  .resume__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 10px;
+  }
+  .resume__list li {
+    position: relative;
+    padding-left: 18px;
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.55;
+  }
+  .resume__list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 8px;
+    height: 1px;
+    background: var(--accent);
+  }
+  .resume__list--mono li {
+    font-size: 14px;
+    color: var(--text-2);
+  }
+  .resume__list--mono li strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .resume__card {
+    padding: clamp(20px, 3vw, 32px);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--bg-2);
+    display: grid;
+    gap: 22px;
+  }
+  .resume__card .resume__h {
+    margin: 0 0 -6px;
+  }
+
+  .resume__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .resume__download {
+    margin-top: 6px;
+    justify-content: center;
+  }
+</style>

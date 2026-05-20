@@ -29,12 +29,11 @@
     window.addEventListener('resize', () => { if (window.innerWidth > 880) setDrawer(false); });
   })();
 
-  // ── Scroll-spy: highlight nav link of the section in view + fill it ──
+  // ── Scroll-spy: highlight the nav link of the section in view ──
   (function () {
     const links = Array.from(document.querySelectorAll('.nav__link[data-section], .nav__drawer-link[data-section]'));
     if (!links.length) return;
 
-    // Map section id → { el, links: [navLink, drawerLink] }
     const groups = new Map();
     links.forEach(link => {
       const id = link.dataset.section;
@@ -50,46 +49,24 @@
       return navEl ? navEl.getBoundingClientRect().height : 64;
     }
 
-    function clearFill(link) {
-      link.style.removeProperty('--fill');
-      link.classList.remove('is-active');
-    }
-
     function update() {
-      const offset = navHeight() + 24; // anchor line just below the sticky nav
-      const probe = window.scrollY + offset;
+      const probe = window.scrollY + navHeight() + 24;
       let activeId = null;
-
       groups.forEach(({ el }, id) => {
         const top = el.offsetTop;
         const bottom = top + el.offsetHeight;
         if (probe >= top && probe < bottom) activeId = id;
       });
-
-      // Fallback: if above the first tracked section, no active; if below the last, last is active.
+      // If we're below the last tracked section, keep it active
       if (!activeId) {
         const ids = Array.from(groups.keys());
-        const last = groups.get(ids[ids.length - 1]).el;
-        if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 4) {
-          activeId = ids[ids.length - 1];
-        } else if (probe >= last.offsetTop) {
-          activeId = ids[ids.length - 1];
-        }
+        const lastId = ids[ids.length - 1];
+        const lastTop = groups.get(lastId).el.offsetTop;
+        if (probe >= lastTop) activeId = lastId;
       }
-
-      groups.forEach(({ el, links }, id) => {
-        if (id === activeId) {
-          const top = el.offsetTop;
-          const height = el.offsetHeight || 1;
-          const progressed = Math.min(1, Math.max(0, (probe - top) / height));
-          const pct = (progressed * 100).toFixed(1) + '%';
-          links.forEach(l => {
-            l.classList.add('is-active');
-            l.style.setProperty('--fill', pct);
-          });
-        } else {
-          links.forEach(clearFill);
-        }
+      groups.forEach(({ links }, id) => {
+        const on = id === activeId;
+        links.forEach(l => l.classList.toggle('is-active', on));
       });
     }
 

@@ -287,11 +287,7 @@
      ═══════════════════════════════════════════════════════ */
   .hero {
     position: relative;
-    /* Leave room so the skill marquee sits visible at the bottom of the viewport on load.
-       Use dvh on supporting browsers to avoid mobile address-bar jumps. */
-    min-height: calc(100vh - var(--skillband-h, 90px));
-    min-height: calc(100dvh - var(--skillband-h, 90px));
-    padding-top: calc(var(--nav-h) + 24px);
+    padding-top: calc(var(--nav-h));
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -303,13 +299,13 @@
 
   .hero__inner {
     display: grid;
-    grid-template-columns: 1.15fr 1fr;
-    gap: clamp(32px, 6vw, 80px);
-    align-items: center;
-    padding-bottom: clamp(40px, 8vh, 80px);
+    grid-template-columns: 1fr 1.12fr;
+    gap: clamp(28px, 5vw, 72px);
+    align-items: end;
+    padding: 0;
   }
 
-  .hero__left { position: relative; z-index: 2; }
+  .hero__left { position: relative; z-index: 2; padding-top: clamp(24px, 4vh, 48px); padding-bottom: clamp(24px, 4vh, 48px);}
 
   .hero__status {
     position: relative;
@@ -490,37 +486,29 @@
   /* portrait */
   .hero__portrait {
     position: relative;
-    aspect-ratio: 1 / 1;
-    max-width: 540px;
-    margin-left: auto;
     width: 100%;
+    height: 100%;
+    margin-left: auto;
+    align-self: end;
+    display: flex;
+    align-items: flex-end;
+    overflow: visible;
   }
-  .hero__portrait::before,
+
   .hero__portrait::after {
-    content: "";
-    position: absolute;
-    border-radius: 50%;
-    pointer-events: none;
-  }
-  .hero__portrait::before {
-    /* Subtle inner glow only — no fill, so the line-art bio reads clearly */
-    inset: 4%;
-    background: radial-gradient(circle at center, rgba(255,107,74,0.10) 0%, rgba(255,107,74,0.04) 45%, transparent 70%);
-    opacity: .9;
-  }
-  .hero__portrait::after {
-    inset: 4%;
+    inset: -2% -4% 0 -4%;
     opacity: .55;
   }
   .hero__portrait-img {
     position: relative;
     z-index: 2;
-    width: 100%; height: 100%;
-    background-image: url("assets/photos/Bio.png");
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    background-image: url("/assets/photos/Bio.svg");
     background-repeat: no-repeat;
     background-position: center bottom;
-    background-size: contain;
-    /* filter: drop-shadow(0 20px 40px rgba(0,0,0,.5)); */
+    background-size: 100% auto;
   }
   .hero__portrait-arrow {
     position: absolute;
@@ -539,7 +527,7 @@
 
   @media (max-width: 980px) {
     .hero__inner { grid-template-columns: 1fr; gap: 40px; }
-    .hero__portrait { max-width: 360px; margin: 0 auto; order: -1; }
+    .hero__portrait { max-width: 360px; margin: 0 auto; order: -1; aspect-ratio: 1 / 1; }
     .hero__meta { margin: 36px auto 0; }
   }
   @media (max-width: 560px) {

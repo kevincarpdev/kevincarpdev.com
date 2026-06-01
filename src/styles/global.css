@@ -302,7 +302,6 @@
     grid-template-columns: 1fr 1.12fr;
     gap: clamp(28px, 5vw, 72px);
     align-items: end;
-    padding: 0;
   }
 
   .hero__left { position: relative; z-index: 2; padding-top: clamp(24px, 4vh, 48px); padding-bottom: clamp(24px, 4vh, 48px); min-width: 0;}

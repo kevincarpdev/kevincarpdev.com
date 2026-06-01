@@ -1126,8 +1126,8 @@
   }
   @media (max-width: 560px) {
     .hero { padding-top: var(--nav-h); }
-    .hero__inner { gap: 20px; }
-    .hero__left { padding-top: 16px; padding-bottom: 16px; }
+    .hero__inner { gap: 0; }
+    .hero__left { padding-top: 16px; padding-bottom: 0; }
     .hero__portrait { max-width: 280px; aspect-ratio: 3 / 4; }
     .hero__portrait-arrow { font-size: 56px; }
     .hero__portrait-arrow--l { left: -6%; }

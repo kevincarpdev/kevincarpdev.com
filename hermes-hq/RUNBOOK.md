@@ -22,7 +22,8 @@ The dashboard and the Hermes CLI point at the **same Honcho workspace**, so what
 | Credential | Where to get it | Used for |
 |---|---|---|
 | Honcho API key | app.honcho.dev → API KEYS | memory (you have this) |
-| Anthropic API key | console.anthropic.com | chat + drafting + job scoring |
+| Nous Portal API key | portal.nousresearch.com | chat + drafting + job scoring (`LLM_API_KEY`) |
+| Anthropic API key (alt) | platform.claude.com | same, if/when you switch off Nous |
 | Domain (optional but recommended) | point an A record, e.g. `hq.kevincarpdev.com` → `2.24.223.193` | HTTPS via Caddy |
 | GitHub PAT or deploy keys | github.com → settings | phase 2: repo access for the agent |
 | Slack bot token | api.slack.com app | phase 2 |
@@ -46,6 +47,16 @@ No repo yet? From your Mac: `rsync -av --exclude data --exclude .env hermes-hq/ 
 
 Open `http://2.24.223.193` (or `https://hq.kevincarpdev.com` if DOMAIN set). First visit with an empty user table offers a create-admin form, so `add_user` is optional for the first account.
 
+**Caddy fails with "port 80 already in use":** something else owns the port. Find it and clear it:
+
+```bash
+ss -ltnp | grep -E ':80 |:443 '          # shows the process
+systemctl disable --now apache2 2>/dev/null; systemctl disable --now nginx 2>/dev/null
+docker compose up -d                      # retry
+```
+
+If the listener is something you need to keep, change Caddy's ports in `docker-compose.yml` instead (e.g. `8080:80`).
+
 ## 2 · Honcho: clean slate
 
 Honcho memory is scoped by **workspace**, so "clearing" is just starting a fresh workspace — no deletion needed:
@@ -66,17 +77,30 @@ Sessions: `proj-stryker-bc`, `proj-fg-parent-portal` (work chat) and `comms-<con
 ```bash
 ssh root@2.24.223.193
 
-# clear any existing hermes state (memory, sessions, skills, config)
+# clear ALL existing hermes state (memory, sessions, skills, config + honcho link)
 mv ~/.hermes ~/.hermes.backup.$(date +%F) 2>/dev/null || true
+mv ~/.honcho ~/.honcho.backup.$(date +%F) 2>/dev/null || true
 
 git clone https://github.com/plastic-labs/hermes-honcho /opt/hermes && cd /opt/hermes
-# follow its README install (uv/python 3.11+), then in ~/.hermes/.env set:
-#   ANTHROPIC_API_KEY=...            (same key as the dashboard)
-#   HONCHO_API_KEY=...               (same key)
-#   HONCHO_WORKSPACE_ID=kc-hq-v1     (MUST match the dashboard .env)
+# install per its README (uv/python 3.11+)
+
+# model provider — Nous Portal (one OAuth, no YAML editing):
+hermes setup --portal
+# then set/change the default model any time, inside the CLI:  /model Hermes-4-405B
+# (persists to ~/.hermes/config.yaml; `hermes config set KEY value` writes ~/.hermes/.env)
+
+# honcho memory — run the built-in wizard:
+hermes memory setup honcho
+#   Cloud or local?      cloud
+#   Honcho API key:      hch-v3-...        (same key as dashboard .env)
+#   Your name (user peer): team-kevin      (match your dashboard peer: team-<username>)
+#   AI peer name:        assistant         (match the dashboard's assistant peer)
+#   Workspace ID:        kc-hq-v1          (MUST match dashboard .env)
+#   Deployment shape:    single            (all routes to your peer; revisit when teammates get their own linux users or a gateway bot goes multi-user)
+# config lands in ~/.hermes/honcho.json
 ```
 
-State lives in `~/.hermes/` (config.yaml, .env, sessions/, state.db, skills) — that `mv` is the "clear memory + skills" step. Local-only state like old skills won't carry over; Honcho-side learning is isolated by workspace as above.
+The matching workspace + peer names are what make CLI + web one shared brain. Hermes state lives in `~/.hermes/` (config.yaml, .env, sessions/, state.db, skills) and `~/.honcho/` — the two `mv` commands are the full "clear memory + skills" step; Honcho-cloud learning is isolated per workspace as above.
 
 Run it in tmux so sessions survive disconnects:
 
@@ -88,6 +112,22 @@ cd /opt/hermes && <its run command>    # per repo README, e.g. `hermes`
 
 ### Team SSH model
 Simplest (fine to start): everyone uses `root`, one shared `~/.hermes`, and tells Hermes who they are. Better once it sticks: one Linux user per teammate (`adduser jim`), each with their own `~/.hermes/.env` using the same workspace — then Honcho cleanly learns each person. Use SSH keys, not passwords (`ssh-copy-id`), and consider disabling password login in `/etc/ssh/sshd_config`.
+
+### Model catalogs: API key vs subscription proxy
+
+Your `sk-nous-...` key against `inference-api.nousresearch.com/v1` serves **Nous models only** (Hermes-4-405B etc.). To use the wider Portal subscription catalog (Claude, GPT, Gemini...) from the dashboard, run Hermes' subscription proxy on the VPS and point the app at it:
+
+```bash
+tmux new -s nousproxy
+hermes proxy start --host 0.0.0.0 --port 8645    # uses your `hermes login nous` OAuth
+# Ctrl+B, D to detach. ufw blocks 8645 externally, but allow docker → host:
+ufw allow from 172.16.0.0/12 to any port 8645
+curl -s http://127.0.0.1:8645/v1/models | python3 -m json.tool   # exact model ids
+```
+
+Then in `.env`: `LLM_BASE_URL=http://host.docker.internal:8645/v1`, `LLM_API_KEY=any-string`, `LLM_MODEL=<id from the list>`, and `docker compose up -d --force-recreate app`.
+
+After ANY `.env` change: `docker compose up -d --force-recreate app`.
 
 ## 4 · Day-to-day flow
 

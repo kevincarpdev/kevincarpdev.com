@@ -36,6 +36,7 @@ def require_user(request: Request):
 def page_ctx(request, user, db, **extra):
     return {"request": request, "user": user,
             "honcho_on": hc.enabled(), "ai_on": ai.enabled(),
+            "ai_label": ai.provider_label(),
             "workspace_id": HONCHO_WORKSPACE_ID, **extra}
 
 
@@ -159,7 +160,8 @@ def settings_page(request: Request, db=Depends(db_session)):
 
 @app.get("/healthz")
 def healthz():
-    return {"ok": True, "honcho": hc.enabled(), "ai": ai.enabled()}
+    return {"ok": True, "honcho": hc.enabled(), "ai": ai.enabled(),
+            "provider": ai.provider_label()}
 
 
 # ---------- project APIs ----------

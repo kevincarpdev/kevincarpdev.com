@@ -1,40 +1,82 @@
-"""Anthropic-powered chat, drafting, and job-fit scoring."""
+"""LLM-powered chat, drafting, and job-fit scoring.
+
+Providers (checked in order):
+  1. OpenAI-compatible endpoint (LLM_BASE_URL + LLM_API_KEY) — e.g. Nous Portal
+  2. Anthropic (ANTHROPIC_API_KEY)
+"""
 import json
 import logging
 
-from .config import ANTHROPIC_API_KEY, ANTHROPIC_MODEL
+from .config import (ANTHROPIC_API_KEY, ANTHROPIC_MODEL, LLM_API_KEY,
+                     LLM_BASE_URL, LLM_MODEL)
 from . import honcho_client as hc
 
 log = logging.getLogger("hq.ai")
 
-OFFLINE_MSG = ("AI is offline: set ANTHROPIC_API_KEY in .env and restart "
-               "(docker compose up -d).")
+OFFLINE_MSG = ("AI is offline: set LLM_API_KEY (+ LLM_BASE_URL) or "
+               "ANTHROPIC_API_KEY in .env, then docker compose up -d.")
+
+CHANNEL_RULES = {
+    "email": 'Email: subject line first ("Subject: ..."), brief greeting, '
+             "tight paragraphs, simple signoff.",
+    "slack": "Slack: short, casual, no greeting/signoff needed.",
+    "asana": "Asana task comment: no greeting/signoff, lead with status or "
+             "the decision needed, structured and scannable (short bullets "
+             "or checklist fine), tag-style references like @Name where natural.",
+}
 
 _client = None
 
 
+def _openai_mode() -> bool:
+    return bool(LLM_BASE_URL and LLM_API_KEY)
+
+
 def enabled() -> bool:
-    return bool(ANTHROPIC_API_KEY)
+    return _openai_mode() or bool(ANTHROPIC_API_KEY)
+
+
+def provider_label() -> str:
+    if _openai_mode():
+        host = LLM_BASE_URL.split("//")[-1].split("/")[0]
+        return f"{LLM_MODEL} @ {host.split('.')[0] if 'nousresearch' in host else host}"
+    if ANTHROPIC_API_KEY:
+        return ANTHROPIC_MODEL
+    return "no key"
 
 
 def client():
     global _client
-    if _client is None and enabled():
+    if _client is None and ANTHROPIC_API_KEY:
         import anthropic
         _client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
     return _client
+
+
+def _complete_openai(system: str, messages: list, max_tokens: int) -> str:
+    import httpx
+    r = httpx.post(
+        f"{LLM_BASE_URL}/chat/completions",
+        headers={"Authorization": f"Bearer {LLM_API_KEY}"},
+        json={"model": LLM_MODEL, "max_tokens": max_tokens,
+              "messages": [{"role": "system", "content": system}] + messages},
+        timeout=120)
+    r.raise_for_status()
+    return r.json()["choices"][0]["message"]["content"]
 
 
 def _complete(system: str, messages: list, max_tokens: int = 1500) -> str:
     if not enabled():
         return OFFLINE_MSG
     try:
+        if _openai_mode():
+            return _complete_openai(system, messages, max_tokens)
         resp = client().messages.create(
             model=ANTHROPIC_MODEL, max_tokens=max_tokens,
             system=system, messages=messages)
         return "".join(b.text for b in resp.content if b.type == "text")
     except Exception as e:
-        log.warning("anthropic call failed: %s", e)
+        log.warning("llm call failed: %s", e)
         return f"AI error: {e}"
 
 
@@ -86,7 +128,7 @@ Project context: {project.name}. Notes: {project.notes or 'none'}
 Documented style for this person: {contact.style_notes or 'none recorded'}
 {f'What memory says about them: {insight}' if insight else ''}
 
-Rules: match the recipient — technical depth for engineers, outcomes and timelines for stakeholders. {('Slack: short, casual, no greeting/signoff needed.' if channel == 'slack' else 'Email: subject line first ("Subject: ..."), brief greeting, tight paragraphs, simple signoff.')} Output ONLY the message, no commentary."""
+Rules: match the recipient — technical depth for engineers, outcomes and timelines for stakeholders. {CHANNEL_RULES.get(channel, CHANNEL_RULES['email'])} Output ONLY the message, no commentary."""
     content = _complete(system, [{"role": "user", "content": f"Draft this: {intent}"}])
     return {"draft": content, "insight": insight}
 

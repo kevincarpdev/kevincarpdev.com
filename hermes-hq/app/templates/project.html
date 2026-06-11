@@ -47,7 +47,7 @@
         {% for c in contacts %}<option value="{{ c.id }}">{{ c.name }} — {{ c.role }}</option>{% endfor %}
       </select>
       <label>channel</label>
-      <select id="draftChannel"><option value="email">Email</option><option value="slack">Slack</option></select>
+      <select id="draftChannel"><option value="email">Email</option><option value="slack">Slack</option><option value="asana">Asana comment</option></select>
       <label>what should it say?</label>
       <textarea id="draftIntent" placeholder="e.g. tell Chad the checkout work ships Thursday; we need the staging API key from Jim first"></textarea>
       <div style="margin-top:14px" class="row">

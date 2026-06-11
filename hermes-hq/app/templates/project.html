@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+{% set nav = 'home' %}
+{% block title %}{{ project.name }} — Hermes HQ{% endblock %}
+{% block content %}
+<div class="kicker">{{ org.name }}</div>
+<div class="proj-head">
+  <h1>{{ project.name }}</h1>
+  <span class="pill phos">{{ project.status }}</span>
+  {% if project.repo %}<span class="pill">{{ project.repo }}</span>{% endif %}
+</div>
+<div class="proj-links">
+  {% for l in links %}<a href="{{ l.url }}" target="_blank">↗ {{ l.label }}</a>{% endfor %}
+</div>
+
+<div class="tabs" data-proj="{{ project.slug }}">
+  <button class="on" data-tab="work">Workspace</button>
+  <button data-tab="draft">Draft a message</button>
+  <button data-tab="people">People</button>
+  <button data-tab="notes">Notes</button>
+</div>
+
+<!-- WORKSPACE CHAT -->
+<div class="tab-pane on" id="pane-work">
+  <div class="chat-log" id="chatLog">
+    {% for m in history %}
+    <div class="msg {{ m.role }}">
+      <div class="who">{{ 'HQ' if m.role == 'assistant' else 'team' }}</div>
+      <div class="body">{{ m.content }}</div>
+    </div>
+    {% else %}
+    <p class="muted">No messages yet. This chat is scoped to {{ project.name }} — ask about the work, plan changes, prep updates. Exchanges feed the shared Honcho memory that Hermes on the VPS also uses.</p>
+    {% endfor %}
+  </div>
+  <div class="chat-form">
+    <textarea id="chatInput" placeholder="Message HQ about {{ project.name }}…  (Enter to send, Shift+Enter for newline)"></textarea>
+    <button id="chatSend">SEND</button>
+  </div>
+</div>
+
+<!-- DRAFT -->
+<div class="tab-pane" id="pane-draft">
+  <div class="cols">
+    <div class="panel">
+      <h4>Compose</h4>
+      <label>to</label>
+      <select id="draftContact">
+        {% for c in contacts %}<option value="{{ c.id }}">{{ c.name }} — {{ c.role }}</option>{% endfor %}
+      </select>
+      <label>channel</label>
+      <select id="draftChannel"><option value="email">Email</option><option value="slack">Slack</option></select>
+      <label>what should it say?</label>
+      <textarea id="draftIntent" placeholder="e.g. tell Chad the checkout work ships Thursday; we need the staging API key from Jim first"></textarea>
+      <div style="margin-top:14px" class="row">
+        <button id="draftGo">DRAFT IT</button>
+        <span class="thinking" id="draftSpin" style="display:none">composing…</span>
+      </div>
+      <div class="output insight" id="draftInsight" style="display:none"></div>
+    </div>
+    <div class="panel">
+      <h4>Draft <button class="ghost small copybtn" id="draftCopy">copy</button>
+          <button class="ghost small copybtn" id="draftSent" style="margin-right:6px">mark as sent</button></h4>
+      <div class="output" id="draftOut" contenteditable="true">Pick a person, say what the message needs to do, hit draft. Edit inline, then copy — and mark it sent so memory learns your real voice.</div>
+      <h4 style="margin-top:22px">Log an inbound message</h4>
+      <p class="muted" style="margin-top:0">Paste what a contact sent you (email/slack). This is how Honcho learns who Chad, Jim, Kyle and Suzanna actually are.</p>
+      <textarea id="inboundText" placeholder="Paste their message…"></textarea>
+      <div style="margin-top:10px" class="row">
+        <button class="ghost" id="inboundGo">LOG INBOUND</button>
+        <span class="flash" id="inboundFlash"></span>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:22px">
+    <details>
+      <summary>recent drafts ({{ drafts|length }})</summary>
+      {% for d in drafts %}
+      <div class="contact-card">
+        <span class="pill amber">{{ d.channel }}</span>
+        <span class="pill">{{ contact_by_id[d.contact_id].name if d.contact_id in contact_by_id else '?' }}</span>
+        <div class="muted" style="margin:8px 0 4px">{{ d.intent }}</div>
+        <div style="white-space:pre-wrap; font-size:13.5px">{{ d.content }}</div>
+      </div>
+      {% endfor %}
+    </details>
+  </div>
+</div>
+
+<!-- PEOPLE -->
+<div class="tab-pane" id="pane-people">
+  {% for c in contacts %}
+  <div class="contact-card" data-cid="{{ c.id }}">
+    <span class="peer">peer: {{ c.peer_id }}</span>
+    <span class="nm">{{ c.name }}</span><span class="rl">{{ c.role }}</span>
+    <div class="cols" style="margin-top:12px">
+      <div>
+        <label>role</label><input class="c-role" value="{{ c.role }}">
+        <label>email</label><input class="c-email" value="{{ c.email }}">
+        <label>slack</label><input class="c-slack" value="{{ c.slack }}">
+      </div>
+      <div>
+        <label>how we talk to them (style notes)</label>
+        <textarea class="c-style" rows="5">{{ c.style_notes }}</textarea>
+      </div>
+    </div>
+    <div class="row" style="margin-top:10px">
+      <button class="small c-save">SAVE</button>
+      <button class="ghost small c-insight">WHAT HAS MEMORY LEARNED?</button>
+      <span class="flash c-flash"></span>
+    </div>
+    <div class="output insight c-insight-out" style="display:none"></div>
+  </div>
+  {% endfor %}
+  <div class="panel" style="margin-top:18px">
+    <h4>Add a person at {{ org.name }}</h4>
+    <div class="row">
+      <input id="newName" placeholder="name" style="max-width:200px">
+      <input id="newRole" placeholder="role" style="max-width:240px">
+      <button class="small" id="newContactGo" data-org="{{ org.id }}">ADD</button>
+    </div>
+  </div>
+</div>
+
+<!-- NOTES -->
+<div class="tab-pane" id="pane-notes">
+  <div class="panel">
+    <h4>Standing project notes — fed to the AI on every request</h4>
+    <textarea id="projNotes" rows="10">{{ project.notes }}</textarea>
+    <div class="row" style="margin-top:12px">
+      <button id="notesSave">SAVE NOTES</button>
+      <span class="flash" id="notesFlash"></span>
+    </div>
+  </div>
+</div>
+{% endblock %}

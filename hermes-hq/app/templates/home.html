@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% set nav = 'home' %}
+{% block content %}
+<div class="kicker">command deck</div>
+<h1>Clients & <em>projects</em></h1>
+<p class="sub">Pick a workspace. Everything inside is scoped to that client — chat, drafts, people, memory.</p>
+
+{% for org in orgs %}
+<h2>{{ org.name }}</h2>
+<div class="grid">
+  {% for p in org.projects %}
+  <a class="card" href="/project/{{ p.slug }}">
+    <span class="arrow">→</span>
+    <div class="org">{{ org.name }}</div>
+    <h3>{{ p.name }}</h3>
+    <div class="meta">{{ p.repo or 'no repo set' }} · {{ p.status }}</div>
+  </a>
+  {% endfor %}
+</div>
+{% endfor %}
+
+<h2>Job pipeline</h2>
+<div class="grid">
+  <a class="card" href="/jobs">
+    <span class="arrow">→</span>
+    <div class="org">Kevin / biz dev</div>
+    <h3>Leads & proposals</h3>
+    <div class="meta">
+      {% for s in ['lead','applied','interview','won'] %}{{ job_counts.get(s, 0) }} {{ s }}{{ ' · ' if not loop.last }}{% endfor %}
+    </div>
+  </a>
+</div>
+{% endblock %}

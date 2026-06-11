@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% set nav = 'settings' %}
+{% block title %}Settings — Hermes HQ{% endblock %}
+{% block content %}
+<div class="kicker">configuration</div>
+<h1>Settings</h1>
+
+<h2>Profile & resume (used for job scoring + proposals)</h2>
+<form method="post" action="/settings" class="panel" style="max-width:820px">
+  <label>profile one-liner</label>
+  <input name="profile" value="{{ profile }}">
+  <label>resume / experience (plain text — paste it all)</label>
+  <textarea name="resume_text" rows="14">{{ resume_text }}</textarea>
+  <div style="margin-top:14px"><button type="submit">SAVE</button></div>
+</form>
+
+<h2>Team</h2>
+<div class="panel" style="max-width:820px">
+  {% for t in team %}
+  <div class="row" style="padding:6px 0; border-bottom:1px solid var(--line)">
+    <span style="min-width:140px">{{ t.display_name or t.username }}</span>
+    <span class="muted" style="font-family:var(--mono); font-size:11px">@{{ t.username }} · peer {{ t.peer_id }}</span>
+  </div>
+  {% endfor %}
+  <p class="muted" style="margin-bottom:0">Add teammates from the VPS:<br>
+  <code style="font-family:var(--mono); font-size:12px; color:var(--phos)">docker compose exec app python -m app.add_user &lt;username&gt;</code></p>
+</div>
+
+<h2>Integrations (phase 2)</h2>
+{% for i in integrations %}
+<div class="integration" style="max-width:820px">
+  <div>
+    <div class="nm"><i class="dot {{ 'ok' if i.configured else '' }}"></i>{{ i.name }}</div>
+    <div class="why">{{ i.purpose }}</div>
+  </div>
+  <span class="pill {{ 'phos' if i.configured else '' }}">{{ 'configured' if i.configured else 'env: ' + i.env|join(', ') }}</span>
+</div>
+{% endfor %}
+<p class="muted" style="max-width:70ch">Each integration lights up when its env var is set in <span style="font-family:var(--mono)">.env</span> on the VPS. Wiring points are marked <span style="font-family:var(--mono)">WIRE-HERE</span> in <span style="font-family:var(--mono)">app/integrations.py</span>.</p>
+{% endblock %}

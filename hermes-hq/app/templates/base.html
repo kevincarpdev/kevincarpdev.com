@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}Hermes HQ{% endblock %}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;1,500&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="side">
+    <div class="wordmark">HERMES<b>/HQ</b></div>
+    <div class="tagline">client ops · memory on</div>
+    <nav class="nav">
+      <a href="/" class="{{ 'on' if nav == 'home' else '' }}">CLIENTS</a>
+      <a href="/jobs" class="{{ 'on' if nav == 'jobs' else '' }}">JOB PIPELINE</a>
+      <a href="/settings" class="{{ 'on' if nav == 'settings' else '' }}">SETTINGS</a>
+    </nav>
+    <div class="spacer"></div>
+    <div class="sys">
+      <span><i class="dot {{ 'ok' if ai_on else '' }}"></i>anthropic {{ 'live' if ai_on else 'no key' }}</span>
+      <span><i class="dot {{ 'ok' if honcho_on else '' }}"></i>honcho {{ 'live' if honcho_on else 'no key' }}</span>
+      <span>ws: {{ workspace_id }}</span>
+    </div>
+    <div class="whoami">
+      {{ user.display_name or user.username }} ·
+      <form method="post" action="/logout"><button type="submit">logout</button></form>
+    </div>
+  </aside>
+  <main class="main">
+    {% block content %}{% endblock %}
+  </main>
+</div>
+<script src="/static/app.js"></script>
+</body>
+</html>

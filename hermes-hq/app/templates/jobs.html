@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% set nav = 'jobs' %}
+{% block title %}Job pipeline — Hermes HQ{% endblock %}
+{% block content %}
+<div class="kicker">biz dev</div>
+<h1>Job <em>pipeline</em></h1>
+<p class="sub">Paste in leads from Upwork / LinkedIn / referrals. HQ scores fit against your resume and drafts the proposal. (No auto-apply — keep your accounts safe.)
+{% if not resume_set %}<br><strong style="color:var(--amber)">Resume not set —</strong> add it in <a href="/settings">Settings</a> so scoring works.{% endif %}</p>
+
+<details open>
+  <summary>+ add a lead</summary>
+  <div class="panel" style="max-width:760px">
+    <div class="cols">
+      <div>
+        <label>title</label><input id="jTitle" placeholder="BigCommerce checkout customization">
+        <label>platform</label>
+        <select id="jPlatform"><option>upwork</option><option>linkedin</option><option>direct</option><option>other</option></select>
+        <label>url</label><input id="jUrl" placeholder="https://…">
+      </div>
+      <div>
+        <label>client</label><input id="jClient">
+        <label>budget</label><input id="jBudget" placeholder="$3-5k / $75hr">
+      </div>
+    </div>
+    <label>description (paste the posting)</label>
+    <textarea id="jDesc" rows="5"></textarea>
+    <div style="margin-top:12px"><button id="jAdd">ADD LEAD</button></div>
+  </div>
+</details>
+
+<h2>Pipeline</h2>
+<table>
+  <tr><th>lead</th><th>platform</th><th>budget</th><th>fit</th><th>status</th><th></th></tr>
+  {% for j in jobs %}
+  <tr data-jid="{{ j.id }}">
+    <td>
+      {% if j.url %}<a href="{{ j.url }}" target="_blank">{{ j.title }}</a>{% else %}{{ j.title }}{% endif %}
+      {% if j.client %}<div class="muted">{{ j.client }}</div>{% endif %}
+    </td>
+    <td><span class="pill">{{ j.platform }}</span></td>
+    <td class="muted">{{ j.budget }}</td>
+    <td>
+      {% if j.fit_score is not none %}
+        <span class="score {{ 'hi' if j.fit_score >= 70 else ('mid' if j.fit_score >= 45 else 'lo') }}">{{ j.fit_score|int }}</span>
+      {% else %}<span class="muted">—</span>{% endif %}
+    </td>
+    <td>
+      <select class="j-status">
+        {% for s in ['lead','applied','interview','won','lost'] %}
+        <option {{ 'selected' if j.status == s }}>{{ s }}</option>
+        {% endfor %}
+      </select>
+    </td>
+    <td class="row">
+      <button class="ghost small j-score">SCORE</button>
+      <button class="ghost small j-proposal">PROPOSAL</button>
+    </td>
+  </tr>
+  <tr class="job-detail" data-jdetail="{{ j.id }}" {% if not j.fit_notes and not j.proposal %}style="display:none"{% endif %}>
+    <td colspan="6">
+      <div class="j-notes muted" style="white-space:pre-wrap">{{ j.fit_notes }}</div>
+      <div class="j-prop output" style="{{ 'display:none' if not j.proposal }}">{{ j.proposal }}</div>
+    </td>
+  </tr>
+  {% else %}
+  <tr><td colspan="6" class="muted">No leads yet.</td></tr>
+  {% endfor %}
+</table>
+{% endblock %}

@@ -1,0 +1,5 @@
+# If DOMAIN is set in .env, Caddy serves HTTPS automatically (Let's Encrypt).
+# If empty, it serves plain HTTP on port 80 at the VPS IP.
+{$DOMAIN::80} {
+	reverse_proxy app:8000
+}

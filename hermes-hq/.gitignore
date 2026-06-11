@@ -1,0 +1,8 @@
+.env
+*.db
+__pycache__/
+*.pyc
+data/
+.venv/
+caddy_data/
+caddy_config/

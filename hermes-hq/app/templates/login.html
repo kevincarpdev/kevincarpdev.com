@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hermes HQ — sign in</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;1,500&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="login-wrap">
+  <div class="login-box">
+    <div class="wordmark">HERMES<b>/HQ</b></div>
+    <div class="tagline">{{ 'first run — create the admin account' if bootstrap else 'team access only' }}</div>
+    {% if bootstrap %}
+    <form method="post" action="/bootstrap">
+      <label>username</label><input name="username" required autofocus>
+      <label>display name</label><input name="display_name" placeholder="Kevin">
+      <label>password (8+ chars)</label><input name="password" type="password" minlength="8" required>
+      <div style="margin-top:18px"><button type="submit">CREATE & ENTER</button></div>
+    </form>
+    {% else %}
+    <form method="post" action="/login">
+      <label>username</label><input name="username" required autofocus>
+      <label>password</label><input name="password" type="password" required>
+      <div style="margin-top:18px"><button type="submit">ENTER</button></div>
+    </form>
+    {% if error %}<div class="error">{{ error }}</div>{% endif %}
+    {% endif %}
+  </div>
+</div>
+</body>
+</html>

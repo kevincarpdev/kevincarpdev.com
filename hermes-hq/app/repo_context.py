@@ -50,17 +50,29 @@ def _is_texty(path: str) -> bool:
 
 
 def mentioned_files(message: str, tree: list):
-    """Files the user referenced by relative path or (long-ish) filename."""
-    hits, msg = [], message.lower()
-    tokens = set(re.findall(r"[\w./\\-]{5,}", msg))
+    """Files referenced by relative path, filename, or filename stem.
+
+    Stem matches ("OrderController" → OrderController.cs) are skipped when
+    ambiguous (same stem in >3 places).
+    """
+    msg = message.lower()
+    tokens = set(re.findall(r"[\w./\\-]{4,}", msg))
+    exact, by_stem = [], {}
     for rel in tree:
-        rl = rel.lower()
+        rl = rel.lower().replace("\\", "/")
         base = os.path.basename(rl)
-        if rl in msg or rl.replace("\\", "/") in msg or (len(base) >= 6 and base in tokens):
-            hits.append(rel)
-        if len(hits) >= 6:
-            break
-    return hits
+        stem = base.rsplit(".", 1)[0]
+        if rl in msg or (len(base) >= 6 and base in tokens):
+            exact.append(rel)
+        elif len(stem) >= 6 and stem in tokens:
+            by_stem.setdefault(stem, []).append(rel)
+    hits = exact[:6]
+    for rels in by_stem.values():
+        if len(rels) <= 3:
+            for rel in rels:
+                if rel not in hits and len(hits) < 6:
+                    hits.append(rel)
+    return hits[:6]
 
 
 def build_context(repo_name: str, message: str):

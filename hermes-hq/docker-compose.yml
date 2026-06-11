@@ -5,6 +5,7 @@ services:
     env_file: .env
     volumes:
       - ./data:/data
+      - /opt/repos:/repos:ro   # client repos, read-only — chat gets file tree + mentioned files
     expose:
       - "8000"
     extra_hosts:

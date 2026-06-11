@@ -127,6 +127,23 @@ curl -s http://127.0.0.1:8645/v1/models | python3 -m json.tool   # exact model i
 
 Then in `.env`: `LLM_BASE_URL=http://host.docker.internal:8645/v1`, `LLM_API_KEY=any-string`, `LLM_MODEL=<id from the list>`, and `docker compose up -d --force-recreate app`.
 
+Make the proxy survive reboots (instead of tmux):
+
+```bash
+cat > /etc/systemd/system/nous-proxy.service <<EOF
+[Unit]
+Description=Nous Portal subscription proxy
+After=network-online.target
+[Service]
+ExecStart=$(which hermes) proxy start --host 0.0.0.0 --port 8645
+Restart=always
+User=root
+[Install]
+WantedBy=multi-user.target
+EOF
+systemctl enable --now nous-proxy && systemctl status nous-proxy
+```
+
 After ANY `.env` change: `docker compose up -d --force-recreate app`.
 
 ## 4 · Day-to-day flow
@@ -140,7 +157,7 @@ After ANY `.env` change: `docker compose up -d --force-recreate app`.
 
 ## 5 · Phase 2 wiring order (recommended)
 
-1. **Git** — set `GITHUB_TOKEN`, clone client repos to `/opt/repos/`, let Hermes work there; dashboard "repo" field already names them.
+1. **Git** — clone client repos to `/opt/repos/<name>` (must match each project's repo field). The workspace chat already reads them (file tree + any file you mention by name; read-only mount at /repos). Edits/commits: SSH in, `cd /opt/repos/<name> && hermes` — per-repo Honcho sessions keep context. `GITHUB_TOKEN` + write access from the dashboard is the remaining phase-2 piece.
 2. **Slack** — bot token; auto-ingest client channels into `comms-*` sessions (replaces manual inbound logging).
 3. **Gmail** — same ingestion for email + send drafts directly.
 4. **Asana** — task list inside each project workspace.

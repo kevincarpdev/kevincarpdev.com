@@ -9,7 +9,7 @@ import logging
 
 from .config import (ANTHROPIC_API_KEY, ANTHROPIC_MODEL, LLM_API_KEY,
                      LLM_BASE_URL, LLM_MODEL)
-from . import honcho_client as hc
+from . import honcho_client as hc, repo_context
 
 log = logging.getLogger("hq.ai")
 
@@ -105,6 +105,9 @@ def project_chat(project, org, contacts, history, user_display: str,
             project.slug,
             f"Summarize the most relevant context for this new request from {user_display}: {message[:400]}")
     system = _project_system(project, org, contacts, memory)
+    repo_ctx = repo_context.build_context(project.repo, message)
+    if repo_ctx:
+        system += "\n\n" + repo_ctx
     msgs = [{"role": m.role, "content": m.content} for m in history[-20:]]
     msgs.append({"role": "user", "content": f"[{user_display}] {message}"})
     reply = _complete(system, msgs)

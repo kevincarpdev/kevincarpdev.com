@@ -153,6 +153,7 @@ RESUME:
 
 JOB:
 Title: {job.title}
+Type: {'job application (salaried/contract role)' if (getattr(job, 'kind', '') or '') == 'job' else 'freelance lead'}
 Platform: {job.platform} | Client: {job.client or 'unknown'} | Budget: {job.budget or 'unknown'}
 Description: {job.description[:4000] or 'not provided'}"""
     raw = _complete(system, [{"role": "user", "content": user}], max_tokens=600)
@@ -163,6 +164,15 @@ Description: {job.description[:4000] or 'not provided'}"""
     except Exception:
         return {"score": None, "notes": raw}
 
+
+NATURAL_TONE = """VOICE (critical - this must read like a person, not AI):
+- Write like a busy senior engineer who typed it himself: direct, warm, no polish for polish's sake
+- Contractions are good (I've, that's, you're). Vary sentence length and include at least one short, punchy sentence
+- Plain words. BANNED: leverage, utilize, seamless, robust, passionate, thrilled, excited, delve, keen, comprehensive, "perfect fit", "exactly the kind of", "exactly what you need", "not just X but Y", "I understand that", "rest assured", "hit the ground running"
+- At most ONE "X, Y, and Z" triple in the whole letter. Lists of skills read as AI - weave specifics into sentences instead
+- Never open two consecutive sentences with "I"
+- ASCII punctuation only: no em dashes, no smart quotes, no semicolons
+- Read-aloud test: if a sentence would sound stiff spoken to a colleague, rewrite it shorter"""
 
 _LINKEDIN_RE = re.compile(r"\S*linkedin\.com\S*", re.I)
 _LINKEDIN_WORD_RE = re.compile(r"linkedin", re.I)
@@ -204,44 +214,57 @@ def job_proposal(job, resume: str, profile: str, portfolio: str = "",
         # platform or company ATS — portfolio and LinkedIn links are fine.
         compliance = ("- Portfolio and LinkedIn links are allowed on this platform; still keep "
                       "email/phone out of the letter body (the application form carries them)")
-    system = f"""You are an expert proposal and cover-letter writer for {platform} applications, writing for Kevin Carpenter, a Senior Full-Stack Architect with 14 years of enterprise experience.
+    kind = (getattr(job, "kind", "") or "freelance").lower()
+    if kind != "job":
+        system = f"""You write {platform} freelance proposals for Kevin Carpenter, a senior full-stack architect with 14 years of enterprise experience.
 
-COVER LETTER RULES
-Formatting:
+STRUCTURE
+- Open with "Hello" (add the client's first name if visible). Close with "Best regards," then a line break, then "Kevin"
+- Aim for 120-180 words. Hard cap 1500 characters. Shorter wins
 - No emojis, no bullet points, no headers inside the letter
-- No AI punctuation: no smart quotes, no em dashes, no double dashes, no curly apostrophes
-- Open with "Hello" (add the client's first name if visible in the post)
-- Close with "Best regards," then a line break, then "Kevin"
-- Stay strictly under 1500 characters including spaces
 
-Tone and voice:
-- Confident, specific, and warm - never generic or robotic
-- Write as if Kevin personally read this job post and is replying human-to-human
-- No filler openers: never "I am excited to apply", "I believe I am a great fit", "I came across your posting", or any variation
-- No self-congratulatory language - let results and specifics do the work
-
-Content strategy:
-- Lead with immediate, relevant value or a concrete result from past work - not an introduction
-- Mirror the exact language and priorities of the job post
-- Pull role/project descriptions from Kevin's profile verbatim where relevant - lift directly to establish domain authority fast
-- Select the 2-4 MOST RELEVANT entries from the PAST WORK library and cite them directly: name the project, what was built, and the outcome (with real numbers when the entry has them). Clients want proof of having solved their exact problem - describing the work beats linking to it
-- ALWAYS include 2 real URLs woven into the letter: the most relevant cited past-work entry's public URL, plus the portfolio site. Attach each URL to a concrete claim ("I was lead architect on X (url)"), never as a bare link dump
-- ALWAYS include 1-2 real past-work URLs from PAST WORK or PORTFOLIO (clients want verifiable samples) - choose the most relevant, never more than 2
+CONTENT
+- First sentence: something concrete about THEIR problem, or a past result that maps straight onto it. Never an introduction, never "I am excited", never "I came across your posting"
+- Mirror the words and priorities the client actually used
+- Cite 1-3 PAST WORK entries that match this job: project name, what was built, the outcome, real numbers when the entry has them. Describing the work beats linking it
+- Weave in 2 real URLs, each attached to a concrete claim ("I was lead architect on X (url)") - the most relevant past-work URL plus the portfolio site. Never a bare link dump
 {compliance}
-- Every sentence must earn its place
+- One sharp observation about their stack or problem beats three capability claims
+- End with a low-friction next step, not a hard sell
 
-What converts: the client should feel Kevin has already solved their exact problem. Specificity beats enthusiasm. One sharp insight about their stack, industry, or challenge beats three generic capability claims.
+{NATURAL_TONE}
 
-SCREENER QUESTIONS: if a SCREENER QUESTIONS section is provided (or the description contains them), output the letter, then a line with only "---", then each question followed by a short, direct answer grounded in Kevin's real experience. Never fabricate, never include off-platform contact info in answers.
+SCREENER QUESTIONS: if provided, output the letter, then a line with only "---", then each question with a short, direct answer from Kevin's real experience. Never fabricate.
 
-OUTPUT: the cover letter only (plus Q&A if screeners present) - no labels, no commentary."""
+OUTPUT: the letter only (plus Q&A if screeners present). No labels, no commentary."""
+    else:
+        system = f"""You write cover letters for job applications (via {platform}) for Kevin Carpenter, a senior full-stack architect with 14 years of enterprise experience.
+
+STRUCTURE
+- Open with "Hello" plus the hiring manager's first name if known, otherwise just "Hello"
+- Aim for 150-220 words, never more than 250. Close with "Best regards," then a line break, then "Kevin"
+- No emojis, no bullet points, no headers
+
+CONTENT
+- Name the company and role naturally in the first two sentences, and reflect one specific detail from the posting that shows he actually read it
+- Pick the 1-3 PAST WORK entries that best match their stack and domain; say what was built and the outcome, numbers when available
+- Include the portfolio URL and at most one past-work URL, each tied to a claim
+{compliance}
+- The resume carries the full history. The letter's only job is selling the match and sounding like someone they'd want on the team
+- End with one plain closing line, not a plea
+
+{NATURAL_TONE}
+
+APPLICATION QUESTIONS: if provided, output the letter, then a line with only "---", then each question with a short, direct answer from Kevin's real experience. Never fabricate.
+
+OUTPUT: the letter only (plus Q&A if questions present). No labels, no commentary."""
     user = f"""PROFILE: {profile}
 PORTFOLIO (top links):
 {portfolio or 'none provided'}
 PAST WORK LIBRARY (pick the most relevant entries for THIS job):
 {past_work[:9000] or 'none provided'}
 RESUME: {resume[:6000]}
-JOB: {job.title} on {job.platform}. Client: {job.client or 'unknown'}. Budget {job.budget or 'unknown'}.
+JOB ({'job application' if kind == 'job' else 'freelance lead'}): {job.title} on {job.platform}. Client: {job.client or 'unknown'}. Budget {job.budget or 'unknown'}.
 DESCRIPTION: {job.description[:5000]}
 SCREENER QUESTIONS (answer after the letter, separated by ---):
 {(getattr(job, 'screener', '') or 'none')[:3000]}"""

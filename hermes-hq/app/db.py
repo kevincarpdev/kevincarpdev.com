@@ -98,6 +98,7 @@ class Job(Base):
     client = Column(String, default="")
     budget = Column(String, default="")
     description = Column(Text, default="")
+    kind = Column(String, default="freelance")  # freelance | job
     screener = Column(Text, default="")  # screener questions from the posting
     status = Column(String, default="lead")  # lead | applied | interview | won | lost
     fit_score = Column(Float, nullable=True)
@@ -117,11 +118,13 @@ def init_db():
     # lightweight migrations for columns added after first deploy
     from sqlalchemy import text
     with engine.connect() as conn:
-        try:
-            conn.execute(text("ALTER TABLE jobs ADD COLUMN screener TEXT DEFAULT ''"))
-            conn.commit()
-        except Exception:
-            pass  # column already exists
+        for ddl in ("ALTER TABLE jobs ADD COLUMN screener TEXT DEFAULT ''",
+                    "ALTER TABLE jobs ADD COLUMN kind VARCHAR DEFAULT 'freelance'"):
+            try:
+                conn.execute(text(ddl))
+                conn.commit()
+            except Exception:
+                pass  # column already exists
 
 
 def get_setting(db, key, default=""):

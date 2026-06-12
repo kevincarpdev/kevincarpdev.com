@@ -141,7 +141,9 @@ def jobs_page(request: Request, db=Depends(db_session)):
         return RedirectResponse("/login", status_code=303)
     jobs = db.query(Job).order_by(Job.created.desc()).all()
     return templates.TemplateResponse(request, "jobs.html", page_ctx(
-        request, user, db, jobs=jobs,
+        request, user, db,
+        freelance_jobs=[j for j in jobs if (j.kind or "freelance") != "job"],
+        app_jobs=[j for j in jobs if (j.kind or "") == "job"],
         resume_set=bool(get_setting(db, "resume_text"))))
 
 
@@ -300,7 +302,11 @@ def api_job_add(payload: dict, user=Depends(require_user), db=Depends(db_session
     title = (payload.get("title") or "").strip()
     if not title:
         raise HTTPException(400, "title required")
-    j = Job(title=title, platform=payload.get("platform", "other"),
+    platform = payload.get("platform", "other")
+    default_kind = "job" if platform in ("indeed", "builtin", "hiring.cafe",
+                                         "linkedin") else "freelance"
+    j = Job(title=title, platform=platform,
+            kind=payload.get("kind") or default_kind,
             url=payload.get("url", ""), client=payload.get("client", ""),
             budget=payload.get("budget", ""),
             description=payload.get("description", ""),

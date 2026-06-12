@@ -222,12 +222,16 @@ if (tabs) {
 }
 
 // ---- jobs (accordion cards) ----
+$("#jPlatform")?.addEventListener("change", (e) => {
+  const jobBoards = ["indeed", "builtin", "hiring.cafe", "linkedin"];
+  if ($("#jKind")) $("#jKind").value = jobBoards.includes(e.target.value) ? "job" : "freelance";
+});
 $("#jAdd")?.addEventListener("click", async () => {
   try {
     await api("/api/jobs", {
       title: $("#jTitle").value, platform: $("#jPlatform").value, url: $("#jUrl").value,
       client: $("#jClient").value, budget: $("#jBudget").value, description: $("#jDesc").value,
-      screener: $("#jScreener")?.value || "",
+      screener: $("#jScreener")?.value || "", kind: $("#jKind")?.value || "",
     });
     location.reload();
   } catch (e) { toast("Error: " + e.message, true); }

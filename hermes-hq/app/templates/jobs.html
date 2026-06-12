@@ -15,6 +15,8 @@
         <label>title</label><input id="jTitle" placeholder="BigCommerce checkout customization">
         <label>platform</label>
         <select id="jPlatform"><option>upwork</option><option>linkedin</option><option>indeed</option><option>builtin</option><option>hiring.cafe</option><option>direct</option><option>other</option></select>
+        <label>type</label>
+        <select id="jKind"><option value="freelance">freelance lead (proposal)</option><option value="job">job application (cover letter)</option></select>
         <label>url</label><input id="jUrl" placeholder="https://…">
       </div>
       <div>
@@ -30,9 +32,7 @@
   </div>
 </details>
 
-<h2>Pipeline</h2>
-<div class="lead-list">
-  {% for j in jobs %}
+{% macro lead_card(j) %}
   <article class="lead" data-jid="{{ j.id }}" data-title="{{ j.title }}">
     <header class="lead-head">
       <span class="chev">▶</span>
@@ -80,8 +80,15 @@
       </div>
     </div>
   </article>
-  {% else %}
-  <p class="muted">No leads yet.</p>
-  {% endfor %}
+{% endmacro %}
+
+<h2>Freelance leads</h2>
+<div class="lead-list">
+  {% for j in freelance_jobs %}{{ lead_card(j) }}{% else %}<p class="muted">No freelance leads yet.</p>{% endfor %}
+</div>
+
+<h2>Job applications</h2>
+<div class="lead-list">
+  {% for j in app_jobs %}{{ lead_card(j) }}{% else %}<p class="muted">No job applications yet.</p>{% endfor %}
 </div>
 {% endblock %}

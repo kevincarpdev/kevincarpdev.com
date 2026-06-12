@@ -98,6 +98,7 @@ class Job(Base):
     client = Column(String, default="")
     budget = Column(String, default="")
     description = Column(Text, default="")
+    screener = Column(Text, default="")  # screener questions from the posting
     status = Column(String, default="lead")  # lead | applied | interview | won | lost
     fit_score = Column(Float, nullable=True)
     fit_notes = Column(Text, default="")
@@ -113,6 +114,14 @@ class Setting(Base):
 
 def init_db():
     Base.metadata.create_all(engine)
+    # lightweight migrations for columns added after first deploy
+    from sqlalchemy import text
+    with engine.connect() as conn:
+        try:
+            conn.execute(text("ALTER TABLE jobs ADD COLUMN screener TEXT DEFAULT ''"))
+            conn.commit()
+        except Exception:
+            pass  # column already exists
 
 
 def get_setting(db, key, default=""):

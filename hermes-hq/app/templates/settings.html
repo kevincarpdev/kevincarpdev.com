@@ -9,6 +9,10 @@
 <form method="post" action="/settings" class="panel" style="max-width:820px">
   <label>profile one-liner</label>
   <input name="profile" value="{{ profile }}">
+  <label>portfolio / top urls (one per line)</label>
+  <textarea name="portfolio_links" rows="3" placeholder="https://kevincarp.com&#10;https://dcilottery.com — DC iLottery (regulated iGaming, Azure)">{{ portfolio_links }}</textarea>
+  <label>past work library (one project per line — proposals cite the most relevant entries directly; see PAST_WORK.md in the repo for the full compiled list)</label>
+  <textarea name="past_work" rows="16" placeholder="Project (url) — role. What was built + outcome. [tech]">{{ past_work }}</textarea>
   <label>resume / experience (plain text — paste it all)</label>
   <textarea name="resume_text" rows="14">{{ resume_text }}</textarea>
   <div style="margin-top:14px"><button type="submit">SAVE</button></div>

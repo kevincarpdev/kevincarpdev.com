@@ -6,6 +6,7 @@ Providers (checked in order):
 """
 import json
 import logging
+import re
 
 from .config import (ANTHROPIC_API_KEY, ANTHROPIC_MODEL, LLM_API_KEY,
                      LLM_BASE_URL, LLM_MODEL)
@@ -18,8 +19,10 @@ OFFLINE_MSG = ("AI is offline: set LLM_API_KEY (+ LLM_BASE_URL) or "
 
 CHANNEL_RULES = {
     "email": 'Email: subject line first ("Subject: ..."), brief greeting, '
-             "tight paragraphs, simple signoff.",
-    "slack": "Slack: short, casual, no greeting/signoff needed.",
+             "tight paragraphs, simple signoff. Plain text only — never "
+             "markdown symbols like ** or ##.",
+    "slack": "Slack: short, casual, no greeting/signoff needed. Plain text "
+             "only — never markdown symbols like ** or ##.",
     "asana": "Asana task comment: no greeting/signoff, lead with status or "
              "the decision needed, structured and scannable (short bullets "
              "or checklist fine), tag-style references like @Name where natural.",
@@ -136,11 +139,14 @@ Rules: match the recipient — technical depth for engineers, outcomes and timel
     return {"draft": content, "insight": insight}
 
 
-def job_fit(job, resume: str, profile: str) -> dict:
+def job_fit(job, resume: str, profile: str, past_work: str = "") -> dict:
     system = """You score freelance/contract job fit. Reply with strict JSON only:
 {"score": 0-100, "notes": "3-5 sentences: why it fits or not, red flags, suggested angle"}"""
     user = f"""CANDIDATE PROFILE:
 {profile}
+
+PAST WORK:
+{past_work[:3500] or 'not provided'}
 
 RESUME:
 {resume[:6000] or 'not provided'}
@@ -158,10 +164,78 @@ Description: {job.description[:4000] or 'not provided'}"""
         return {"score": None, "notes": raw}
 
 
-def job_proposal(job, resume: str, profile: str) -> str:
-    system = """You write winning, human-sounding freelance proposals/cover letters. Short (150-250 words), specific to the job, leads with the client's problem, shows directly relevant experience, ends with a concrete next step. No "I am writing to express my interest" boilerplate. Output only the proposal."""
+_LINKEDIN_RE = re.compile(r"\S*linkedin\.com\S*", re.I)
+_LINKEDIN_WORD_RE = re.compile(r"linkedin", re.I)
+_EMAIL_RE = re.compile(r"\b[\w.+-]+@[\w-]+\.[\w.-]+\b")
+_PHONE_RE = re.compile(r"\(?\b\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}\b")
+
+
+def scrub_offplatform(text: str) -> str:
+    """Hard-remove LinkedIn URLs/mentions, emails, and phone numbers.
+
+    Upwork prohibits off-platform contact info pre-contract. This runs on
+    every INPUT and on the generated OUTPUT for upwork jobs — prompt rules
+    alone are not a guarantee.
+    """
+    text = _LINKEDIN_RE.sub("", text)
+    text = _EMAIL_RE.sub("", text)
+    text = _PHONE_RE.sub("", text)
+    # drop any sentence fragment still naming linkedin ("fuller background at .")
+    text = "\n".join(l for l in text.splitlines()
+                     if not _LINKEDIN_WORD_RE.search(l)) if _LINKEDIN_WORD_RE.search(text) else text
+    return re.sub(r"[ \t]{2,}", " ", text)
+
+
+def job_proposal(job, resume: str, profile: str, portfolio: str = "",
+                 past_work: str = "") -> str:
+    is_upwork = (job.platform or "").lower() == "upwork"
+    if is_upwork:
+        profile = scrub_offplatform(profile)
+        resume = scrub_offplatform(resume)
+        portfolio = scrub_offplatform(portfolio)
+        past_work = scrub_offplatform(past_work)
+    system = """You are an expert Upwork proposal writer for Kevin Carpenter, a Senior Full-Stack Architect with 14 years of enterprise experience.
+
+COVER LETTER RULES
+Formatting:
+- No emojis, no bullet points, no headers inside the letter
+- No AI punctuation: no smart quotes, no em dashes, no double dashes, no curly apostrophes
+- Open with "Hello" (add the client's first name if visible in the post)
+- Close with "Best regards," then a line break, then "Kevin"
+- Stay strictly under 1500 characters including spaces
+
+Tone and voice:
+- Confident, specific, and warm - never generic or robotic
+- Write as if Kevin personally read this job post and is replying human-to-human
+- No filler openers: never "I am excited to apply", "I believe I am a great fit", "I came across your posting", or any variation
+- No self-congratulatory language - let results and specifics do the work
+
+Content strategy:
+- Lead with immediate, relevant value or a concrete result from past work - not an introduction
+- Mirror the exact language and priorities of the job post
+- Pull role/project descriptions from Kevin's profile verbatim where relevant - lift directly to establish domain authority fast
+- Select the 2-4 MOST RELEVANT entries from the PAST WORK library and cite them directly: name the project, what was built, and the outcome (with real numbers when the entry has them). Clients want proof of having solved their exact problem - describing the work beats linking to it
+- ALWAYS include 2 real URLs woven into the letter: the most relevant cited past-work entry's public URL, plus the portfolio site. Attach each URL to a concrete claim ("I was lead architect on X (url)"), never as a bare link dump
+- ALWAYS include 1-2 real past-work URLs from PAST WORK or PORTFOLIO (clients want verifiable samples) - choose the most relevant, never more than 2
+- PLATFORM COMPLIANCE (absolute): NEVER mention LinkedIn in any form, and never include email addresses, phone numbers, calendar links, or any off-platform contact method - Upwork prohibits these before a contract and flags violations. Only URLs that appear in PAST WORK or PORTFOLIO are allowed
+- Every sentence must earn its place
+
+What converts: the client should feel Kevin has already solved their exact problem. Specificity beats enthusiasm. One sharp insight about their stack, industry, or challenge beats three generic capability claims.
+
+SCREENER QUESTIONS: if a SCREENER QUESTIONS section is provided (or the description contains them), output the letter, then a line with only "---", then each question followed by a short, direct answer grounded in Kevin's real experience. Never fabricate, never include off-platform contact info in answers.
+
+OUTPUT: the cover letter only (plus Q&A if screeners present) - no labels, no commentary."""
     user = f"""PROFILE: {profile}
+PORTFOLIO (top links):
+{portfolio or 'none provided'}
+PAST WORK LIBRARY (pick the most relevant entries for THIS job):
+{past_work[:9000] or 'none provided'}
 RESUME: {resume[:6000]}
-JOB: {job.title} on {job.platform}. Budget {job.budget or 'unknown'}.
-DESCRIPTION: {job.description[:4000]}"""
-    return _complete(system, [{"role": "user", "content": user}], max_tokens=800)
+JOB: {job.title} on {job.platform}. Client: {job.client or 'unknown'}. Budget {job.budget or 'unknown'}.
+DESCRIPTION: {job.description[:5000]}
+SCREENER QUESTIONS (answer after the letter, separated by ---):
+{(getattr(job, 'screener', '') or 'none')[:3000]}"""
+    out = _complete(system, [{"role": "user", "content": user}], max_tokens=1400)
+    if is_upwork and not out.startswith("AI error") and out != OFFLINE_MSG:
+        out = scrub_offplatform(out)
+    return out

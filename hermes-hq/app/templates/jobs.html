@@ -7,8 +7,8 @@
 <p class="sub">Paste in leads from Upwork / LinkedIn / referrals. HQ scores fit against your resume and drafts the proposal. (No auto-apply — keep your accounts safe.)
 {% if not resume_set %}<br><strong style="color:var(--amber)">Resume not set —</strong> add it in <a href="/settings">Settings</a> so scoring works.{% endif %}</p>
 
-<details open>
-  <summary>+ add a lead</summary>
+<details>
+  <summary>ADD A LEAD</summary>
   <div class="panel" style="max-width:760px">
     <div class="cols">
       <div>
@@ -22,48 +22,66 @@
         <label>budget</label><input id="jBudget" placeholder="$3-5k / $75hr">
       </div>
     </div>
-    <label>description (paste the posting)</label>
+    <label>description (paste the full posting)</label>
     <textarea id="jDesc" rows="5"></textarea>
+    <label>screener questions (paste them here — the proposal answers each one after a "---" divider)</label>
+    <textarea id="jScreener" rows="3" placeholder="1. What is your experience with…&#10;2. …"></textarea>
     <div style="margin-top:12px"><button id="jAdd">ADD LEAD</button></div>
   </div>
 </details>
 
 <h2>Pipeline</h2>
-<table>
-  <tr><th>lead</th><th>platform</th><th>budget</th><th>fit</th><th>status</th><th></th></tr>
+<div class="lead-list">
   {% for j in jobs %}
-  <tr data-jid="{{ j.id }}">
-    <td>
-      {% if j.url %}<a href="{{ j.url }}" target="_blank">{{ j.title }}</a>{% else %}{{ j.title }}{% endif %}
-      {% if j.client %}<div class="muted">{{ j.client }}</div>{% endif %}
-    </td>
-    <td><span class="pill">{{ j.platform }}</span></td>
-    <td class="muted">{{ j.budget }}</td>
-    <td>
+  <article class="lead" data-jid="{{ j.id }}" data-title="{{ j.title }}">
+    <header class="lead-head">
+      <span class="chev">▶</span>
+      <div class="lead-title">
+        {% if j.url %}<a href="{{ j.url }}" target="_blank">{{ j.title }}</a>{% else %}{{ j.title }}{% endif %}
+        <div class="lead-sub">{{ j.client }}{{ ' · ' if j.client and j.budget }}{{ j.budget }}</div>
+      </div>
+      <span class="pill">{{ j.platform }}</span>
       {% if j.fit_score is not none %}
-        <span class="score {{ 'hi' if j.fit_score >= 70 else ('mid' if j.fit_score >= 45 else 'lo') }}">{{ j.fit_score|int }}</span>
-      {% else %}<span class="muted">—</span>{% endif %}
-    </td>
-    <td>
+        <span class="fit-badge {{ 'hi' if j.fit_score >= 70 else ('mid' if j.fit_score >= 45 else 'lo') }}">{{ j.fit_score|int }}</span>
+      {% else %}
+        <span class="fit-badge none">—</span>
+      {% endif %}
       <select class="j-status">
         {% for s in ['lead','applied','interview','won','lost'] %}
         <option {{ 'selected' if j.status == s }}>{{ s }}</option>
         {% endfor %}
       </select>
-    </td>
-    <td class="row">
-      <button class="ghost small j-score">SCORE</button>
-      <button class="ghost small j-proposal">PROPOSAL</button>
-    </td>
-  </tr>
-  <tr class="job-detail" data-jdetail="{{ j.id }}" {% if not j.fit_notes and not j.proposal %}style="display:none"{% endif %}>
-    <td colspan="6">
-      <div class="j-notes muted" style="white-space:pre-wrap">{{ j.fit_notes }}</div>
-      <div class="j-prop output" style="{{ 'display:none' if not j.proposal }}">{{ j.proposal }}</div>
-    </td>
-  </tr>
+      <span class="lead-actions">
+        <button class="ghost small j-score">SCORE</button>
+        <button class="ghost small j-proposal">PROPOSAL</button>
+        <button class="ghost small danger j-delete" title="delete lead">✕</button>
+      </span>
+    </header>
+    <div class="lead-body">
+      <div class="cols">
+        <div>
+          <h4>Screener questions</h4>
+          <textarea class="j-screener" rows="4" placeholder="Paste the screener questions — the proposal answers each after a --- divider">{{ j.screener or '' }}</textarea>
+          <div class="row" style="margin-top:8px">
+            <button class="ghost small j-screener-save">SAVE QUESTIONS</button>
+            <span class="flash j-flash"></span>
+          </div>
+          {% if j.description %}
+          <h4 style="margin-top:20px">Posting</h4>
+          <div class="muted scrollbox">{{ j.description }}</div>
+          {% endif %}
+        </div>
+        <div>
+          <h4>Fit analysis</h4>
+          <div class="j-notes muted" style="white-space:pre-wrap">{{ j.fit_notes or 'Not scored yet — hit SCORE.' }}</div>
+          <h4 style="margin-top:20px">Proposal <button class="ghost small copybtn j-copy">copy</button></h4>
+          <div class="j-prop output" data-has="{{ '1' if j.proposal else '' }}">{{ j.proposal or 'No proposal yet — hit PROPOSAL.' }}</div>
+        </div>
+      </div>
+    </div>
+  </article>
   {% else %}
-  <tr><td colspan="6" class="muted">No leads yet.</td></tr>
+  <p class="muted">No leads yet.</p>
   {% endfor %}
-</table>
+</div>
 {% endblock %}

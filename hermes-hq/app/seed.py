@@ -1,7 +1,8 @@
 """Idempotent seed: current orgs, projects, contacts. Run:
   python -m app.seed
 """
-from .db import Contact, Org, Project, SessionLocal, init_db, set_setting
+from .db import (Contact, Org, Project, SessionLocal, get_setting, init_db,
+                 set_setting)
 
 
 def seed():
@@ -46,9 +47,22 @@ def seed():
     contact(fore, "Kyle", "(set role)", "contact-kyle-foregenomics")
     contact(fore, "Suzanna", "(set role)", "contact-suzanna-foregenomics")
 
-    set_setting(db, "profile",
-                "Kevin Carpenter — freelance/contract software developer. "
-                "Site: kevincarp.com · LinkedIn: linkedin.com/in/kevin-carpenter-304a4554")
+    if not get_setting(db, "profile"):
+        set_setting(db, "profile",
+                    "Kevin Carpenter — Senior Full-Stack Architect, 14 years "
+                    "enterprise experience. Site: kevincarp.com · LinkedIn: "
+                    "linkedin.com/in/kevin-carpenter-304a4554")
+    if not get_setting(db, "past_work"):
+        set_setting(db, "past_work",
+                    "(Paste the compiled library from PAST_WORK.md in the repo "
+                    "root — Settings page on the dashboard.)")
+    if not get_setting(db, "portfolio_links"):
+        # NOTE: no LinkedIn here — Upwork prohibits sharing it pre-contract
+        # (it's auto-filtered for upwork proposals even if added later)
+        set_setting(db, "portfolio_links",
+                    "https://kevincarp.com\n"
+                    "https://dcilottery.com — DC iLottery (regulated iGaming, "
+                    "fintech payments, Azure)")
     db.close()
     print("Seeded. Edit roles/style notes in the UI as you learn them.")
 

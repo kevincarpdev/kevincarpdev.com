@@ -153,6 +153,8 @@ def settings_page(request: Request, db=Depends(db_session)):
     return templates.TemplateResponse(request, "settings.html", page_ctx(
         request, user, db,
         profile=get_setting(db, "profile"),
+        portfolio_links=get_setting(db, "portfolio_links"),
+        past_work=get_setting(db, "past_work"),
         resume_text=get_setting(db, "resume_text"),
         integrations=integrations.statuses(),
         team=db.query(User).all()))
@@ -301,7 +303,8 @@ def api_job_add(payload: dict, user=Depends(require_user), db=Depends(db_session
     j = Job(title=title, platform=payload.get("platform", "other"),
             url=payload.get("url", ""), client=payload.get("client", ""),
             budget=payload.get("budget", ""),
-            description=payload.get("description", ""))
+            description=payload.get("description", ""),
+            screener=payload.get("screener", ""))
     db.add(j)
     db.commit()
     return {"ok": True, "id": j.id}
@@ -312,7 +315,8 @@ def api_job_score(jid: int, user=Depends(require_user), db=Depends(db_session)):
     j = db.get(Job, jid)
     if not j:
         raise HTTPException(404)
-    out = ai.job_fit(j, get_setting(db, "resume_text"), get_setting(db, "profile"))
+    out = ai.job_fit(j, get_setting(db, "resume_text"), get_setting(db, "profile"),
+                     get_setting(db, "past_work"))
     j.fit_score = out["score"]
     j.fit_notes = out["notes"]
     db.commit()
@@ -325,9 +329,40 @@ def api_job_proposal(jid: int, user=Depends(require_user), db=Depends(db_session
     if not j:
         raise HTTPException(404)
     j.proposal = ai.job_proposal(j, get_setting(db, "resume_text"),
-                                 get_setting(db, "profile"))
+                                 get_setting(db, "profile"),
+                                 get_setting(db, "portfolio_links"),
+                                 get_setting(db, "past_work"))
     db.commit()
     return {"proposal": j.proposal}
+
+
+@app.post("/api/jobs/{jid}/screener")
+def api_job_screener(jid: int, payload: dict, user=Depends(require_user),
+                     db=Depends(db_session)):
+    j = db.get(Job, jid)
+    if not j:
+        raise HTTPException(404)
+    j.screener = payload.get("screener", "")
+    db.commit()
+    return {"ok": True}
+
+
+@app.post("/api/jobs/{jid}/delete")
+def api_job_delete(jid: int, user=Depends(require_user), db=Depends(db_session)):
+    j = db.get(Job, jid)
+    if j:
+        db.delete(j)
+        db.commit()
+    return {"ok": True}
+
+
+@app.post("/api/drafts/{did}/delete")
+def api_draft_delete(did: int, user=Depends(require_user), db=Depends(db_session)):
+    d = db.get(Draft, did)
+    if d:
+        db.delete(d)
+        db.commit()
+    return {"ok": True}
 
 
 @app.post("/api/jobs/{jid}/status")
@@ -346,9 +381,12 @@ def api_job_status(jid: int, payload: dict, user=Depends(require_user),
 
 @app.post("/settings")
 def settings_save(request: Request, profile: str = Form(""),
+                  portfolio_links: str = Form(""), past_work: str = Form(""),
                   resume_text: str = Form(""), user=Depends(require_user)):
     db = SessionLocal()
     set_setting(db, "profile", profile)
+    set_setting(db, "portfolio_links", portfolio_links)
+    set_setting(db, "past_work", past_work)
     set_setting(db, "resume_text", resume_text)
     db.close()
     return RedirectResponse("/settings", status_code=303)

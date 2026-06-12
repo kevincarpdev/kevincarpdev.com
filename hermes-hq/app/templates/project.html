@@ -73,7 +73,8 @@
     <details>
       <summary>recent drafts ({{ drafts|length }})</summary>
       {% for d in drafts %}
-      <div class="contact-card">
+      <div class="contact-card" data-did="{{ d.id }}">
+        <button class="ghost small danger d-del" style="float:right" title="delete draft">✕</button>
         <span class="pill amber">{{ d.channel }}</span>
         <span class="pill">{{ contact_by_id[d.contact_id].name if d.contact_id in contact_by_id else '?' }}</span>
         <div class="muted" style="margin:8px 0 4px">{{ d.intent }}</div>

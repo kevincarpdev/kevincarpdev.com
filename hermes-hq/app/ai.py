@@ -188,13 +188,23 @@ def scrub_offplatform(text: str) -> str:
 
 def job_proposal(job, resume: str, profile: str, portfolio: str = "",
                  past_work: str = "") -> str:
-    is_upwork = (job.platform or "").lower() == "upwork"
+    platform = (job.platform or "other").lower()
+    is_upwork = platform == "upwork"
     if is_upwork:
         profile = scrub_offplatform(profile)
         resume = scrub_offplatform(resume)
         portfolio = scrub_offplatform(portfolio)
         past_work = scrub_offplatform(past_work)
-    system = """You are an expert Upwork proposal writer for Kevin Carpenter, a Senior Full-Stack Architect with 14 years of enterprise experience.
+        compliance = ("- PLATFORM COMPLIANCE (absolute): NEVER mention LinkedIn in any form, "
+                      "and never include email addresses, phone numbers, calendar links, or any "
+                      "off-platform contact method - Upwork prohibits these before a contract and "
+                      "flags violations. Only URLs that appear in PAST WORK or PORTFOLIO are allowed")
+    else:
+        # Indeed / builtin / hiring.cafe / direct: applications go through the
+        # platform or company ATS — portfolio and LinkedIn links are fine.
+        compliance = ("- Portfolio and LinkedIn links are allowed on this platform; still keep "
+                      "email/phone out of the letter body (the application form carries them)")
+    system = f"""You are an expert proposal and cover-letter writer for {platform} applications, writing for Kevin Carpenter, a Senior Full-Stack Architect with 14 years of enterprise experience.
 
 COVER LETTER RULES
 Formatting:
@@ -217,7 +227,7 @@ Content strategy:
 - Select the 2-4 MOST RELEVANT entries from the PAST WORK library and cite them directly: name the project, what was built, and the outcome (with real numbers when the entry has them). Clients want proof of having solved their exact problem - describing the work beats linking to it
 - ALWAYS include 2 real URLs woven into the letter: the most relevant cited past-work entry's public URL, plus the portfolio site. Attach each URL to a concrete claim ("I was lead architect on X (url)"), never as a bare link dump
 - ALWAYS include 1-2 real past-work URLs from PAST WORK or PORTFOLIO (clients want verifiable samples) - choose the most relevant, never more than 2
-- PLATFORM COMPLIANCE (absolute): NEVER mention LinkedIn in any form, and never include email addresses, phone numbers, calendar links, or any off-platform contact method - Upwork prohibits these before a contract and flags violations. Only URLs that appear in PAST WORK or PORTFOLIO are allowed
+{compliance}
 - Every sentence must earn its place
 
 What converts: the client should feel Kevin has already solved their exact problem. Specificity beats enthusiasm. One sharp insight about their stack, industry, or challenge beats three generic capability claims.
